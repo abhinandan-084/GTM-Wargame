@@ -63,7 +63,7 @@ The system implements Chain-of-Thought (CoT) reasoning across three personas:
 - **Growth Strategist**: Critiques SciPy optimization results against the "Efficiency Momentum."
 - **GTM Manager**: Synthesizes a "Wargame Playbook" with contingency plans for competitor price wars.
 
-**3. L3 Numerical Guardrails**
+**3. Numerical Guardrails**
 
 The **Consistency Checker** prevents LLM hallucinations. It parses agent responses using regex and cross-references extracted numbers against the Ground Truth from the Optimization Engine, flagging mismatches. If the Agent suggests a **"15% Lift"** but the Scipy Optimizer outputted **"12%"**, the system flags a Hallucination Alert in the UI, ensuring the boardroom only sees validated data.
 
