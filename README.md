@@ -71,8 +71,17 @@ The ConsistencyChecker prevents LLM hallucinations. It parses agent responses us
 
 **4. Hybrid LLM Support**
 
-Gemini Pro/Flash: Optimized at temp=0.1 for maximum deterministic reasoning.
-Ollama (Qwen 3.5:9b): Optimized at temp=0.4 to prevent logit starvation in local analytical synthesis.
+The system implements a **Hybrid LLM Architecture**, allowing the GTM Boardroom to run on either enterprise cloud-scale models or local privacy-first models.
+
+* **Enterprise Cloud: Google Gemini 3**
+    - **Use Case:** High-stakes boardroom simulations and complex strategic synthesis.
+    - **Rationale:** Leverages massive parameter counts for high-fidelity **Chain-of-Thought (CoT)** reasoning. 
+    - **Optimization:** Configured at `Temperature: 0.1` for maximum determinism. The high reasoning density allows the model to map disparate SHAP floats to qualitative market regimes with zero "logit drift."
+
+* **Local Edge: Ollama (Qwen 3)**
+    - **Use Case:** Rapid iterative testing, cost-sensitive simulations, and **Data Sovereignty** compliance.
+    - **Rationale:** Ensures that sensitive internal sales data, pricing strategies, and competitor diagnostics never leave the corporate firewall
+    - **Inference Tuning:** Unlike cloud models, local models (7B-14B) are susceptible to "logit starvation" at near-zero temperatures. We have optimized the local engine at `Temperature: 0.4` with `Top_P: 0.9` to ensure the Analyst Agent maintains fluid reasoning without looping or robotic stagnation.
 
 ## 🛠️ **Installation & Setup**
 
