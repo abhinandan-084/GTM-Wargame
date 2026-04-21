@@ -35,7 +35,7 @@ The system operates as a closed-loop "Reasoning Engine" spanning four distinct l
 **4. Agentic Reasoning Layer:** A Three-Agent consensus model (Analyst, Strategist, Manager) using LangChain with dual-provider support (Gemini 3 & Qwen 3.5:9b).
 
 
-##📂 **File System**
+## 📂 **File System**
 
 ```text
 ├── boardroom_app.py        # Streamlit UI: The Boardroom Dashboard
