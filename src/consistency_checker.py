@@ -4,16 +4,21 @@ from typing import Dict, Any, List
 
 class ConsistencyChecker:
     """
-    Principal Engineer Note: This version handles NumPy scalars, 
-    NumPy arrays, and Pandas types that often fail standard 
-    Python type checks.
+    A utility class designed to validate numerical values found in AI agent responses
+    against a ground truth pool derived from SHAP information, market context, and
+    optimization results. It handles various data types including NumPy scalars and arrays.
     """
 
     @staticmethod
     def _flatten_data(data: Any) -> List[float]:
         """
-        Recursively extracts every number, handling Python natives, 
-        NumPy scalars, and NumPy arrays.
+        Recursively extracts all numerical values from various data structures (lists, tuples,
+        NumPy arrays, dictionaries) and converts them to floats. Non-finite values (NaN, Inf)
+        are filtered out.
+        Args:
+            data (Any): The input data structure to flatten.
+        Returns:
+            List[float]: A list containing all finite numerical values found in the input data.
         """
         nums = []
         
@@ -43,18 +48,30 @@ class ConsistencyChecker:
     @staticmethod
     def validate_response(text: str, shap_info: Dict, market_context: Dict, opt_results: Dict) -> Dict[str, Any]:
         """
-        Validates the Agent response against a unified Ground Truth pool.
+        Validates the Agent's natural language response by checking if numerical values
+        mentioned in the text are present within a unified ground truth pool.
+        The ground truth pool is constructed from SHAP information, market context, and
+        optimization results. It accounts for minor rounding differences and common scaling
+        issues (e.g., percentages).
+        Args:
+            text (str): The natural language response text from the AI agent.
+            shap_info (Dict): Dictionary containing SHAP values or related model diagnostics.
+            market_context (Dict): Dictionary describing the current market conditions and strategic context.
+            opt_results (Dict): Dictionary containing the results of an optimization process.
+        Returns:
+            Dict[str, Any]: A dictionary indicating whether the response is valid (`is_valid`),
+                            a list of detected hallucinated values (`hallucinated_values`), and
+                            an error message if hallucinations are found (`error_msg`).
         """
-        # 1. Build the Ground Truth Pool from all sources
+        # Build the Ground Truth Pool from all sources
         raw_pool = []
         for source in [shap_info, market_context, opt_results]:
             raw_pool.extend(ConsistencyChecker._flatten_data(source))
         
-        # Use a set for faster lookup and unique values
+        # Get absolute values and lose the signs
         ground_truth_pool = [abs(v) for v in raw_pool]
 
-        # 2. Clean and extract numbers from LLM text
-        # Remove commas and currency symbols first
+        # Clean and extract numbers from LLM text, format to remove commas and currency symbols first
         clean_text = text.replace(',', '').replace('$', '').replace('%', '')
         found_in_text = re.findall(r"[-+]?\d*\.\d+|\d+", clean_text)
         
@@ -71,7 +88,7 @@ class ConsistencyChecker:
         tolerance = 1.1 
 
         for num in text_nums:
-            # Skip indices and common low-value markdown formatting numbers
+            # Skip indices and common low-value markdown formatting numbers, these are found in bullet points for LLMs
             if num in [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]:
                 continue
             

@@ -12,9 +12,9 @@ This repository contains a modular **Agentic GTM (Go-To-Market) Strategy Simulat
 
 The gap between **Data Science** (ML outputs) and **GTM Strategy** (Boardroom decisions) is often weeks of manual interpretation. This project solves three critical "Principal-level" problems:
 
-1. **The Contextualization Problem:** A SHAP value of `0.4` for Price is meaningless without knowing if we are in a *Price War* or a *Launch Window*. The **Programmatic Context Detector** ensures the AI "knows" the market regime before it speaks.
+1. **The Contextualization Problem:** A SHAP value of `0.4` for Price is meaningless without knowing if we are in a **Price War** or a **Launch Window**. The **Programmatic Context Detector** ensures the AI "knows" the market regime before it speaks.
 
-2. **The Summarizer-to-Thinker Transition:** Most GenAI apps simply re-state the data. This system uses **Chain-of-Thought (CoT)** prompting to force the Agents to *critique* the optimizer and hypothesize *why* drivers are moving, moving the AI from a "reporter" to a "strategic advisor."
+2. **The Summarizer-to-Thinker Transition:** Most GenAI apps simply re-state the data. This system uses **Chain-of-Thought (CoT)** prompting to force the Agents to **critique** the optimizer and hypothesize **why** drivers are moving, moving the AI from a "reporter" to a "strategic advisor."
 
 3. **The Hallucination Guardrail:** For a businesses, a single hallucinated number destroys the credibility of the entire dashboard. The **Consistency Checker** provides the mathematical rigor required to deploy LLMs in high-stakes financial environments.
 <br/><br/>
@@ -30,7 +30,7 @@ The system operates as a closed-loop "Reasoning Engine" spanning four distinct l
 
 **2. Diagnostic Engine:** Employs XGBoost for sales forecasting and SHAP (SHapley Additive exPlanations) for local feature attribution on the most recent "Today" week. Leverages `scipy.optimize.differential_evolution` to find the global optimum for spend allocation across Social, Search, and Retail channels.
 
-**3. Programmatic Context Layer:** A heuristic engine that translates raw metrics (Price Elasticity, Share of Voice, Efficiency Momentum) into strategic "Market Regimes."
+**3. Programmatic Context Layer:** A heuristic engine that translates raw metrics (Price Elasticity, Share of Voice, Efficiency Momentum) into strategic "Market Regimes".
 
 **4. Agentic Reasoning Layer:** A Three-Agent consensus model (Analyst, Strategist, Manager) using LangChain with dual-provider support (Gemini 3 & Qwen 3.5:9b).
 
@@ -65,7 +65,7 @@ The system implements Chain-of-Thought (CoT) reasoning across three personas:
 
 **3. L3 Numerical Guardrails**
 
-The ConsistencyChecker prevents LLM hallucinations. It parses agent responses using regex and cross-references extracted numbers against the Ground Truth from the Optimization Engine, flagging mismatches. If the Agent suggests a "15% Lift" but the Scipy Optimizer outputted "12%", the system flags a Hallucination Alert in the UI, ensuring the boardroom only sees validated data.
+The **Consistency Checker** prevents LLM hallucinations. It parses agent responses using regex and cross-references extracted numbers against the Ground Truth from the Optimization Engine, flagging mismatches. If the Agent suggests a **"15% Lift"** but the Scipy Optimizer outputted **"12%"**, the system flags a Hallucination Alert in the UI, ensuring the boardroom only sees validated data.
 
 **If a hallucination is detected, the UI flags the specific metric for boardroom review.**
 

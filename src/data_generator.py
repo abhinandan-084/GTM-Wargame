@@ -6,6 +6,21 @@ from typing import List, Optional, Dict
 from schemas import DataConfig, OEMTierConfig, PromoEvent
 
 class GTM_DataGenerator:
+    """
+    Generates synthetic GTM (Go-To-Market) data for product sales, marketing spend,
+    and pricing, considering various factors like seasonality, promotions, and
+    competitor actions.
+    Attributes:
+        rank (int): The OEM's market rank, influencing certain behaviors based on yml config file
+        start_date (date): The start date for data generation.
+        weeks (int): The number of weeks for which to generate data.
+        launch_spike (float): Multiplier for sales during the OEM's product launch.
+        market_leader_price_decay_factor (float): Factor by which market leader's price decays weekly.
+        hill_k (float): The 'K' parameter for the Hill function, related to the spend at half-maximal effect.
+        hill_n (float): The 'n' parameter for the Hill function, related to the steepness of the curve.
+        params (dict): A dictionary of various parameters for simulations.
+        promos (Optional[List[PromoEvent]]): A list of promotional events [Depracated] #ToDo : To remove this functionality
+     """
     def __init__(self, data_config: DataConfig, oem_config: OEMTierConfig, coeffs: dict, promos: Optional[List[PromoEvent]] = None):
         self.rank = oem_config.rank
         self.start_date = data_config.start_date
@@ -19,17 +34,31 @@ class GTM_DataGenerator:
         self.promos = promos or []
 
     def _apply_hill_function(self, spend: np.ndarray) -> np.ndarray:
+        """
+        Applies the Hill function to simulate the impact of spend.
+        Args:
+            spend (np.ndarray): Array of marketing spend values.
+        Returns:
+            np.ndarray: Array representing the impact/response based on the Hill function.
+        """
         K = self.hill_k
         n = self.hill_n
         return (spend**n) / (spend**n + K**n)
 
     def _init_df(self):
+        """
+        Initialize df with date-related columns ('week' and 'month')
+        """
         dates = pd.date_range(start=self.start_date, periods=self.weeks, freq='W')
         df = pd.DataFrame({'week': dates})
         df['month'] = df['week'].dt.month
         return df
 
     def _base_volume_simulation(self, df):
+        """
+        Simulates the base sales volume incorporating trend, seasonality, and holiday events.
+        Returns: df with the 'base_volume' column.
+        """
         df['week_no'] = df['week'].dt.isocalendar().week
 
         # Defining Baseline Trend (Long-term growth)
@@ -41,8 +70,8 @@ class GTM_DataGenerator:
         # Seasonal Multipliers Map (Rational: Q4 high, July low, Q1 steady)
         # These represent % of baseline. 1.0 = average.
         monthly_map = {
-            1: 0.90, 2: 0.90, 3: 1.0,  # Q1 Launch Peak for iPhone/Pixel
-            4: 1.00, 5: 0.95, 6: 0.90,  # Q2 Decay
+            1: 0.90, 2: 0.90, 3: 1.0,  # Q1 Launch Peak : New Launches
+            4: 1.00, 5: 0.95, 6: 0.90,  # Q2 Decay : Mid year Slump
             7: 0.85, 8: 1.20, 9: 0.90,  # July Slump -> Aug/Sept : New Launches
             10: 0.90, 11: 1.10, 12: 1.10 # Q4 Holiday Peak
         }
@@ -69,12 +98,21 @@ class GTM_DataGenerator:
         return df
 
     def _sales_simulation(self, df):
+        """
+        Simulates sales impacts from OEM's own launch and competitor launches.
+        Returns: df with 'oem_launch_spike', 'comp_a_impact', and 'comp_b_impact' columns.
+        """
         df['oem_launch_spike'] = df['month'].apply(lambda x: self.launch_spike if x == self.params['launch_month'] else 1.0)
         df['comp_a_impact'] = df['month'].apply(lambda x: self.params['rank_a_impact']['impact'] if x == self.params['rank_a_impact']['launch_month'] else 1.0)
         df['comp_b_impact'] = df['month'].apply(lambda x: self.params['rank_b_impact']['impact'] if x == self.params['rank_b_impact']['launch_month'] else 1.0)
         return df
 
     def _marketing_spend_simulation(self, df):
+        """
+        Simulates various marketing spends (retail, search, social) and their impact.
+        Includes adstock effects, media synergy, and promotional adjustments.
+        Returns: df with marketing spend, adstock, hill function impacts, media synergy, and ATL contribution columns.
+        """
         time_index = np.arange(len(df))
         monthly_multiplier  = np.array([self.params['monthly_seasonality'][m-1] for m in df['month']])
 
@@ -129,6 +167,11 @@ class GTM_DataGenerator:
         return df
 
     def _generate_competitor_behavior(self, df):
+        """
+        Generates a simulated price behavior for a market leader competitor.
+        Args: df
+        Returns: A np.array of simulated market leader prices.
+        """
         leader_base_price = 799.0
         leader_prices = np.zeros(len(df))
         leader_prices[0] = leader_base_price
@@ -145,6 +188,14 @@ class GTM_DataGenerator:
         return leader_prices * promos
 
     def _price_decay_simulation(self, df):
+        """
+        Simulates product pricing, including list price decay, promotional rebates, 
+        effective price, and the resulting price effect on sales.
+        Also calculates price penalties based on competitor pricing on an upstart (rank 3) OEM.
+        Args: df
+
+        Returns: df with list price, promo rebate, effective price, price effect, price penalty, and leader penalty columns.
+        """
         base_price = 799.0
         df['list_price'] = base_price
         for i in range(1, len(df)):
@@ -186,6 +237,11 @@ class GTM_DataGenerator:
         return df
 
     def _final_sales(self, df):
+        """
+        Calculates the final sales volume by combining all simulated effects.
+        Args: df
+        Returns: df with the final 'sales' column
+        """
         df['sales'] = (df['base_volume'] * df['oem_launch_spike'] * df['comp_a_impact']
         * df['comp_b_impact'] * df['retail_visibility_multiplier'] * df['price_effect']
         * df['price_penalty'] * df['leader_penalty']) * (1+df['atl_contribution'])
@@ -193,6 +249,10 @@ class GTM_DataGenerator:
         return df
 
     def generate(self):
+        """
+        Orchestrates the data generation process by calling all simulation methods.
+        Returns: df with all generated GTM data.
+        """
         df = self._init_df()
         df = self._base_volume_simulation(df)
         df = self._sales_simulation(df)

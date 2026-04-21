@@ -17,15 +17,23 @@ from dotenv import load_dotenv
 load_dotenv()  # reads variables from a .env file and sets them in os.environ
 
 if __name__ == '__main__':
-
-    # Initializing Session State : Ensures that the results stay on screen even if we move a slider after the simulation is done.
+    # Initializing Session State : Ensures that the results stay on screen even if we move a slider after the simulation is done
+    # and to stop streamlit's default behavior where any widget change triggers a full script rerun
     if 'run_sim' not in st.session_state:
         st.session_state['run_sim'] = None
 
-    # --- DATA ORCHESTRATION ---
+    # Data Orchestrator Function : Encapsulates the entire simulation workflow
     def run_full_pipeline(llm_provider, api_key, horizon):
-        # 1. Generate Synthetic Data (using your finalized generator)
-        # Load YAML
+        """
+        Runs the full GTM simulation pipeline, from data generation to agentic analysis.
+        Args:
+            llm_provider (str): The LLM provider to use (e.g., "gemini", "ollama").
+            api_key (str): The API key for the LLM provider (if applicable).
+            horizon (int): The planning horizon in weeks.
+        Returns:
+            dict: A dictionary containing all the results from the simulation, analysis, and strategy.
+        """
+        # Generate Synthetic Data (data generator) : Load simulation configuration from saved YAML file
         with open('simulation_config.yaml', 'r') as f:
             full_config = yaml.safe_load(f)
             
@@ -37,11 +45,12 @@ if __name__ == '__main__':
         coeffs = tier_data['coeffs']
         promos = []
         
-        # Data Generator Class
+        # 1. Initialize and run the data generator
         generator = GTM_DataGenerator(data_cfg, oem_cfg, coeffs, promos=promos) 
         df = generator.generate()
 
         # 2. Driver & Optimization Engine 
+        # Set current week index for historical data slicing
         current_week_idx = (horizon+1)*(-1)
         engine = GTM_DriverEngine(df, current_week_idx=current_week_idx)
         with st.spinner("📈 💰 Running Driver Engine & Optimiser..."):
@@ -51,6 +60,7 @@ if __name__ == '__main__':
             comparison_df = engine.compare_optimized_vs_actual(opt_results, horizon=horizon)
 
         # 3. Agentic Layer
+        # Initialize the GTM Brain with the selected LLM provider and API key
         brain = GTMBrain(provider=llm_provider, api_key=api_key)
         
         with st.spinner("🕵️ Analyst diagnosing drivers..."):
@@ -62,7 +72,8 @@ if __name__ == '__main__':
         with st.spinner("👔 GTM Manager finalizing playbook..."):
             summary = brain.get_gtm_manager_node(analysis, strategy, market_context)
 
-        # Consistensy Checker
+        # 4. Consistency Checker 
+        # Validate the generated summary against numerical results
         checker = ConsistencyChecker()
 
         if summary != None:
@@ -78,14 +89,14 @@ if __name__ == '__main__':
         }
         return results
 
-    # --- PAGE CONFIG ---
+    # Page Config : Streamlit page configuration
     st.set_page_config(
         page_title="GTM Wargame: Boardroom Simulator",
         page_icon="📱",
         layout="wide"
     )
 
-    # --- STYLING ---
+    # Styling : Custom CSS styling for better aesthetics [Refer MDN Web Docs (Mozilla Developer Network) for more]
     st.markdown("""
         <style>
         .main { background-color: #f5f7f9; }
@@ -94,19 +105,22 @@ if __name__ == '__main__':
         </style>
         """, unsafe_allow_html=True)
 
-    # --- SIDEBAR: CONTROLS ---
+    # Sidebar : Sidebar for simulation controls
     with st.sidebar:
         st.title("🕹️ Simulation Control")
+
+        # LLM provider selection and API key input (masked for security)
         llm_provider = st.selectbox("Intelligence Engine", ["gemini", "ollama"])
         api_key = st.text_input("API Key (if Gemini)", type="password")
 
+        # Use environment variable for API key if not provided
         if api_key == "":
             api_key = os.environ.get('GOOGLE_API_KEY')
 
         st.divider()
-        #budget_limit = st.slider("Total Strategy Budget ($)", 100000, 1000000, 500000)
         horizon = st.selectbox("Planning Horizon (Weeks)", [2, 4], index=0)
 
+        # Budget limit slider, dependent on horizon
         if horizon == 2:
             budget_limit = st.slider("Total Strategy Budget ($)", 300000, 700000, 500000)
         else:
@@ -117,14 +131,16 @@ if __name__ == '__main__':
         if st.button("🚀 Run GTM Wargame", use_container_width=True):
             st.session_state['run_sim'] = run_full_pipeline(llm_provider, api_key, horizon)
 
-    # --- MAIN UI ---
+    # Main UI Code
+    # Display results if simulation has been run
     if st.session_state['run_sim']:
         results = st.session_state['run_sim']
         
-        # HEADER SECTION
+        # Header for the main content area
         st.title("Boardroom Briefing: GTM Strategy Playbook")
         
-        # --- ROW 1: TOP LEVEL METRICS ---
+        # Row 1 : Top Level Metrics
+        # Display key metrics using Streamlit columns
         m1, m2, m3, m4 = st.columns(4)
         lift = results['opt_results']['lift_percent']
         m1.metric("Projected Sales Lift", f"{lift}%", delta_description = "vs Baseline")
@@ -132,7 +148,7 @@ if __name__ == '__main__':
         m3.metric("Price Position", results['market_context']['market_regime']['price_position'].split('(')[0])
         m4.metric("Competitive Threat", results['market_context']['market_regime']['competitive_price_threat'].split('(')[0])
 
-        # --- TABS FOR DIFFERENT VIEWPOINTS ---
+        # Tabs for different roles/viewpoints : Content organized into tabs for different perspectives
         tab_manager, tab_analytics, tab_optimization = st.tabs([
             "👔 Executive Playbook", "🧬 Driver Diagnostics", "📊 Spend Optimization"
         ])
@@ -145,7 +161,6 @@ if __name__ == '__main__':
                     st.write(results['summary'])
                 
                 st.subheader("Growth Strategist: Rationale")
-                #st.info(results['strategy'])
                 with st.container(border=True):
                     st.write(results['strategy'])
             
@@ -168,6 +183,7 @@ if __name__ == '__main__':
             col_a, col_b = st.columns([1, 1])
             with col_a:
                 st.subheader("Top Sales Drivers (SHAP)")
+                # DataFrame for SHAP values and for visaulisation
                 shap_df = pd.DataFrame(list(results['shap_info'].items()), columns=['Feature', 'Impact'])
                 shap_df = shap_df.sort_values('Impact', ascending=False).head(10)
                 fig_shap = px.bar(shap_df, x='Impact', y='Feature', orientation='h', color='Impact',
@@ -193,7 +209,7 @@ if __name__ == '__main__':
                 go.Bar(name='Optimized', x=spend_metrics, y=comp_df.loc[spend_metrics, 'Optimized (Proposal)'])
             ])
 
-            # 2. Update Layout (The "Formatting" of the container)
+            # Layout setting for sales and spend chart
             fig_sales_spend.update_layout(
                 title='Sales Performance',
                 xaxis_title='Metric name',
@@ -211,6 +227,7 @@ if __name__ == '__main__':
                 go.Bar(name='Optimized', x=spend_metrics, y=comp_df.loc[spend_metrics, 'Optimized (Proposal)'])
             ])
 
+            # Layout setting for Average Price and Market Leader Price
             fig_price.update_layout(
                 title='Price Performance',
                 xaxis_title='metric',
@@ -222,7 +239,7 @@ if __name__ == '__main__':
 
             st.plotly_chart(fig_price, use_container_width=True)
 
-            # Display the final dataframe 
+            # Displaying the comparison dataframe with custom formatting
             st.dataframe(comp_df
             .style
             .format(formatter='$ {:.2f}',
@@ -236,5 +253,5 @@ if __name__ == '__main__':
             .set_properties(**{'text-align': 'center'}))
 
     else:
-        # Landing State
+        # Landing State: Base state when the simulation has not been run
         st.info("👈 Select your LLM engine and budget in the sidebar, then click 'Run GTM Wargame' to start the simulation.")

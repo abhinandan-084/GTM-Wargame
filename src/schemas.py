@@ -26,3 +26,4 @@ class PromoEvent(BaseModel):
         if start_date and end_date < start_date:
             raise ValueError('end_date must be after start_date')
         return end_date
+        

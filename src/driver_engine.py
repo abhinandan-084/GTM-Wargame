@@ -6,9 +6,15 @@ from typing import Any, List, Dict
 from scipy.optimize import differential_evolution 
 
 class GTM_DriverEngine:
+    """
+    Trains a sales prediction model, provides diagnostics, simulates future sales, and optimise marketing/pricing strategies.
+    """
     def __init__(self, df, current_week_idx=-5):
         """
-        current_week_idx: Index to treat as 'today' (e.g., -5 for the 5th to last week).
+        Initializes the GTM_DriverEngine.
+        Args:
+            df : The input DataFrame containing historical sales and marketing data.
+            current_week_idx (int): Index to treat as 'today' (e.g., -5 for the 5th to last week). This defines the split point for training data.
         """
         self.df = df.copy()
         # Normalize index to absolute position
@@ -17,22 +23,43 @@ class GTM_DriverEngine:
         self._train_model()
 
     def _feat_engine(self):
-        # Feature Engineering
+        """
+        Performs feature engineering on df. This includes creating various
+        price, marketing, and competitive metrics, as well as time-based features.
+        Sets `self.X_train` and `self.y_train` for model training.
+        """
+        # Feature Engineering : 
         self.df['price_gap_pct'] = (self.df['list_price'] - self.df['market_leader_price']) / self.df['market_leader_price']
+
+        # This metric aims to capture the marketing effort per unit of price. Measure of how aggressively the product is being promoted
         self.df['marketing_intensity'] = (self.df['search_spend'] + self.df['social_spend']) / self.df['list_price']
         self.df['rolling_sales_4w'] = self.df['sales'].shift(1).rolling(window=4).mean().fillna(self.df['base_volume'])
         self.df['total_mkt_spend'] = self.df['retail_support_spend'] + self.df['search_spend'] + self.df['social_spend']
         self.df['leader_price_delta'] = self.df['market_leader_price'].diff(1).fillna(0)
+
+        # % change in the market leader's price over the last 4 weeks to get an idea of competitor's and our pricing momentum, indicating aggressive moves or stability.
         self.df['leader_price_velocity'] = self.df['market_leader_price'].pct_change(periods=4).fillna(0)
         self.df['our_price_velocity'] = self.df['list_price'].pct_change(periods=4).fillna(0)
         self.df['relative_velocity'] = self.df['our_price_velocity'] - self.df['leader_price_velocity']
+
+        # To capture an interaction effect: how marketing efforts (adstock) might amplify or mitigate the impact of price gap. 
+        # # For example, high marketing spend might make a premium price more acceptable.
         self.df['price_marketing_synergy'] = self.df['price_gap_pct'] * (self.df['search_adstock'] + self.df['social_adstock'])
+
         self.df['is_launch'] = self.df['oem_launch_spike'] != 1.0
         self.df['is_comp_launch'] = self.df['month'].isin([1, 9]).astype(int)
+
+        # Proxy for marketing efficiency: how many sales were generated per unit of marketing spend in the previous period. 
+        # The +1 is to prevent division by zero. It's a key indicator of ROI.
+        # effiviency momentum helps smooth out weekly fluctuations and indicates whether marketing effectiveness is generally 
+        # improving or declining over time.
+
         self.df['mkt_efficiency_ratio'] = self.df['sales'].shift(1) / (self.df['total_mkt_spend'].shift(1) + 1)
         self.df.fillna({'mkt_efficiency_ratio':1.0},inplace=True)
         self.df['efficiency_momentum'] = self.df['mkt_efficiency_ratio'].rolling(4).mean().fillna(1.0)
         self.df['recent_promo_intensity'] = self.df['promo_rebate_pct'].rolling(window=4).mean().fillna(0)
+
+        # Other Misc Features
         self.df['month_sin'] = np.sin(2 * np.pi * self.df['month']/12)
         self.df['month_cos'] = np.cos(2 * np.pi * self.df['month']/12)
         self.df['marketing_vs_comp_launch'] = (self.df['search_adstock'] + self.df['social_adstock']) / (self.df['is_comp_launch'] + 1)
@@ -51,23 +78,36 @@ class GTM_DriverEngine:
         self.y_train = self.df.iloc[:self.current_idx]['sales']
 
     def _train_model(self):
+        """
+        Trains an XGBoost Regressor model using the engineered features and historical sales data.
+        Also initializes a SHAP TreeExplainer for model diagnostics.
+        """
         self.model = xgb.XGBRegressor(n_estimators=200, max_depth=5, learning_rate=0.05, subsample=0.8, random_state=42)
         self.model.fit(self.X_train, self.y_train)
         self.shap_explainer = shap.TreeExplainer(self.model)
 
     def get_diagnostics(self):
+        """
+        Generates SHAP values for the current week to provide model diagnostics and feature importance.
+        Returns: Dict[str, Any]: A dictionary where keys are feature names and values are their SHAP values.
+        """
         target_row = self.df.iloc[[self.current_idx]][self.feat_cols]
         shap_values = self.shap_explainer.shap_values(target_row)
         return dict(zip(self.feat_cols, shap_values[0]))
 
-    def simulate_future_horizon(
-        self, price: float, 
-        search_spends_per_week: List[float], 
-        social_spends_per_week: List[float], 
-        retail_spends_per_week: List[float],
-        horizon=4,
-        leader_price_override: float = None  # Added: allows "What-if" leader drops price
-    ) -> List[float]:
+    def simulate_future_horizon(self, price, search_spends_per_week, social_spends_per_week, retail_spends_per_week, horizon=4, leader_price_override = None) -> List[float]:
+        """
+        Simulates sales over a future horizon based on proposed pricing and marketing spends.
+
+        Args:
+            price (float): The proposed list price for the product.
+            search_spends_per_week (List[float]): List of search spends for each week in the horizon.
+            social_spends_per_week (List[float]): List of social spends for each week in the horizon.
+            retail_spends_per_week (List[float]): List of retail support spends for each week in the horizon.
+            horizon (int): The number of weeks to simulate into the future.
+            leader_price_override (float, optional): An optional override for the market leader's price to simulate competitive 'what-if' scenarios.
+        Returns: List[float]: A list of forecasted weekly sales for the given horizon.
+        """
         weekly_sales_predictions = []
         # Initialize adstock for the first week based on previous week's actuals
         # Or simplify by assuming current week's spend entirely dictates adstock effect for that week for optimization purposes.
@@ -102,16 +142,21 @@ class GTM_DriverEngine:
         return weekly_sales_predictions
 
     def optimize_strategy(self, budget_limit, horizon=4):
-
+        """
+        Optimizes pricing and marketing spend across channels to maximize total sales within a given budget.
+        Uses differential evolution for optimization.
+        Args:
+            budget_limit (float): The total budget available for marketing spend over the horizon.
+            horizon (int): The number of weeks for which to optimize the strategy.
+        Returns:
+            Dict[str, Any]: A dictionary containing optimization results including optimized price,
+                            weekly spend allocations, forecasted sales, and lift percentage.
+        """
         # 1. Get Actuals for this horizon to calculate Lift
         actual_data = self.get_historical_actuals(horizon=horizon)
         actual_sales_sum = actual_data['actual_total_sales']
 
         last_price = self.df.iloc[self.current_idx]['list_price']
-        
-        # x vector will be: [price, search_w1, ..., search_wN, social_w1, ..., social_wN, retail_w1, ..., retail_wN]
-        # N = horizon
-        # Total variables: 1 (price) + 3 * horizon (spends)
         
         # Initial guess: current price, and budget evenly split per channel per week
         spend_per_channel_per_week = (budget_limit / 3) / horizon
@@ -157,7 +202,7 @@ class GTM_DriverEngine:
         
         forecasted_total_sales = round(-res.fun, 0)
 
-        # Calculate Lift %
+        # Calculate Lift and Lift %
         # Lift = ((New Sales - Old Sales) / Old Sales) * 100
         lift_pct = ((forecasted_total_sales / actual_sales_sum) - 1) * 100 if actual_sales_sum > 0 else 0
 
@@ -186,7 +231,11 @@ class GTM_DriverEngine:
         }
 
     def get_historical_actuals(self, horizon=4):
-        """Returns the actual metrics for the weeks following the reference point."""
+        """
+        Returns the actual metrics (sales, spends, prices) for the weeks following the current reference point.
+        Args: horizon (int): The number of weeks to retrieve historical actuals for.
+        Returns: Dict[str, Any]: A dictionary containing various actual historical metrics.
+        """
         future_df = self.df.iloc[self.current_idx + 1 : self.current_idx + 1 + horizon]
 
         actual_sales = future_df['sales'].sum()
@@ -212,7 +261,16 @@ class GTM_DriverEngine:
         }
 
     def compare_optimized_vs_actual(self, opt_results, horizon=4):
-        """Calculates the delta between optimized strategy and historical actuals using the summary metrics"""
+        """
+        Calculates and displays the delta between an optimized strategy and historical actuals
+        using summary metrics.
+        Args:
+            opt_results (Dict[str, Any]): The results dictionary from the `optimize_strategy` method.
+            horizon (int): The number of weeks considered for comparison.
+        Returns:
+            df: A DataFrame comparing actual vs. optimized metrics with deltas and lift percentages.
+        """
+
         actuals = self.get_historical_actuals(horizon=horizon)
 
         actual_sales = actuals['actual_total_sales']
@@ -243,7 +301,15 @@ class GTM_DriverEngine:
         })
 
     def display_weekly_phased_strategy(self, opt_results, horizon=4):
-        """Displays a week-by-week comparison of optimized vs. actual sales and spends."""
+        """
+        Displays a week-by-week comparison of optimized vs. actual sales and spends.
+        Args:
+            opt_results (Dict[str, Any]): The results dictionary from the `optimize_strategy` method.
+            horizon (int): The number of weeks for which to display the strategy.
+        Returns:
+            df: A DataFrame showing weekly actuals and optimized proposals for sales and spends.
+        """
+
         actuals = self.get_historical_actuals(horizon=horizon)
 
         weekly_data = []
@@ -264,8 +330,14 @@ class GTM_DriverEngine:
 
     def get_market_context(self) -> Dict[str, Any]:
         """
-        Translates numerical signals into Strategic Context for the Agentic Layer.
+        Translates numerical signals into a strategic context for decision-making.
+        Analyzes current market conditions based on price positioning, competitive activity,
+        media efficiency, and product lifecycle.
+
+        Returns:
+            Dict[str, Any]: A dictionary providing strategic context, signals, and wargame alerts.
         """
+
         row = self.df.iloc[self.current_idx]
         prev_4w = self.df.iloc[self.current_idx-4 : self.current_idx]
         
@@ -305,7 +377,7 @@ class GTM_DriverEngine:
         # 4. Product Lifecycle Phase
         if row['is_launch']:
             lifecycle = "Launch Phase (Focus on volume and visibility over margins)"
-        elif row['month'] in [11, 12]:
+        elif row['month'] in [11, 12]:  # This is hard-coded at the moment, can be updated
             lifecycle = "Peak Season (Holiday Season)"
         else:
             lifecycle = "Maturity/Maintain (Focus on sustaining baseline)"     
