@@ -8,7 +8,7 @@
 
 This repository contains a modular **Agentic GTM (Go-To-Market) Strategy Simulator** that bridges Machine Learning Diagnostics (XGBoost/SHAP) and Executive Strategy (LangChain/LLM Agents). It is designed specifically for a OEM to simulate weekly sales performance and optimize marketing spend across Search, Social, and Retail channels. Unlike standard dashboards that merely report data, this system uses a multi-agent "Boardroom" architecture to perform Strategic Wargaming. It transforms XGBoost diagnostics and Scipy optimizations into actionable executive playbooks while maintaining strict numerical grounding.
 
-### 💎 **Closing the "Signal-to-Action" Gap**
+## **Closing the "Signal-to-Action" Gap**
 
 The gap between **Data Science** (ML outputs) and **GTM Strategy** (Boardroom decisions) is often weeks of manual interpretation. This project solves three critical "Principal-level" problems:
 
@@ -19,10 +19,10 @@ The gap between **Data Science** (ML outputs) and **GTM Strategy** (Boardroom de
 3. **The Hallucination Guardrail:** For a businesses, a single hallucinated number destroys the credibility of the entire dashboard. The **Consistency Checker** provides the mathematical rigor required to deploy LLMs in high-stakes financial environments.
 <br/><br/>
   
-<video width="630" height="300" src="https://github.com/user-attachments/assets/c1876436-e99f-4f61-8b40-b120f6ddcfa5"></video>
+## **Demo**
+[![Demo video](notebooks/gtm_demo.png)](https://www.youtube.com/watch?v=S_teSaizhiY)
 
-
-## 🏛️ **Architecture Overview**
+## **Architecture Overview**
 
 The system operates as a closed-loop "Reasoning Engine" spanning four distinct layers:
 
@@ -35,7 +35,7 @@ The system operates as a closed-loop "Reasoning Engine" spanning four distinct l
 **4. Agentic Reasoning Layer:** A Three-Agent consensus model (Analyst, Strategist, Manager) using LangChain with dual-provider support (Gemini 3 & Qwen 3.5:9b).
 
 
-## 📂 **File System**
+## **File System**
 
 ```text
 ├── boardroom_app.py        # Streamlit UI: The Boardroom Dashboard
@@ -47,7 +47,7 @@ The system operates as a closed-loop "Reasoning Engine" spanning four distinct l
 └── requirements.txt        # Dependency Manifest
 ```
 
-## 🚀 **Key Technical Features**
+## **Key Technical Features**
 
 **1. Programmatic Context Detection**
 
@@ -83,7 +83,7 @@ The system implements a **Hybrid LLM Architecture**, allowing the GTM Boardroom 
     - **Rationale:** Ensures that sensitive internal sales data, pricing strategies, and competitor diagnostics never leave the corporate firewall
     - **Inference Tuning:** Unlike cloud models, local models (7B-14B) are susceptible to "logit starvation" at near-zero temperatures. We have optimized the local engine at `Temperature: 0.4` with `Top_P: 0.9` to ensure the Analyst Agent maintains fluid reasoning without looping or robotic stagnation.
 
-## 🛠️ **Installation & Setup**
+## **Installation & Setup**
 
 **1. Clone the Repository**
 ```bash
@@ -114,7 +114,7 @@ You can choose between a local Ollama instance (for data privacy) or Google Gemi
 streamlit run boardroom_app.py
 ```
 
-## **📊 Methodology**
+## **Methodology**
 
 **1. Forecasting** : XGBoost Regressor (n_estimators=200, max_depth=5) trained on rolling historical features.
 
@@ -122,7 +122,7 @@ streamlit run boardroom_app.py
 
 **3. Attribution**: Tree-based SHAP values provide the "Why" for the most recent data point, enabling the Agent to explain sales variances.
 
-## **📈 Key Boardroom Metrics**
+## **Key Boardroom Metrics**
 
 - **Projected Sales Lift**: The Delta between the optimized proposal and historical baseline.
 
