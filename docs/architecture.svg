@@ -10,7 +10,7 @@
 
   <rect x="0" y="0" width="1440" height="470" fill="#ffffff"/>
 
-  <text x="720" y="34" text-anchor="middle" font-size="21" font-weight="700" fill="#1f2328">GTM Wargame — Architecture</text>
+  <text x="720" y="34" text-anchor="middle" font-size="21" font-weight="700" fill="#1f2328">GTM Wargame - Architecture</text>
   <text x="720" y="55" text-anchor="middle" font-size="13" fill="#57606a">A closed-loop reasoning engine: ML diagnostics in, a numerically guardrailed playbook out</text>
 
   <!-- ============ MAIN PIPELINE ROW ============ -->
