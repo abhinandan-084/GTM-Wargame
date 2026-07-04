@@ -1,11 +1,7 @@
-# Library Imports
-from typing import List, Dict, Any, Union, Literal
-import re
+from typing import Dict, Optional
 
-# LangChain Imports
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_ollama import ChatOllama
+from gtm_boardroom.agents.providers import create_provider
+
 
 class GTMBrain:
     """
@@ -13,22 +9,11 @@ class GTMBrain:
     It manages different LLM-powered 'nodes' (Analyst, Strategist, Manager) for diagnostics,
     tactics, and execution based on provided data and context.
     """
-    def __init__(self, provider: Literal["gemini", "ollama"], api_key: str = None):
-        self.provider = provider
-        if self.provider == "gemini":
-            # Gemini : temp = 0.1 for consistency 
-            self.llm = ChatGoogleGenerativeAI(
-                model ="gemini-3-flash-preview",
-                google_api_key=api_key, 
-                temperature=0.1 
-            )
-        else:
-            # Ollama (Qwen/Llama) : temp = 0.3-0.4 provides the 'entropy' needed to synthesize complex data without getting stuck in loops.
-            self.llm = ChatOllama(
-                model="qwen3.5:9b-q4_K_M", 
-                temperature=0.4 # Raised for local model fluidity
-            )
-    def get_analyst_node(self, shap_values: Dict, market_context: Dict):
+
+    def __init__(self, provider: str, api_key: Optional[str] = None, **kwargs):
+        self.provider = create_provider(provider, api_key=api_key, **kwargs)
+
+    def get_analyst_node(self, shap_values: Dict, market_context: Dict) -> str:
         """
         'Principal Data Scientist' node. Its goal is to diagnose sales movements by matching SHAP drivers to market regimes.
         Args:
@@ -55,32 +40,26 @@ class GTMBrain:
         - NEVER use asterisks (*) or underscores (_) for bold or italics except other than the text before colon in every bullet point
         - Ensure every section starts on a new line.
 
-        TASK: 
+        TASK:
         1. DRIVER ANALYSIS: Identify the top 3 SHAP drivers and explain WHY they are moving based on the 'signals' in the context
         2. SENSITIVITY CHECK: If SHAP shows 'price' is a driver, cross-reference with 'price_sensitivity'. Is the model detecting the regime correctly?
         3. REASONING: Connect these drivers to the BUSINESS_CONTEXT (e.g., if 'price_gap_pct' is high and sales are down, hypothesize price sensitivity).
         4. SYNERGY AUDIT: Look at 'marketing_synergy'. Is our spend actually amplifying our price position or is it disconnected?
         5. Check the wargame_alerts. If competitor_price_war is True, ignore small fluctuations in Retail Spend and focus your analysis on how the price_gap_pct is cannibalizing our baseline volume.
-        
+
         OUTPUT FORMAT:
         - TOP DRIVERS: (List the drivers and their contextual significance)
         - SCIENTIFIC HYPOTHESIS: (e.g., "Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat.")
         - DATA ANOMALIES: (Mention any 'wargame_alerts' that contradict the drivers)
 
         RULES:
-        - DO NOT invent numbers. 
+        - DO NOT invent numbers.
         - NEVER mention a number not in the INPUT_DATA.
         - If 'promotion_fatigue' is True, highlight it as a risk to the drivers.
         """
-        prompt = ChatPromptTemplate.from_template(template)
-        chain = prompt | self.llm
-        
-        if self.provider == "gemini": 
-            return chain.invoke({"shap_info": shap_values, "context": market_context}).content[0].get('text')
-        else:
-            return chain.invoke({"shap_info": shap_values, "context": market_context}).content
+        return self.provider.invoke(template, {"shap_info": shap_values, "context": market_context})
 
-    def get_strategist_node(self, opt_results: Dict, analyst_insight: str, market_context: Dict):
+    def get_strategist_node(self, opt_results: Dict, analyst_insight: str, market_context: Dict) -> str:
         """
         'Growth Strategist' node. Its goal is to develop tactics by critiquing optimizer results using signals like 'Share of Voice' and 'Efficiency'.
         Args:
@@ -121,19 +100,15 @@ class GTMBrain:
         - RISK ASSESSMENT: (Specifically mention if 'competitor_price_war' is active)
 
         CONSTRAINTS:
-        - You are bounded by the Budget Limit. 
+        - You are bounded by the Budget Limit.
         - If 'lift_percent' is negative, challenge the model's price suggestion.
         """
-        prompt = ChatPromptTemplate.from_template(template)
-        chain = prompt | self.llm
+        return self.provider.invoke(
+            template,
+            {"opt_results": opt_results, "analyst_insight": analyst_insight, "context": market_context},
+        )
 
-        if self.provider == "gemini": 
-            return chain.invoke({"opt_results": opt_results, "analyst_insight": analyst_insight, "context": market_context}).content[0].get('text')
-        else:
-            return chain.invoke({"opt_results": opt_results, "analyst_insight": analyst_insight, "context": market_context}).content
-
-    # GTM Manager Analyst
-    def get_gtm_manager_node(self, analysis: str, strategy: str, market_context: Dict):
+    def get_gtm_manager_node(self, analysis: str, strategy: str, market_context: Dict) -> str:
         """
         'GTM Manager / Boardroom Lead' node. Its goal is to create the 'Wargame Playbook' and handle alerts, making final go/no-go decisions.
         Args:
@@ -154,7 +129,7 @@ class GTMBrain:
         [STRICT FORMATTING RULES]
         - NO 'To:', 'From:', 'Subject:', or 'Date:' headers.
         - NO email salutations (e.g., 'Dear Team', 'Hi everyone').
-        - NO conversational filler or signatures at the end. 
+        - NO conversational filler or signatures at the end.
         - START immediately with the first heading.
         - Use clean Markdown (### Headings).
         - Use ### for Section Headers.
@@ -174,10 +149,4 @@ class GTMBrain:
         - Under no circumstances mention a number not listed in the Strategy or Analysis.
         - Be decisive.
         """
-        prompt = ChatPromptTemplate.from_template(template)
-        chain = prompt | self.llm
-
-        if self.provider == "gemini":
-            return chain.invoke({"analysis": analysis, "strategy": strategy, "context": market_context}).content[0].get('text')
-        else:
-            return chain.invoke({"analysis": analysis, "strategy": strategy, "context": market_context}).content
+        return self.provider.invoke(template, {"analysis": analysis, "strategy": strategy, "context": market_context})

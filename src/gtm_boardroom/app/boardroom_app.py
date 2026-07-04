@@ -10,6 +10,7 @@ from gtm_boardroom.data.generator import GTM_DataGenerator
 from gtm_boardroom.agents.gtm_agents import GTMBrain
 from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
 from gtm_boardroom.data.config import get_tier_config
+from gtm_boardroom.agents.providers import PROVIDER_ENV_VARS, detect_available_providers
 
 # dotenv for reading env variables
 from dotenv import load_dotenv
@@ -26,7 +27,7 @@ if __name__ == '__main__':
         """
         Runs the full GTM simulation pipeline, from data generation to agentic analysis.
         Args:
-            llm_provider (str): The LLM provider to use (e.g., "gemini", "ollama").
+            llm_provider (str): The LLM provider to use (e.g., "gemini", "openai", "anthropic", "ollama").
             api_key (str): The API key for the LLM provider (if applicable).
             horizon (int): The planning horizon in weeks.
         Returns:
@@ -100,13 +101,16 @@ if __name__ == '__main__':
     with st.sidebar:
         st.title("🕹️ Simulation Control")
 
-        # LLM provider selection and API key input (masked for security)
-        llm_provider = st.selectbox("Intelligence Engine", ["gemini", "ollama"])
-        api_key = st.text_input("API Key (if Gemini)", type="password")
+        # LLM provider selection: only show providers whose API key is present in the
+        # environment, plus local providers (e.g. Ollama) that don't need one.
+        available_providers = detect_available_providers()
+        llm_provider = st.selectbox("Intelligence Engine", available_providers)
 
-        # Use environment variable for API key if not provided
-        if api_key == "":
-            api_key = os.environ.get('GOOGLE_API_KEY')
+        api_key = None
+        if llm_provider in PROVIDER_ENV_VARS:
+            env_var = PROVIDER_ENV_VARS[llm_provider]
+            api_key_input = st.text_input(f"API Key ({env_var})", type="password")
+            api_key = api_key_input or os.environ.get(env_var)
 
         st.divider()
         horizon = st.selectbox("Planning Horizon (Weeks)", [2, 4], index=0)
