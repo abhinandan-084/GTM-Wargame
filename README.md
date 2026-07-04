@@ -58,6 +58,18 @@ result = ConsistencyChecker.validate_response(
 
 If the Manager agent claims a **"47% lift"** but the optimizer actually forecast 12%, this is exactly what gets caught.
 
+## Data & Privacy
+
+Your raw sales, spend, and pricing data never leaves your machine.
+
+The LLM layer only ever receives **derived signals** - SHAP values, market-regime labels, optimizer results - never the underlying dataframe. `GTMBrain`'s three node methods (`get_analyst_node`, `get_strategist_node`, `get_gtm_manager_node`) take dictionaries of numbers and labels as arguments; nothing upstream of them ever hands over the raw historical records.
+
+What that means depending on which provider you configure:
+- **Gemini / OpenAI / Anthropic**: only the aggregated statistics above are sent to that provider's API - never a row of your actual sales/spend history.
+- **llama.cpp**: nothing leaves the machine at all - inference runs in-process against a local `.gguf` model file.
+
+This is why `SyntheticDataSource`, `CSVDataSource`, and any future SQL/Snowflake-backed `DataSource` can point at real internal data without changing the privacy story - the boundary is enforced structurally at the `GTMBrain` interface, not by convention.
+
 ## Key Technical Features
 
 **1. Programmatic Context Detection**

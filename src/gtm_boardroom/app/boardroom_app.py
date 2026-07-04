@@ -128,6 +128,9 @@ if __name__ == '__main__':
             env_var = PROVIDER_ENV_VARS[llm_provider]
             api_key_input = st.text_input(f"API Key ({env_var})", type="password")
             api_key = api_key_input or os.environ.get(env_var)
+            st.caption("🔒 Only SHAP values, market signals, and optimizer results are sent to this provider - never your raw sales/spend data.")
+        else:
+            st.caption("🔒 Runs fully locally - nothing leaves this machine.")
 
         st.divider()
         horizon = st.selectbox("Planning Horizon (Weeks)", [2, 4], index=0)
