@@ -1,12 +1,13 @@
 # Import functions and libraries
 import os
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
 from gtm_boardroom.diagnostics.driver_engine import GTM_DriverEngine
-from gtm_boardroom.data.generator import GTM_DataGenerator
+from gtm_boardroom.data.source import CSVDataSource, SyntheticDataSource
 from gtm_boardroom.agents.gtm_agents import GTMBrain
 from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
 from gtm_boardroom.data.config import get_tier_config
@@ -16,6 +17,16 @@ from gtm_boardroom.agents.providers import PROVIDER_ENV_VARS, detect_available_p
 from dotenv import load_dotenv
 load_dotenv()  # reads variables from a .env file and sets them in os.environ
 
+# The sample historical CSV lives in the repo's top-level data/ dir, not inside the
+# installed package, since it's a committed dataset rather than package resource.
+REPO_ROOT = Path(__file__).resolve().parents[3]
+HISTORICAL_CSV_PATH = REPO_ROOT / "data" / "simulated_sales_data_rank_3.csv"
+
+DATA_SOURCES = {
+    "Synthetic Generator": "synthetic",
+    "Historical CSV (data/simulated_sales_data_rank_3.csv)": "csv",
+}
+
 if __name__ == '__main__':
     # Initializing Session State : Ensures that the results stay on screen even if we move a slider after the simulation is done
     # and to stop streamlit's default behavior where any widget change triggers a full script rerun
@@ -23,23 +34,19 @@ if __name__ == '__main__':
         st.session_state['run_sim'] = None
 
     # Data Orchestrator Function : Encapsulates the entire simulation workflow
-    def run_full_pipeline(llm_provider, api_key, horizon):
+    def run_full_pipeline(data_source, llm_provider, api_key, horizon):
         """
-        Runs the full GTM simulation pipeline, from data generation to agentic analysis.
+        Runs the full GTM simulation pipeline, from data loading to agentic analysis.
         Args:
+            data_source (DataSource): Upstream source providing the weekly GTM dataframe.
             llm_provider (str): The LLM provider to use (e.g., "gemini", "openai", "anthropic", "ollama").
             api_key (str): The API key for the LLM provider (if applicable).
             horizon (int): The planning horizon in weeks.
         Returns:
             dict: A dictionary containing all the results from the simulation, analysis, and strategy.
         """
-        # Generate Synthetic Data (data generator) : Load simulation configuration from the packaged YAML
-        data_cfg, oem_cfg, coeffs = get_tier_config('upstart')
-        promos = []
-        
-        # 1. Initialize and run the data generator
-        generator = GTM_DataGenerator(data_cfg, oem_cfg, coeffs, promos=promos) 
-        df = generator.generate()
+        # 1. Load the weekly GTM dataframe from whichever upstream source was selected
+        df = data_source.load()
 
         # 2. Driver & Optimization Engine 
         # Set current week index for historical data slicing
@@ -101,6 +108,16 @@ if __name__ == '__main__':
     with st.sidebar:
         st.title("🕹️ Simulation Control")
 
+        # Data source selection: pluggable upstream sources behind the DataSource interface.
+        data_source_label = st.selectbox("Data Source", list(DATA_SOURCES.keys()))
+        if DATA_SOURCES[data_source_label] == "synthetic":
+            data_cfg, oem_cfg, coeffs = get_tier_config('upstart')
+            data_source = SyntheticDataSource(data_cfg, oem_cfg, coeffs)
+        else:
+            data_source = CSVDataSource(HISTORICAL_CSV_PATH)
+
+        st.divider()
+
         # LLM provider selection: only show providers whose API key is present in the
         # environment, plus local providers (e.g. Ollama) that don't need one.
         available_providers = detect_available_providers()
@@ -124,7 +141,7 @@ if __name__ == '__main__':
         
         st.divider()
         if st.button("🚀 Run GTM Wargame", use_container_width=True):
-            st.session_state['run_sim'] = run_full_pipeline(llm_provider, api_key, horizon)
+            st.session_state['run_sim'] = run_full_pipeline(data_source, llm_provider, api_key, horizon)
 
     # Main UI Code
     # Display results if simulation has been run
