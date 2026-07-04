@@ -25,6 +25,7 @@ class GTM_DataGenerator:
         self.rank = oem_config.rank
         self.start_date = data_config.start_date
         self.weeks = data_config.weeks
+        self.base_price = data_config.base_price
         self.launch_spike = data_config.launch_spike
         self.market_leader_price_decay_factor = data_config.market_leader_price_decay_factor
         self.hill_k = oem_config.hill_k
@@ -172,7 +173,7 @@ class GTM_DataGenerator:
         Args: df
         Returns: A np.array of simulated market leader prices.
         """
-        leader_base_price = 799.0
+        leader_base_price = self.base_price
         leader_prices = np.zeros(len(df))
         leader_prices[0] = leader_base_price
 
@@ -196,7 +197,7 @@ class GTM_DataGenerator:
 
         Returns: df with list price, promo rebate, effective price, price effect, price penalty, and leader penalty columns.
         """
-        base_price = 799.0
+        base_price = self.base_price
         df['list_price'] = base_price
         for i in range(1, len(df)):
             if df.loc[i, 'month'] == self.params['launch_month']:

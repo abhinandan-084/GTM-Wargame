@@ -193,7 +193,7 @@ class GTM_DriverEngine:
             
             return -sales_forecast + penalty
 
-        res = differential_evolution(objective, bounds, seed=42)
+        res = differential_evolution(objective, bounds, x0=initial_guess, seed=42)
 
         optimized_price = round(res.x[0], 2)
         optimized_search_weekly = [round(s, 2) for s in res.x[1 : 1 + horizon]]
@@ -222,7 +222,6 @@ class GTM_DriverEngine:
             "optimized_search": sum(optimized_search_weekly), # Total for comparison
             "optimized_social": sum(optimized_social_weekly), # Total for comparison
             "optimized_retail": sum(optimized_retail_weekly), # Total for comparison
-            "forecasted_total_sales": forecasted_total_sales,
             "weekly_forecasted_sales": [round(s, 0) for s in weekly_forecasted_sales],
             "weekly_forecasted_search": optimized_search_weekly,
             "weekly_forecasted_social": optimized_social_weekly,
