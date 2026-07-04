@@ -25,3 +25,6 @@ jobs:
 
       - name: Run tests
         run: uv run pytest -v
+
+      - name: Verify notebooks have no committed outputs
+        run: uv run nbstripout --verify --keep-id notebooks/*.ipynb
