@@ -5,12 +5,11 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 import numpy as np
-import yaml
-from driver_engine import GTM_DriverEngine
-from data_generator import GTM_DataGenerator
-from gtm_agents import GTMBrain
-from consistency_checker import ConsistencyChecker
-from schemas import DataConfig, OEMTierConfig
+from gtm_boardroom.diagnostics.driver_engine import GTM_DriverEngine
+from gtm_boardroom.data.generator import GTM_DataGenerator
+from gtm_boardroom.agents.gtm_agents import GTMBrain
+from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
+from gtm_boardroom.data.config import get_tier_config
 
 # dotenv for reading env variables
 from dotenv import load_dotenv
@@ -33,16 +32,8 @@ if __name__ == '__main__':
         Returns:
             dict: A dictionary containing all the results from the simulation, analysis, and strategy.
         """
-        # Generate Synthetic Data (data generator) : Load simulation configuration from saved YAML file
-        with open('simulation_config.yaml', 'r') as f:
-            full_config = yaml.safe_load(f)
-            
-        # Extract Data Objects
-        s_cfg = full_config['simulation_config']
-        data_cfg = DataConfig(**s_cfg)
-        tier_data = full_config['oem_tiers']['upstart']
-        oem_cfg = OEMTierConfig(rank=tier_data['rank'], hill_k=tier_data['hill_k'], hill_n=tier_data['hill_n'])
-        coeffs = tier_data['coeffs']
+        # Generate Synthetic Data (data generator) : Load simulation configuration from the packaged YAML
+        data_cfg, oem_cfg, coeffs = get_tier_config('upstart')
         promos = []
         
         # 1. Initialize and run the data generator

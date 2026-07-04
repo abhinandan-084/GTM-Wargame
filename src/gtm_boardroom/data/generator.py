@@ -3,7 +3,7 @@ from datetime import date
 import pandas as pd
 import numpy as np
 from typing import List, Optional, Dict
-from schemas import DataConfig, OEMTierConfig, PromoEvent
+from gtm_boardroom.data.schemas import DataConfig, OEMTierConfig, PromoEvent
 
 class GTM_DataGenerator:
     """

@@ -1,4 +1,4 @@
-from consistency_checker import ConsistencyChecker
+from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
 
 SHAP_INFO = {"price_gap_pct": 0.42, "marketing_intensity": -0.11}
 MARKET_CONTEXT = {

@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "gtm-wargame"
 version = "0.1.0"
@@ -29,6 +33,11 @@ dev = [
     "pytest>=8.3.0",
 ]
 
+[project.scripts]
+gtm-boardroom = "gtm_boardroom.app.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gtm_boardroom"]
+
 [tool.pytest.ini_options]
-pythonpath = ["src"]
 testpaths = ["tests"]

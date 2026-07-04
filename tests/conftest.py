@@ -1,29 +1,19 @@
-import pathlib
-
 import pytest
-import yaml
 
-from data_generator import GTM_DataGenerator
-from driver_engine import GTM_DriverEngine
-from schemas import DataConfig, OEMTierConfig
-
-CONFIG_PATH = pathlib.Path(__file__).resolve().parent.parent / "src" / "simulation_config.yaml"
+from gtm_boardroom.data.config import get_tier_config, load_simulation_config
+from gtm_boardroom.data.generator import GTM_DataGenerator
+from gtm_boardroom.diagnostics.driver_engine import GTM_DriverEngine
 
 
 @pytest.fixture(scope="session")
 def simulation_config():
-    with open(CONFIG_PATH) as f:
-        return yaml.safe_load(f)
+    return load_simulation_config()
 
 
 @pytest.fixture(scope="session")
-def upstart_generator(simulation_config):
-    tier_data = simulation_config["oem_tiers"]["upstart"]
-    data_cfg = DataConfig(**simulation_config["simulation_config"])
-    oem_cfg = OEMTierConfig(
-        rank=tier_data["rank"], hill_k=tier_data["hill_k"], hill_n=tier_data["hill_n"]
-    )
-    return GTM_DataGenerator(data_cfg, oem_cfg, tier_data["coeffs"])
+def upstart_generator():
+    data_cfg, oem_cfg, coeffs = get_tier_config("upstart")
+    return GTM_DataGenerator(data_cfg, oem_cfg, coeffs)
 
 
 @pytest.fixture(scope="session")

@@ -1,7 +1,7 @@
 import numpy as np
 
-from data_generator import GTM_DataGenerator
-from schemas import DataConfig, OEMTierConfig
+from gtm_boardroom.data.config import get_tier_config
+from gtm_boardroom.data.generator import GTM_DataGenerator
 
 REQUIRED_COLUMNS = {
     "week",
@@ -39,14 +39,10 @@ def test_sales_are_non_negative(generated_df):
     assert (generated_df["sales"] >= 0).all()
 
 
-def test_generation_is_deterministic_given_same_seed(simulation_config):
-    tier_data = simulation_config["oem_tiers"]["upstart"]
-    data_cfg = DataConfig(**simulation_config["simulation_config"])
-    oem_cfg = OEMTierConfig(
-        rank=tier_data["rank"], hill_k=tier_data["hill_k"], hill_n=tier_data["hill_n"]
-    )
+def test_generation_is_deterministic_given_same_seed():
+    data_cfg, oem_cfg, coeffs = get_tier_config("upstart")
 
-    df_a = GTM_DataGenerator(data_cfg, oem_cfg, tier_data["coeffs"]).generate()
-    df_b = GTM_DataGenerator(data_cfg, oem_cfg, tier_data["coeffs"]).generate()
+    df_a = GTM_DataGenerator(data_cfg, oem_cfg, coeffs).generate()
+    df_b = GTM_DataGenerator(data_cfg, oem_cfg, coeffs).generate()
 
     assert np.array_equal(df_a["sales"].to_numpy(), df_b["sales"].to_numpy())
