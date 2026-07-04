@@ -73,7 +73,7 @@ Chain-of-Thought reasoning across three personas: **Data Analyst** (maps SHAP va
 
 **3. Multi-Provider LLM Support**
 
-An `LLMProvider` abstraction (`gtm_boardroom/agents/providers.py`) normalizes response handling across providers, so `GTMBrain` never branches on which one is active. Supported today: **Gemini**, **OpenAI**, **Anthropic**, plus legacy **Ollama** for local/offline use. The Streamlit sidebar auto-detects which providers are usable by checking which of `GOOGLE_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` are set - bring whichever keys you have. *(Native `llama.cpp` support for local inference is planned to replace Ollama - see [Roadmap](#roadmap).)*
+An `LLMProvider` abstraction (`gtm_boardroom/agents/providers.py`) normalizes response handling across providers, so `GTMBrain` never branches on which one is active. Supported today: **Gemini**, **OpenAI**, **Anthropic**, plus **llama.cpp** for fully local/offline use via [`llama-cpp-python`](https://github.com/abetlen/llama-cpp-python) bindings against a `.gguf` model file on disk - no server process, no data leaving the machine. The Streamlit sidebar auto-detects which cloud providers are usable by checking which of `GOOGLE_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` are set - bring whichever keys you have. `llamacpp` is always listed, since it needs a model path, not a key.
 
 **4. Pluggable Data Sources**
 
@@ -88,7 +88,7 @@ src/gtm_boardroom/
 │   └── cli.py                 # `gtm-boardroom` console script entry point
 ├── agents/
 │   ├── gtm_agents.py          # GTMBrain: Analyst -> Strategist -> Manager prompts
-│   └── providers.py           # LLMProvider abstraction (Gemini/OpenAI/Anthropic/Ollama)
+│   └── providers.py           # LLMProvider abstraction (Gemini/OpenAI/Anthropic/llama.cpp)
 ├── data/
 │   ├── generator.py           # GTM_DataGenerator: synthetic market data factory
 │   ├── source.py              # DataSource interface (SyntheticDataSource, CSVDataSource)
@@ -123,7 +123,13 @@ GOOGLE_API_KEY=...      # enables Gemini
 OPENAI_API_KEY=...      # enables OpenAI
 ANTHROPIC_API_KEY=...   # enables Anthropic
 ```
-Only providers with a key present show up in the sidebar. Ollama is always listed too, since it runs locally and needs no key - just have `ollama serve` running with a model pulled.
+Only cloud providers with a key present show up in the sidebar. `llamacpp` is always listed - it runs fully locally via `llama-cpp-python`, no key required.
+
+**For local inference (llamacpp)**, download a `.gguf` model and either rely on the default path or point at your own:
+```text
+LLAMACPP_MODEL_PATH=/path/to/your-model.gguf
+```
+If unset, it falls back to `~/llama.cpp/models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf`. The model loads in-process on first use - the first call after starting the app will be slow while it loads into memory.
 
 **3. Run it**
 ```bash
@@ -155,7 +161,7 @@ uv run pytest
 
 - [x] Pluggable `DataSource` interface (synthetic, CSV; SQL/Snowflake next)
 - [x] Multi-provider LLM support (Gemini, OpenAI, Anthropic)
-- [ ] Replace Ollama with native `llama.cpp` support for local inference
+- [x] Native `llama.cpp` support for fully local/offline inference
 - [ ] A 'CFO Agent' persona for margin-impact validation on top of the existing boardroom
 
 Tracked as GitHub issues on this repo if you want to follow along or contribute.

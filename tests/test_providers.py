@@ -1,8 +1,10 @@
 import pytest
 
+import gtm_boardroom.agents.providers as providers
 from gtm_boardroom.agents.providers import (
     PROVIDER_ENV_VARS,
     LOCAL_PROVIDERS,
+    LLAMACPP_MODEL_PATH_ENV_VAR,
     _extract_text,
     create_provider,
     detect_available_providers,
@@ -62,3 +64,32 @@ def test_create_provider_builds_model_without_network_call():
     provider = create_provider("gemini", api_key="dummy-key-not-real")
     assert provider.name == "gemini"
     assert provider.model is not None
+
+
+def test_create_provider_llamacpp_raises_for_missing_model_file():
+    with pytest.raises(Exception):
+        create_provider("llamacpp", model_path="/nonexistent/path/model.gguf")
+
+
+def test_llamacpp_model_path_precedence_kwarg_over_env_over_default(monkeypatch):
+    captured_kwargs = {}
+
+    class FakeChatLlamaCpp:
+        def __init__(self, **kwargs):
+            captured_kwargs.update(kwargs)
+
+    monkeypatch.setattr(providers, "ChatLlamaCpp", FakeChatLlamaCpp)
+
+    # Default, when nothing else is set
+    monkeypatch.delenv(LLAMACPP_MODEL_PATH_ENV_VAR, raising=False)
+    create_provider("llamacpp")
+    assert captured_kwargs["model_path"].endswith("Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf")
+
+    # Env var overrides the default
+    monkeypatch.setenv(LLAMACPP_MODEL_PATH_ENV_VAR, "/env/model.gguf")
+    create_provider("llamacpp")
+    assert captured_kwargs["model_path"] == "/env/model.gguf"
+
+    # Explicit kwarg overrides both
+    create_provider("llamacpp", model_path="/explicit/model.gguf")
+    assert captured_kwargs["model_path"] == "/explicit/model.gguf"

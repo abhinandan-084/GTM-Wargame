@@ -2,10 +2,10 @@ import os
 from typing import Callable, Dict, List, Optional
 
 from langchain_anthropic import ChatAnthropic
+from langchain_community.chat_models import ChatLlamaCpp
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 PROVIDER_ENV_VARS: Dict[str, str] = {
@@ -14,14 +14,17 @@ PROVIDER_ENV_VARS: Dict[str, str] = {
     "anthropic": "ANTHROPIC_API_KEY",
 }
 
-LOCAL_PROVIDERS = {"ollama"}
+LOCAL_PROVIDERS = {"llamacpp"}
+
+LLAMACPP_MODEL_PATH_ENV_VAR = "LLAMACPP_MODEL_PATH"
+DEFAULT_LLAMACPP_MODEL_PATH = "~/llama.cpp/models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
 
 
 def _extract_text(content) -> str:
     """Normalizes langchain response.content across providers.
 
     Gemini returns a list of content-block dicts (e.g. [{'type': 'text', 'text': ...}]);
-    OpenAI/Anthropic/Ollama typically return a plain string. Handling this here keeps
+    OpenAI/Anthropic/llama.cpp typically return a plain string. Handling this here keeps
     provider-specific response shapes out of GTMBrain's prompt logic.
     """
     if isinstance(content, str):
@@ -61,10 +64,19 @@ def _build_anthropic(api_key: Optional[str], **kwargs) -> BaseChatModel:
     )
 
 
-def _build_ollama(api_key: Optional[str], **kwargs) -> BaseChatModel:
-    return ChatOllama(
-        model=kwargs.get("model", "qwen3.5:9b-q4_K_M"),
+def _build_llamacpp(api_key: Optional[str], **kwargs) -> BaseChatModel:
+    model_path = (
+        kwargs.get("model_path")
+        or os.environ.get(LLAMACPP_MODEL_PATH_ENV_VAR)
+        or DEFAULT_LLAMACPP_MODEL_PATH
+    )
+    return ChatLlamaCpp(
+        model_path=os.path.expanduser(model_path),
         temperature=kwargs.get("temperature", 0.4),
+        n_ctx=kwargs.get("n_ctx", 8192),
+        max_tokens=kwargs.get("max_tokens", 1024),
+        n_gpu_layers=kwargs.get("n_gpu_layers", 0),
+        verbose=kwargs.get("verbose", False),
     )
 
 
@@ -72,7 +84,7 @@ _PROVIDER_BUILDERS: Dict[str, Callable[..., BaseChatModel]] = {
     "gemini": _build_gemini,
     "openai": _build_openai,
     "anthropic": _build_anthropic,
-    "ollama": _build_ollama,
+    "llamacpp": _build_llamacpp,
 }
 
 

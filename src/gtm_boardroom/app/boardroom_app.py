@@ -39,7 +39,7 @@ if __name__ == '__main__':
         Runs the full GTM simulation pipeline, from data loading to agentic analysis.
         Args:
             data_source (DataSource): Upstream source providing the weekly GTM dataframe.
-            llm_provider (str): The LLM provider to use (e.g., "gemini", "openai", "anthropic", "ollama").
+            llm_provider (str): The LLM provider to use (e.g., "gemini", "openai", "anthropic", "llamacpp").
             api_key (str): The API key for the LLM provider (if applicable).
             horizon (int): The planning horizon in weeks.
         Returns:
@@ -119,7 +119,7 @@ if __name__ == '__main__':
         st.divider()
 
         # LLM provider selection: only show providers whose API key is present in the
-        # environment, plus local providers (e.g. Ollama) that don't need one.
+        # environment, plus local providers (e.g. llama.cpp) that don't need one.
         available_providers = detect_available_providers()
         llm_provider = st.selectbox("Intelligence Engine", available_providers)
 
