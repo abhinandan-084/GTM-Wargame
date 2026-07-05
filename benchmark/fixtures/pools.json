@@ -1,0 +1,174 @@
+{
+  "42": {
+    "shap_info": {
+      "month": -504.1676940917969,
+      "comp_a_impact": -0.026723727583885193,
+      "comp_b_impact": 0.0,
+      "retail_support_spend": 2873.39794921875,
+      "search_adstock": -3154.97998046875,
+      "social_adstock": 357.4814453125,
+      "list_price": 335.7098388671875,
+      "market_leader_price": 265.758056640625,
+      "price_effect": 295.6942138671875,
+      "price_penalty": 20.259050369262695,
+      "leader_penalty": 4.466547012329102,
+      "price_gap_pct": 565.506103515625,
+      "marketing_intensity": 222.2373504638672,
+      "rolling_sales_4w": 1139.651123046875,
+      "total_mkt_spend": 1026.34423828125,
+      "leader_price_delta": 1752.689208984375,
+      "leader_price_velocity": 7.81766939163208,
+      "our_price_velocity": 12.827520370483398,
+      "relative_velocity": -0.5440808534622192,
+      "price_marketing_synergy": 3054.90771484375,
+      "is_launch": 0.0,
+      "is_comp_launch": 0.0,
+      "mkt_efficiency_ratio": 882.744384765625,
+      "efficiency_momentum": -44.27156066894531,
+      "recent_promo_intensity": -1632.4991455078125,
+      "month_sin": 9.314573287963867,
+      "month_cos": -31.31931495666504,
+      "marketing_vs_comp_launch": 17004.82421875
+    },
+    "market_context": {
+      "market_regime": {
+        "phase": "Steady State",
+        "competitor_activity": "Quiet",
+        "competitive_price_threat": "Stable (No aggressive competitor pricing moves)",
+        "price_position": "Under-cutter (Significantly cheaper than Leader)",
+        "lifecycle_stage": "Maturity/Maintain (Focus on sustaining baseline)"
+      },
+      "signals": {
+        "price_sensitivity": "Normal",
+        "share_of_voice": "Dominant",
+        "marketing_synergy": "Strong Multiplier",
+        "efficiency_trend": "Diminishing Returns (Marketing efficiency is dropping; spend with caution)"
+      },
+      "wargame_alerts": {
+        "promotion_fatigue": true,
+        "imminent_stock_pressure": false,
+        "competitor_price_war": false
+      }
+    },
+    "opt_results": {
+      "actual_historical_sales": 362038,
+      "forecasted_total_sales": 379779.0,
+      "lift_percent": 4.9,
+      "optimized_price": 589.22,
+      "optimized_search": 284243.02,
+      "optimized_social": 18754.480000000003,
+      "optimized_retail": 193820.60000000003,
+      "weekly_forecasted_sales": [
+        103149.0,
+        96674.0,
+        85984.0,
+        93971.0
+      ],
+      "weekly_forecasted_search": [
+        107025.16,
+        80168.76,
+        13818.95,
+        83230.15
+      ],
+      "weekly_forecasted_social": [
+        1788.79,
+        8381.7,
+        2786.33,
+        5797.66
+      ],
+      "weekly_forecasted_retail": [
+        79853.05,
+        99549.9,
+        5769.29,
+        8648.36
+      ],
+      "actual_market_leader_price": 715.0710214555252
+    }
+  },
+  "1337": {
+    "shap_info": {
+      "month": -949.302978515625,
+      "comp_a_impact": -0.09215828776359558,
+      "comp_b_impact": 0.0,
+      "retail_support_spend": 7035.8486328125,
+      "search_adstock": -1579.0335693359375,
+      "social_adstock": -1108.8084716796875,
+      "list_price": -1.8243236541748047,
+      "market_leader_price": -549.1987915039062,
+      "price_effect": 986.0676879882812,
+      "price_penalty": 20.9492244720459,
+      "leader_penalty": 26.477209091186523,
+      "price_gap_pct": -181.8023681640625,
+      "marketing_intensity": 290.92059326171875,
+      "rolling_sales_4w": 89.51316833496094,
+      "total_mkt_spend": 224.764404296875,
+      "leader_price_delta": 646.7369384765625,
+      "leader_price_velocity": -57.57955551147461,
+      "our_price_velocity": 165.22015380859375,
+      "relative_velocity": 41.02093505859375,
+      "price_marketing_synergy": 3508.390869140625,
+      "is_launch": 0.0,
+      "is_comp_launch": 134.51983642578125,
+      "mkt_efficiency_ratio": 542.7342529296875,
+      "efficiency_momentum": -692.3046264648438,
+      "recent_promo_intensity": -309.080078125,
+      "month_sin": -72.34294128417969,
+      "month_cos": 113.90950012207031,
+      "marketing_vs_comp_launch": 16508.552734375
+    },
+    "market_context": {
+      "market_regime": {
+        "phase": "Steady State",
+        "competitor_activity": "Quiet",
+        "competitive_price_threat": "Stable (No aggressive competitor pricing moves)",
+        "price_position": "Under-cutter (Significantly cheaper than Leader)",
+        "lifecycle_stage": "Maturity/Maintain (Focus on sustaining baseline)"
+      },
+      "signals": {
+        "price_sensitivity": "Normal",
+        "share_of_voice": "Dominant",
+        "marketing_synergy": "Strong Multiplier",
+        "efficiency_trend": "Diminishing Returns (Marketing efficiency is dropping; spend with caution)"
+      },
+      "wargame_alerts": {
+        "promotion_fatigue": false,
+        "imminent_stock_pressure": false,
+        "competitor_price_war": false
+      }
+    },
+    "opt_results": {
+      "actual_historical_sales": 340021,
+      "forecasted_total_sales": 350982.0,
+      "lift_percent": 3.22,
+      "optimized_price": 648.13,
+      "optimized_search": 178511.27,
+      "optimized_social": 44060.659999999996,
+      "optimized_retail": 274430.98,
+      "weekly_forecasted_sales": [
+        84813.0,
+        90648.0,
+        85770.0,
+        89752.0
+      ],
+      "weekly_forecasted_search": [
+        6819.44,
+        140762.53,
+        21979.3,
+        8950.0
+      ],
+      "weekly_forecasted_social": [
+        5523.63,
+        29762.46,
+        1969.42,
+        6805.15
+      ],
+      "weekly_forecasted_retail": [
+        89075.14,
+        4805.17,
+        89629.42,
+        90921.25
+      ],
+      "actual_market_leader_price": 715.0157657260035
+    }
+  }
+}
