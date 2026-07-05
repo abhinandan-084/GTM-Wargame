@@ -58,6 +58,17 @@ result = ConsistencyChecker.validate_response(
 
 If the Manager agent claims a **"47% lift"** but the optimizer actually forecast 12%, this is exactly what gets caught.
 
+## Measured Results
+
+The guardrail isn't just asserted - it's measured, by two experiments living in `benchmark/`:
+
+- **[Checker precision & recall](benchmark/results/eval_checker_report.md)** (Experiment B, deterministic, runs in CI): the `ConsistencyChecker` scored **precision 1.000, recall 1.000, false-positive rate 0.000** across 45 labelled cases / 160 numbers built on authentic pipeline artifacts. All 20 injected fabrications were caught, with zero false flags on percentage-scaling, rounding, negative-sign, and `$1,234`-formatting trap bait. Every injected value is programmatically verified to be unmatchable against its ground-truth pool at fixture-build time, so recall can't be inflated by fakes that accidentally match.
+- **[LLM fabrication rates](benchmark/results/experiment_a_report.md)** (Experiment A, real API calls, run locally, never in CI): how often real models write a number that isn't in the ground truth, with the guardrail observing - paired seeds across models, raw counts, Wilson 95% confidence intervals. The committed report is a k=2 smoke run; the full paired Gemini + llama.cpp run (k=25-50) is pending and will replace it.
+
+Both are reproducible: `uv run python benchmark/eval_checker.py --rebuild-fixtures` rebuilds and rescores Experiment B offline (no API keys), and `uv run python benchmark/run.py --dry-run` exercises the Experiment A pipeline with zero API calls.
+
+One honest caveat, stated in both reports: this measures **numerical grounding against a known pool** - whether a cited number exists in the ground truth - not semantic correctness of the argument the number appears in.
+
 ## Data & Privacy
 
 Your raw sales, spend, and pricing data never leaves your machine.
@@ -111,6 +122,12 @@ src/gtm_boardroom/
 │   └── driver_engine.py       # GTM_DriverEngine: XGBoost + SHAP + SciPy optimizer
 └── guardrails/
     └── consistency_checker.py # ConsistencyChecker: the hallucination guardrail
+
+benchmark/
+├── eval_checker.py            # Experiment B: checker precision/recall harness
+├── run.py                     # Experiment A: LLM fabrication-rate driver
+├── fixtures/                  # labelled cases (committed, reproducible offline)
+└── results/                   # reports, per-run records, flagged transcripts
 
 tests/                         # pytest suite, runs in CI on every push/PR
 docs/architecture.svg          # the diagram above
