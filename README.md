@@ -10,7 +10,7 @@
 
 ## The problem this repo actually solves
 
-Ask an LLM to write an executive strategy memo from your ML outputs, and sooner or later it will invent a number. It'll say "15% lift" when your optimizer said 12%. In a boardroom, one hallucinated metric is enough to burn the credibility of the whole dashboard - so most teams either keep a human in the loop for every number, or don't ship the LLM layer at all.
+Ask an LLM to write an executive strategy memo from your ML outputs, and sooner or later it will invent a number. It'll say "47% lift" when your optimizer said 12%. In a boardroom, one hallucinated metric is enough to burn the credibility of the whole dashboard - so most teams either keep a human in the loop for every number, or don't ship the LLM layer at all.
 
 **GTM Wargame ships it anyway, by treating "don't hallucinate" as a system property, not a prompting trick.** Every number the agents are allowed to cite is drawn from a single **Ground Truth Pool** - the SHAP values, the optimizer output, the market context - and before anything reaches the UI, a **`ConsistencyChecker`** regex-parses the agent's response and cross-references every number it wrote against that pool. Percentage-vs-fraction scaling, rounding, sign - all handled. If a number doesn't match anything in the pool, it's flagged as a hallucination and the UI shows a warning instead of pretending the output is trustworthy.
 
