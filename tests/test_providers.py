@@ -47,6 +47,16 @@ def test_detect_available_providers_only_env_backed_when_no_keys_set(monkeypatch
     assert set(available) == LOCAL_PROVIDERS
 
 
+def test_create_provider_falls_back_to_env_key_when_none_passed(monkeypatch):
+    # Regression: passing api_key=None explicitly to the langchain classes
+    # suppresses their own env-var fallback, so create_provider("gemini")
+    # crashed even with GOOGLE_API_KEY set (the .env-only setup the README
+    # documents). The kwarg must be omitted when no key is given.
+    monkeypatch.setenv("GOOGLE_API_KEY", "test-key")
+    provider = create_provider("gemini")
+    assert provider.name == "gemini"
+
+
 def test_detect_available_providers_includes_provider_with_key_set(monkeypatch):
     for env_var in PROVIDER_ENV_VARS.values():
         monkeypatch.delenv(env_var, raising=False)

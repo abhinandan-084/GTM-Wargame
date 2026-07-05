@@ -1,0 +1,21 @@
+{
+  "model": "gemini",
+  "seed": 1001,
+  "node": "manager",
+  "text": "### EXECUTIVE SUMMARY\n- **Lifecycle Strategy**: We are in the Maturity/Maintain stage of a Steady State market. The current trajectory of high-intensity spending is unsustainable, as evidenced by a negative Efficiency Momentum of -1009.52 and a Mkt Efficiency Ratio of -53.92.\n- **Value Protection**: Recent Promo Intensity of -2221.55 indicates that tactical discounting is destroying value rather than driving growth. We must pivot to Margin Preservation to offset the forecasted lift of -11.01 percent.\n- **Strategic Mandate**: We will maintain our Dominant Share of Voice but must rationalize the 7580.74 Total Marketing Spend to address diminishing returns while leveraging the 3137.01 Price Marketing Synergy.\n\n### THE WARGAME PLAY\n- **Price Execution**: Standardize the retail price at 499.14 and eliminate all additional tactical discounts to reverse the -2221.55 impact of Recent Promo Intensity.\n- **Spend Optimization**: Scale back the 195,479.37 Search and 235,551.87 Retail Support Spend to improve the negative Efficiency Momentum of -1009.52 while maintaining our position as the market Under-cutter.\n- **Channel Discipline**: Restrict Social spend to 47,109.76 and focus resources on the 6096.99 Retail Support Spend drivers that correlate with the highest baseline lift.\n\n### CONTINGENCY\n- **Stock Pressure**: If imminent_stock_pressure occurs, we will immediately reduce the 235,551.87 Retail Support Spend to slow velocity and protect margins, as the current -11.01 percent lift suggests we are over-spending to manufacture unnecessary volume.\n- **Price War**: If a competitor_price_war triggers, we will hold our 499.14 price point. Our Price Gap Pct of 1106.31 provides sufficient insulation against competitors, and further discounting would only worsen the -53.92 Mkt Efficiency Ratio.\n\n### COUNTER-MOVE\n- **Competitive Response**: If the competitor drops their price by 5 percent, we will maintain our 499.14 price position. Since the Market Leader Price is 733.43, we remain the clear Under-cutter. We will not react with further price cuts, as the negative Recent Promo Intensity of -2221.55 proves the market is unresponsive to additional price-based incentives in this phase.",
+  "numbers_extracted": 21,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-05T22:50:09.067958+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "manager"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

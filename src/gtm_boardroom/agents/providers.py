@@ -40,27 +40,34 @@ def _extract_text(content) -> str:
     return str(content)
 
 
+def _key_kwarg(api_key: Optional[str]) -> Dict[str, str]:
+    # Passing api_key=None explicitly suppresses the langchain classes' own
+    # env-var fallback (observed with ChatGoogleGenerativeAI), so the kwarg
+    # must be omitted entirely when no key is given.
+    return {} if api_key is None else {"api_key": api_key}
+
+
 def _build_gemini(api_key: Optional[str], **kwargs) -> BaseChatModel:
     return ChatGoogleGenerativeAI(
         model=kwargs.get("model", "gemini-3-flash-preview"),
-        api_key=api_key,
         temperature=kwargs.get("temperature", 0.1),
+        **_key_kwarg(api_key),
     )
 
 
 def _build_openai(api_key: Optional[str], **kwargs) -> BaseChatModel:
     return ChatOpenAI(
         model=kwargs.get("model", "gpt-4o-mini"),
-        api_key=api_key,
         temperature=kwargs.get("temperature", 0.1),
+        **_key_kwarg(api_key),
     )
 
 
 def _build_anthropic(api_key: Optional[str], **kwargs) -> BaseChatModel:
     return ChatAnthropic(
         model=kwargs.get("model", "claude-sonnet-4-5"),
-        api_key=api_key,
         temperature=kwargs.get("temperature", 0.1),
+        **_key_kwarg(api_key),
     )
 
 
