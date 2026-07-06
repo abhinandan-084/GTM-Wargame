@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1017,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: 10603.212890625. This is the primary driver of sales movement, indicating that our dominant share of voice is yielding maximum impact while competitor activity remains quiet.\n- **Marketing Intensity**: 7253.4892578125. This reflects the success of our current spend levels in a steady state market, allowing us to maintain a strong presence during the maturity stage.\n- **Price Marketing Synergy**: 3974.772705078125. This driver confirms that our marketing efforts are effectively amplifying our under-cutter price position, creating a multiplier effect that converts price-sensitive consumers.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model correctly identifies that our under-cutter price position is a significant asset, with price gap pct at 1131.9942626953125 and leader price delta at 1060.6588134765625 contributing positively to volume. Because price sensitivity is normal, our significantly cheaper pricing relative to the leader is acting as a consistent pull factor rather than a desperate volume grab. The strong price marketing synergy suggests our messaging is successfully centered on value, though the negative efficiency momentum of -755.187744140625 warns that we are entering a phase of diminishing returns. We are currently over-spending to maintain baseline volume in a mature lifecycle, as evidenced by the high marketing intensity required to offset the negative impact of recent promo intensity.\n\n### DATA ANOMALIES\n\n- **Recent Promo Intensity**: -2551.04248046875. While wargame alerts indicate promotion fatigue is False, this negative SHAP value suggests that our recent promotional tactics are actually cannibalizing margin or failing to resonate, contradicting the overall positive marketing synergy.\n- **Efficiency Momentum**: -755.187744140625. This negative trend confirms the signal of diminishing returns, suggesting that while total mkt spend of 1344.319091796875 is contributing, the incremental benefit of each dollar is fading.\n- **Wargame Alerts**: All alerts are False, which confirms that the negative pressure from recent promo intensity is an internal efficiency issue rather than a result of a competitor price war or stock pressure.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:01:30.010074+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

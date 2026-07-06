@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1018,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Competitor Launch (8719.78)**: This is the primary positive driver, indicating that our marketing efforts are highly effective because the competitor activity is currently Quiet. In a Steady State market, our Dominant share of voice allows us to capture mindshare without significant pushback from rival brands.\n- **Price Marketing Synergy (3341.36)**: This driver confirms the Strong Multiplier signal identified in the business context. Our marketing spend is not operating in isolation; it is actively amplifying our Under-cutter price position, making our lower price point more visible and attractive to the target audience.\n- **Retail Support Spend (-2962.45)**: This significant negative value aligns with the Diminishing Returns signal. Despite our dominant position, incremental spending in retail support is currently counterproductive, suggesting that we have reached a saturation point where additional investment in this channel is no longer yielding positive volume.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model correctly identifies that the market is Hyper-sensitive to pricing, as evidenced by the positive impacts of **price_effect (1988.07)** and **price_gap_pct (1583.19)**. Because we are in a Maturity/Maintain lifecycle stage as an Under-cutter, our volume is heavily dependent on maintaining a significant delta against the market leader. However, the negative impact of **retail_support_spend (-2962.45)** and the **mkt_efficiency_ratio (-191.59750366210938)** suggest that while our price-point is attractive, our current method of subsidizing retail channels is inefficient and dragging down overall performance.\n\n### DATA ANOMALIES\n\n- **Wargame Alerts**: There are no active alerts for promotion_fatigue or competitor_price_war. This confirms that the negative movement in retail support spend is likely an internal efficiency failure rather than a reaction to aggressive competitor pricing or consumer burnout.\n- **Efficiency Momentum (809.5233154296875)**: Interestingly, while the overall efficiency ratio is negative, the momentum is positive, suggesting that recent adjustments to the marketing mix may be starting to correct the diminishing returns observed in the broader retail spend category.",
+  "numbers_extracted": 8,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:13:26.536889+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

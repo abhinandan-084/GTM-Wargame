@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1027,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of sales movement (21762.83), indicating that our dominant share of voice is exceptionally effective because competitors are currently in a quiet phase with no active launches.\n- **Retail Support Spend**: The high positive impact (4734.35) suggests that our investment in the retail channel is successfully sustaining the baseline during this steady-state phase, effectively converting shoppers at the point of sale.\n- **Price Marketing Synergy**: The model identifies a strong multiplier effect (3335.19) between our pricing and marketing, confirming that our position as an under-cutter is being successfully amplified by our current advertising messaging.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite the market being in a steady state, the negative impact of recent promo intensity (-2363.37) combined with the promotion fatigue alert suggests that our promotional effectiveness has peaked. While our under-cutter price position is driving volume, the diminishing returns on efficiency (-947.21) indicate that we are over-leveraging spend to maintain a dominant share of voice, making the current sales volume vulnerable to any increase in competitor activity.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: The wargame alert for promotion fatigue is directly reflected in the negative SHAP value for recent promo intensity (-2363.37), signaling that additional promotional spend is now cannibalizing margin rather than driving incremental growth.\n- **Efficiency Momentum**: Although we have a dominant share of voice, the efficiency momentum is negative (-947.21), which aligns with the signal of diminishing returns and suggests that our total marketing spend (-1781.11) is no longer optimized for the current maturity stage.\n- **Price Sensitivity**: The model detects a positive price effect (745.33) and price gap impact (582.01), which correctly aligns with the normal price sensitivity signal and our under-cutter status, showing that our price delta against the leader (1521.63) remains a key volume driver despite the efficiency drop.",
+  "numbers_extracted": 11,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T15:32:17.034963+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

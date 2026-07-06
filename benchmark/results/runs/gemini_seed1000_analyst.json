@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1000,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of sales movement (12568.458984375), indicating that our dominant share of voice is yielding maximum impact specifically because competitor activity is currently quiet.\n- **Price Marketing Synergy**: The high SHAP value (3204.9609375) confirms the strong multiplier signal, suggesting that our marketing spend is highly effective at communicating our under-cutter price position to the market.\n- **Retail Support Spend**: Direct investment in retail (2864.92333984375) is significantly outperforming digital social channels, which is consistent with a maturity phase where physical availability and retail presence sustain the baseline.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite the market being in a steady state, our under-cutter price position is being successfully amplified by a dominant share of voice; however, the negative impact of recent promo intensity (-1836.0797119140625) confirms that we have reached a point of diminishing returns where further aggressive discounting is actively detracting from value.\n\n### DATA ANOMALIES\n\n- **Recent Promo Intensity**: This driver is significantly negative (-1836.0797119140625) despite the overall positive price effect (1041.3974609375), suggesting that while our base price is attractive, the frequency or depth of recent promotions is causing inefficiency.\n- **Adstock Divergence**: Search adstock is contributing positively (2605.250244140625) while social adstock is dragging performance (-880.1188354492188), indicating that in this mature lifecycle stage, consumers are responding to intent-based search rather than discovery-based social media.\n- **Price Sensitivity Alignment**: The model correctly detects normal price sensitivity, as the price gap pct (605.3407592773438) and leader price delta (1649.3900146484375) are contributing positively to volume without the volatility associated with hyper-sensitivity.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T10:49:29.438260+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

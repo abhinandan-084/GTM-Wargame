@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1020,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: The most significant positive driver (19679.2890625) indicates that our dominant share of voice is yielding massive returns because competitor activity is currently quiet.\n- **Recent Promo Intensity**: This is the primary negative driver (-4381.96240234375), suggesting that despite the absence of promotion fatigue in wargame alerts, the current promotional depth is likely inefficient or misaligned with the steady state market phase.\n- **Retail Support Spend**: A strong positive contributor (3710.74169921875) that validates our focus on sustaining the baseline during the maturity stage of the product lifecycle.\n- **Price Marketing Synergy**: The high positive value (3170.90625) confirms the strong multiplier signal, proving that our marketing spend is effectively amplifying our under-cutter price position.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite the product being in a maturity phase, our dominant share of voice is successfully exploiting a quiet competitive landscape to drive volume. The model correctly detects normal price sensitivity, as evidenced by the positive price effect (584.1217041015625) and price gap percentage (362.47100830078125), which show our under-cutter status remains a competitive advantage. However, the negative efficiency momentum (-247.96713256835938) and the heavy drag from recent promo intensity suggest we are reaching a point of diminishing returns where additional promotional spend may no longer be cost-effective.\n\n### DATA ANOMALIES\n\n- **Promotion Intensity Paradox**: While wargame alerts indicate that promotion fatigue is false, the SHAP value for recent promo intensity is heavily negative (-4381.96240234375). This suggests a structural inefficiency in how promotions are being executed rather than a lack of consumer appetite.\n- **Marketing Efficiency**: The model shows a negative marketing efficiency ratio (-238.73504638671875), which aligns with the business context signal of diminishing returns, even though the absolute impact of marketing vs competitor launch remains the dominant reason for sales movement.\n- **Social Adstock**: Despite a dominant share of voice, social adstock is providing a negative contribution (-445.8523864746094), indicating that our social media channel specifically is underperforming relative to other retail and marketing drivers.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:35:12.279088+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

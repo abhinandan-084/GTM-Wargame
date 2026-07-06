@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1026,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Competitive Defense (marketing_vs_comp_launch)**: The 10002.06 impact indicates that our marketing efforts are the primary factor preventing a total volume collapse. In a steady state market, this high value suggests our defensive spend is successfully countering the competitor's aggressive pricing maneuvers.\n- **Retail Support (retail_support_spend)**: At 6462.25, this driver shows that our physical channel presence is vital to maintaining our under-cutter position. However, with efficiency_momentum at -257.76, we are seeing diminishing returns on this spend as the product lifecycle reaches maturity.\n- **Leader Price Delta (leader_price_delta)**: The -4473.77 impact is the primary negative driver. This confirms that the competitor price war is successfully narrowing the gap, making our under-cutter position less effective in a market that is currently hyper-sensitive to price changes.\n\n### SCIENTIFIC HYPOTHESIS\nThe model accurately reflects the high stress competitive price threat. While we maintain a dominant share of voice, the hyper-sensitive price sensitivity signal means that the leader_price_delta of -4473.77 is the critical point of failure. Even with a strong marketing synergy multiplier, our spend is struggling to overcome the fact that the competitor is aggressively slashing prices, which is effectively cannibalizing our baseline volume despite our lower list_price.\n\n### DATA ANOMALIES\n- **Price War Cannibalization**: The competitor_price_war alert explains why the price_gap_pct of -116.91 and leader_price_delta of -4473.77 are dragging down performance. The price gap is no longer wide enough to sustain our usual volume advantage in this hyper-sensitive regime.\n- **Efficiency Decay**: Despite the high marketing_intensity of 3301.73, the efficiency_momentum of -257.76 and the diminishing returns signal suggest that our current spend levels are becoming less effective as the competitor continues to slash prices.\n- **Temporal Headwinds**: The month impact of -1019.34 suggests a seasonal downturn that is compounding the pressure from the competitive price war, further straining our ability to maintain baseline sales.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T15:22:24.099532+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

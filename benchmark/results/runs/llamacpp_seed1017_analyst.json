@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1017,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **marketing_intensity**: This driver has a significant impact on sales movement, with a SHAP value of 7253.4892578125.\n2. **price_gap_pct**: This driver also has a substantial impact on sales movement, with a SHAP value of 1131.9942626953125.\n3. **our_price_velocity**: This driver is also significant, with a SHAP value of 33.87715148925781.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers and their contextual significance, we can formulate the following scientific hypothesis:\n\n\"Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat.\"\n\nThis hypothesis is based on the significant impact of **price_gap_pct** and **our_price_velocity**, which indicate a high level of price sensitivity.\n\n### DATA ANOMALIES\n\nBased on the wargame_alerts, there are no data anomalies that contradict the drivers. However, we should be aware of the following:\n\n* **promotion_fatigue**: This alert is not triggered in this scenario.\n* **competitor_price_war**: This alert is not triggered in this scenario.\n\nOverall, the analysis suggests that price sensitivity is a key driver of sales movement, and that our premium position may be under threat.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T20:10:22.024321+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

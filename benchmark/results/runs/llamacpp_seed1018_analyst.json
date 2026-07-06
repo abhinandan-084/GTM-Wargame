@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1018,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n- **price_gap_pct**: This driver has a high value of 1583.1971435546875, indicating that our price position is significantly under threat.\n\n- **marketing_intensity**: This driver has a moderate value of 1012.6875610351562, indicating that marketing efforts may be having some impact on sales.\n\n- **price_effect**: This driver has a low value of -2962.4501953125, indicating that the overall price effect is actually negative.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on these drivers and their contextual significance:\n\n* Despite the launch phase, our premium position is under threat due to high price sensitivity.\n* Marketing efforts may be having some impact on sales, but it's unclear whether this is a result of effective marketing or simply a coincidence.\n* The overall price effect is actually negative, which suggests that our pricing strategy may be having an unintended consequence.\n\n### DATA ANOMALIES\n\nBased on the wargame_alerts:\n\n* **promotion_fatigue**: This alert is currently False, but it's essential to keep an eye on this metric to ensure that our marketing efforts are not becoming too repetitive or ineffective.\n* **imminent_stock_pressure**: This alert is currently False, which suggests that there is no immediate stock pressure that needs to be addressed.\n* **competitor_price_war**: This alert is currently False, which suggests that there is no current competitor price war that needs to be addressed.\n\n### SYNERGY AUDIT\n\nBased on the marketing_synergy metric:\n\n* Our spend may not be amplifying our price position as effectively as we would like.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T20:27:30.459514+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

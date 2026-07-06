@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1013,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Competitor Launch**: 16327.22265625. This is the primary driver of volume, indicating that our dominant share of voice is effectively capturing the market during a period where competitor activity is quiet.\n- **Month**: -2713.529052734375. This negative value reflects the maturity and maintain lifecycle stage, where the product is experiencing natural baseline erosion over time.\n- **Leader Price Delta**: 2473.56689453125. This positive impact confirms that our under-cutter price position is successfully driving sales, as the model detects high volume gains from the gap between our pricing and the market leader.\n\n### SCIENTIFIC HYPOTHESIS\n\n- **Price Sensitivity and Synergy**: Despite the negative pressure from the month driver, the model correctly identifies that the market is hyper-sensitive to pricing. Our position as an under-cutter is being heavily amplified by a price marketing synergy of 2204.863037109375, suggesting that our marketing spend is not just driving awareness but specifically highlighting our price advantage.\n- **Competitive Positioning**: The high value for marketing vs comp launch suggests that our current dominance in share of voice is the only factor preventing a more significant decline during this steady state phase.\n- **Efficiency Risks**: While retail support spend contributes 2162.822509765625, the business context of diminishing returns suggests that further increasing this spend may not yield proportional gains, as the mkt efficiency ratio is already negative at -419.8346252441406.\n\n### DATA ANOMALIES\n\n- **Wargame Alerts**: There are no active alerts for promotion fatigue, stock pressure, or competitor price wars. This aligns with the SHAP values for price penalty and leader penalty, which both remain at 0.0, confirming that our aggressive under-cutter pricing is currently safe from competitive retaliation or consumer exhaustion.\n- **Marketing Efficiency**: The efficiency momentum of 427.92510986328125 appears to contradict the signal of diminishing returns, suggesting that while overall efficiency is dropping, there is a recent short-term upward trend in how effectively our marketing is converting.",
+  "numbers_extracted": 7,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T13:16:13.245812+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

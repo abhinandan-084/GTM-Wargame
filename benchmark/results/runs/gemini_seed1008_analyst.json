@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1008,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Competitor Launch**: This is the primary driver of volume (14414.06640625), indicating that our Dominant Share of Voice is yielding massive returns while competitor activity remains Quiet.\n- **Retail Support Spend**: Direct investment in the channel (4403.90673828125) is successfully sustaining our baseline during the Maturity/Maintain lifecycle stage.\n- **Price Marketing Synergy**: The model identifies a strong positive interaction (2616.66015625) between our spend and our price position, confirming the Strong Multiplier signal where marketing effectively communicates our Under-cutter status.\n\n### SCIENTIFIC HYPOTHESIS\nDespite the market being in a Steady State, our Hyper-sensitive price sensitivity means our Under-cutter position is the fundamental reason for our resilience. The model correctly detects that our price gap relative to the leader (507.1588134765625) and the leader price delta (1280.2861328125) are driving positive movement. However, the negative impact of Recent Promo Intensity (-2022.114013671875) and Efficiency Momentum (-364.1693115234375) validates the Diminishing Returns signal, suggesting that while our price position is strong, we have reached a saturation point where additional promotional pressure is now cannibalizing margin without proportional volume gains.\n\n### DATA ANOMALIES\n- **Promotion Fatigue**: Although the wargame_alerts show promotion_fatigue is False, the SHAP value for Recent Promo Intensity (-2022.114013671875) is the largest negative drag on the model, suggesting the onset of fatigue or inefficiency not yet flagged by the business rules.\n- **Seasonal Headwinds**: The Month driver (-1346.865478515625) shows a significant natural decline in demand that is being masked by our aggressive Marketing vs Comp Launch spend.\n- **Relative Velocity**: Despite our price advantage, our Relative Velocity is negative (-42.20349884033203), indicating that while we are winning on price, the Leader may be maintaining momentum through non-price factors or brand equity.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T12:08:29.140764+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

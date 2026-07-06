@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1015,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **comp_a_impact**: This driver is responsible for a positive impact of 0.09617722779512405 on sales.\n2. **retail_support_spend**: This driver is responsible for a negative impact of -191.7727813720703 on sales.\n3. **search_adstock**: This driver is responsible for a negative impact of -835.4270629882812 on sales.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers, we can hypothesize that:\n\n* Despite being in the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat.\n* The high **comp_a_impact** suggests that competitor A's marketing efforts are having a significant positive impact on sales.\n* However, the negative **retail_support_spend** and **search_adstock** suggest that our retail support spend and search ad stock are not effectively supporting sales.\n\n### DATA ANOMALIES\n\nBased on the wargame_alerts, we have:\n\n* **promotion_fatigue**: True. This suggests that there may be a risk to the drivers due to promotion fatigue.\n* **competitor_price_war**: False. This suggests that there is no immediate competitor price war threat.\n\n### SYNERGY AUDIT\n\nBased on the marketing_synergy signal, we can see that our spend is amplifying our price position. However, this synergy may be at risk due to the high level of promotion_fatigue.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T19:44:11.397711+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

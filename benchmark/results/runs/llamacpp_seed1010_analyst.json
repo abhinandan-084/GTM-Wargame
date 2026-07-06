@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1010,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n- **price_gap_pct**: -13.106818199157715\n- **marketing_intensity**: 1210.56103515625\n- **retail_support_spend**: 11855.751953125\n\nThese drivers indicate that our price position is under threat due to a large price gap with the market leader, while our marketing intensity and retail support spend are high.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers, we can hypothesize that:\n\n* Despite being in a launch phase, our premium position is under threat due to hyper-sensitive price sensitivity.\n* Our high marketing intensity and retail support spend may be amplifying our price position, but this synergy needs further audit.\n\n### DATA ANOMALIES\n\nBased on the wargame alerts, we have the following anomalies:\n\n* **promotion_fatigue**: True\n\t+ Risk: The drivers may be influenced by promotion fatigue, which could lead to inaccurate conclusions.\n* **competitor_price_war**: False\n\t+ No anomaly detected.\n\n### SYNERGY AUDIT\n\nBased on the marketing vs. comp launch signal, we can see that our marketing spend is high compared to competitor launches. However, this synergy needs further audit to determine its effectiveness in amplifying our price position.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T18:33:46.001910+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

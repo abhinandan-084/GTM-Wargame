@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1011,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **month**: The sales movement is largely driven by the month of the year.\n2. **price_gap_pct**: The price gap percentage between our product and the market leader is a significant driver of sales movement.\n3. **marketing_intensity**: The marketing intensity is also a key driver of sales movement.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers, we can hypothesize that:\n\n* Despite being in a launch phase, the high price gap percentage between our product and the market leader suggests that our premium position is under threat.\n* The high marketing intensity is likely to amplify this effect, making it even more challenging for us to maintain our premium position.\n\n### DATA ANOMALIES\n\nBased on the wargame alerts, we have:\n\n* **promotion_fatigue**: This alert indicates that there may be a risk of promotion fatigue, which could impact our sales movement.",
+  "numbers_extracted": 0,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T18:47:40.156665+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

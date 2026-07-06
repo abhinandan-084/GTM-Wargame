@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1015,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: This is the primary driver at 15283.9775390625, indicating that our dominant share of voice during competitor windows is the most significant factor in defending our market position during this steady state phase.\n- **Recent Promo Intensity**: Contributing 3503.685791015625 to sales movement, this reflects the high volume impact of tactical discounting, though it is currently flagged for potential fatigue.\n- **Retail Support Spend**: At 2962.047607421875, this driver confirms that physical channel investment is a critical lever for maintaining baseline sales while the product is in the maturity lifecycle stage.\n\n### SCIENTIFIC HYPOTHESIS\n- **Hypothesis**: While the market is in a steady state, the hyper-sensitive price sensitivity signal suggests that our volume is fundamentally anchored by our under-cutter price position. The model detects this through the high positive impact of price marketing synergy (2658.77294921875) and leader price delta (1202.216064453125), meaning our marketing is successfully amplifying our price advantage. However, the negative efficiency momentum (-543.0582275390625) combined with the promotion fatigue alert indicates that we are reaching a ceiling where additional promotional intensity may yield diminishing returns.\n\n### DATA ANOMALIES\n- **Promotion Fatigue**: The wargame alert for promotion fatigue directly contradicts the high positive SHAP value for recent promo intensity (3503.685791015625), suggesting that while promos are currently driving volume, the strategy is at high risk of imminent failure.\n- **Digital Adstock Inefficiency**: Despite a dominant share of voice, both search adstock (-835.4270629882812) and social adstock (-975.188720703125) are exerting negative pressure on sales, indicating that digital channel spend is currently disconnected from the hyper-sensitive price needs of the consumer.\n- **Price Sensitivity Alignment**: The model accurately reflects the hyper-sensitive regime as the price effect is negative (-746.2564086914062), yet the price gap pct (582.2605590820312) and relative velocity (109.6130142211914) are positive, confirming that sales are moving because we are significantly cheaper than the leader, not because of the absolute price point.",
+  "numbers_extracted": 12,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T13:40:21.067542+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1024,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n- **price_gap_pct**: -1592.69\n- **comp_a_impact**: -1.25\n- **marketing_intensity**: 338.67\n\nThese drivers suggest that the sales movement is primarily driven by price-related factors.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the SHAP values and the BUSINESS_CONTEXT, we can formulate a scientific hypothesis:\n\n\"Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat. This is likely due to the significant price gap between our product and the market leader.\"\n\n### DATA ANOMALIES\n\nOne potential data anomaly that contradicts the drivers is the \"competitor_price_war\" alert in the BUSINESS_CONTEXT. However, this alert is currently False.\n\nIf this alert were True, it would indicate a competitor price war, which could contradict the hypothesis of price sensitivity being 'Hyper-sensitive'.\n\n### SYNERGY AUDIT\n\nThe marketing_synergy value is 2376.84, which suggests that our spend is actually amplifying our price position.\n\nThis synergy audit supports the scientific hypothesis and reinforces the idea that our premium position is under threat due to price sensitivity.",
+  "numbers_extracted": 4,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T21:42:14.617655+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

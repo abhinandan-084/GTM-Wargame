@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1022,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **retail_support_spend**: -3344.359130859375\n\t* This driver suggests that a decrease in retail support spend is significantly impacting sales.\n2. **search_adstock**: -802.1658325195312\n\t* This driver indicates that a decrease in search adstock is also contributing to the decline in sales.\n3. **price_gap_pct**: 708.1050415039062\n\t* Although this driver is positive, it suggests that the price gap between our product and the market leader is increasing, which may be cannibalizing our baseline volume.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on these drivers, we can formulate a scientific hypothesis:\n\n\"Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat due to increased competition and decreasing retail support spend.\"\n\n### DATA ANOMALIES\n\nWe have one wargame_alert that contradicts the drivers:\n\n* **promotion_fatigue**: False\n\t+ Although this alert is currently false, it's essential to monitor this metric closely in future analyses to ensure we're not overlooking any potential promotion fatigue.\n\n### SYNERGY AUDIT\n\nBased on the 'marketing_synergy' signal, our spend seems to be amplifying our price position. However, it's crucial to continue monitoring this metric to ensure that our marketing efforts are effectively supporting our pricing strategy.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T21:18:44.976876+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

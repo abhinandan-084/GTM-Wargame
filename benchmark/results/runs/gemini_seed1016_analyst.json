@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1016,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: The dominant driver (15791.3193359375) indicates that our volume is currently sustained by our massive share of voice relative to a quiet competitive landscape, effectively capturing the market in the absence of rival launches.\n- **Price Marketing Synergy**: This high positive value (3388.52392578125) confirms the Strong Multiplier signal, demonstrating that our marketing spend is successfully amplifying our position as an Under-cutter.\n- **Leader Price Delta**: The gap between our pricing and the market leader (2338.717529296875) is a primary volume contributor, which aligns with the Hyper-sensitive price sensitivity detected in the current market regime.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite being in a Maturity phase with a dominant share of voice, the negative impact of Total Mkt Spend (-1231.2108154296875) and Efficiency Momentum (-157.74464416503906) suggests we have hit a ceiling of Diminishing Returns. Our volume is currently propped up by the Leader Price Delta (2338.717529296875), but the model detects that our aggressive spending is no longer efficient, likely due to the Hyper-sensitive nature of the market where price moves outweigh incremental marketing reach.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: The wargame alert for promotion fatigue is a critical risk to our top drivers; it explains why Total Mkt Spend (-1231.2108154296875) is pulling sales downward despite the strong Price Marketing Synergy (3388.52392578125).\n- **Seasonal Drag**: The Month variable (-1194.373046875) is exerting significant downward pressure, suggesting that baseline demand is naturally low during this period, forcing our marketing to work harder for fewer gains.\n- **Efficiency Decay**: While Mkt Efficiency Ratio (1310.2037353515625) remains positive, the negative Efficiency Momentum (-157.74464416503906) validates the signal that we must spend with caution to avoid further margin erosion.",
+  "numbers_extracted": 11,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T13:46:31.537175+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

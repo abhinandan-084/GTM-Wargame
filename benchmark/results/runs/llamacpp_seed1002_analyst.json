@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1002,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **marketing_intensity**: This driver is significant because it indicates that our marketing efforts are having a positive impact on sales.\n2. **price_gap_pct**: This driver is also significant because it indicates that the price gap between our product and the market leader is a major factor in driving sales.\n3. **leader_price_delta**: This driver is significant because it indicates that changes in the market leader's price are having a major impact on our sales.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers, we can form the following scientific hypothesis:\n\n**Hypothesis:** Despite being in the launch phase, our premium position is under threat due to 'price_sensitivity' being 'Hyper-sensitive'. This means that any price changes will have a significant impact on sales.\n\n### DATA ANOMALIES\n\nThere are no data anomalies mentioned in the wargame_alerts. However, we should be aware of the following:\n\n* If **promotion_fatigue** is True, it may indicate that our marketing efforts are becoming less effective.\n* We should also keep an eye on the market leader's price changes and how they impact our sales.\n\n### SYNERGY AUDIT\n\nBased on the drivers, we can see that there is a strong synergy between our marketing efforts and our premium position. This suggests that our marketing spend is effectively amplifying our price position and driving sales.\n\nHowever, we should also be aware of the potential risks to this synergy. For example:\n\n* If **promotion_fatigue** is True, it may indicate that our marketing efforts are becoming less effective.\n* We should also keep an eye on the market leader's price changes and how they impact our sales.\n\nOverall, while there is a strong synergy between our marketing efforts and our premium position, we should be aware of the potential risks to this synergy.",
+  "numbers_extracted": 0,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T16:43:30.936505+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

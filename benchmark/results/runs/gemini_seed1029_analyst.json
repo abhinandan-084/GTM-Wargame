@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1029,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of sales movement (11300.7392578125), suggesting that our marketing posture is exceptionally effective while the competitor activity is \"Quiet.\" We are successfully capitalizing on the lack of rival noise to capture market attention.\n- **Price Marketing Synergy**: The high SHAP value (6999.92822265625) validates the \"Strong Multiplier\" signal. Our position as an \"Under-cutter\" is not just a passive price advantage; it is being actively amplified by our \"Dominant\" share of voice, creating a compounding effect on volume.\n- **Rolling Sales 4w**: A strong positive contribution (2823.153076171875) indicates healthy baseline momentum consistent with the \"Maturity/Maintain\" lifecycle stage. The brand is sustaining volume effectively without requiring a launch-driven spike.\n\n### SCIENTIFIC HYPOTHESIS\n\n- **Hypothesis**: Although price sensitivity is \"Inelastic/Brand-driven,\" our \"Under-cutter\" status remains a structural advantage when paired with high marketing intensity. The model correctly identifies that sales are not being driven by price fluctuations alone, but by the \"Strong Multiplier\" effect of our brand presence. However, the negative impact of retail support spend (-1998.658203125) and efficiency momentum (-201.05416870117188) confirms the \"Diminishing Returns\" signal, suggesting that we have reached a saturation point where additional tactical spend is no longer efficient.\n\n### DATA ANOMALIES\n\n- **Retail Support Spend**: This variable shows a significant negative impact (-1998.658203125) despite the overall \"Strong Multiplier\" synergy. This suggests that while broad marketing is working, specific retail-level incentives are currently dragging down performance or are misaligned with the \"Steady State\" regime.\n- **Wargame Alerts**: There are no alerts for \"promotion_fatigue\" or \"competitor_price_war,\" which confirms that the negative pressure from retail support spend and recent promo intensity (-576.5016479492188) is likely an internal efficiency issue rather than a reaction to external competitive threats.",
+  "numbers_extracted": 7,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T15:47:54.076391+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

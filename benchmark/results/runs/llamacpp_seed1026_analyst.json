@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1026,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **month**: -1019.3350219726562\n   * Context: The model is detecting a seasonal trend in sales.\n2. **price_gap_pct**: -116.90956115722656\n   * Context: The model is detecting that our price position is under threat due to competitor pricing strategies.\n3. **marketing_intensity**: 3301.725830078125\n   * Context: The model is detecting a strong marketing effort, which may be contributing to sales fluctuations.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the top drivers, we can formulate the following scientific hypothesis:\n\n*Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat. This suggests that our pricing strategy should take into account the competitive landscape and adjust accordingly.*\n\n### DATA ANOMALIES\n\nBased on the wargame_alerts, there are no anomalies in this case.\n\nHowever, if **promotion_fatigue** were True, we would highlight it as a risk to the drivers:\n\n*The model is detecting signs of promotion fatigue, which may indicate that our marketing efforts are becoming less effective. This should be taken into account when interpreting the results.*",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T22:08:23.897718+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

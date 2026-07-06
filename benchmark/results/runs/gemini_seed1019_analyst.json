@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1019,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: 16061.734375. This is the most significant positive driver, indicating that our dominant share of voice is yielding massive returns because competitor activity is currently quiet. In the absence of a rival launch, our marketing spend is capturing the majority of consumer attention.\n- **Retail Support Spend**: 5366.23388671875. This high positive value suggests that physical channel support is critical during this maturity stage. It aligns with our steady state phase where sustaining baseline volume through retail presence is a priority.\n- **Price Marketing Synergy**: 2827.1396484375. This driver confirms that our marketing is not operating in a vacuum; it is actively amplifying our position as an under-cutter. The spend is effectively highlighting our price advantage to a hyper-sensitive audience.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model correctly identifies that while we are in a steady state, our volume is highly contingent on the price gap relative to the market leader. Despite the price effect being negative at -352.89312744140625, the positive price gap pct of 896.5048828125 and leader price delta of 641.074951171875 suggest that our under-cutter status is the primary reason for sales retention. Because price sensitivity is hyper-sensitive, any narrowing of this gap would likely lead to a rapid collapse in volume. The strong synergy value indicates that our marketing is successfully acting as a multiplier for our price position, though the efficiency momentum of 856.9197998046875 suggests we are nearing the peak of this effect before diminishing returns become prohibitive.\n\n### DATA ANOMALIES\n\n- **Wargame Alerts**: There are no active alerts for promotion fatigue or competitor price wars, which explains why the recent promo intensity of -891.697021484375 is not yet a critical threat to the overall baseline.\n- **Seasonal Headwinds**: The month driver of -1727.4493408203125 and search adstock of -1454.642822265625 represent significant downward pressure, suggesting that without the massive marketing vs comp launch impact, the brand would be seeing a net decline in sales.\n- **Price Velocity**: Both our price velocity at -68.92130279541016 and the leader price velocity at -19.6445255279541 are negative, yet the relative velocity of 33.2927360534668 remains positive, indicating we are managing our price erosion more effectively than the market leader to maintain our under-cutter advantage.",
+  "numbers_extracted": 13,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:27:59.638576+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

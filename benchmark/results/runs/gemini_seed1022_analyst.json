@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1022,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: The dominant driver (12526.71484375) reflects our current market position where a dominant share of voice during a quiet competitor phase allows our messaging to capture the majority of consumer attention without interference.\n- **Price Marketing Synergy**: This value (4730.35888671875) validates the strong multiplier signal in our context, proving that our marketing spend is most effective when it is directly coupled with our under-cutter price positioning.\n- **Retail Support Spend**: Contributing 3344.359130859375, this driver indicates that in a steady state regime, physical retail presence is essential for maintaining the baseline volume for a mature product.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model accurately detects the hyper-sensitive price regime, as evidenced by the positive price effect (1840.3212890625) and price gap percentage (708.1050415039062) which align with our status as an under-cutter. However, the negative impact of total market spend (-2382.282470703125) and the marketing efficiency ratio (-1033.9315185546875) confirm the diminishing returns signal. This suggests that while our price-point attracts volume, we are over-leveraging broad marketing spend to sustain a mature product, leading to inefficiency despite the strong synergy between price and specific promotional activities.\n\n### DATA ANOMALIES\n\n- **Wargame Alerts**: All alerts including promotion fatigue and competitor price war are currently false, suggesting that the negative pressure from total market spend (-2382.282470703125) is an internal efficiency issue rather than a result of external market aggression.\n- **Marketing Intensity**: Despite a dominant share of voice, the marketing intensity SHAP is negligible (-1.6909475326538086), indicating that the sheer volume of spend is less important than the strategic synergy with our pricing model.\n- **Search Adstock**: The negative movement in search adstock (-802.1658325195312) contradicts the overall dominant share of voice, hinting that top-of-funnel digital intent may be cooling even as retail support remains strong.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:45:46.195409+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

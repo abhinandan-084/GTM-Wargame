@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1010,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Retail Support Spend**: Contributing 11855.75, this is the primary engine of volume, indicating that in the Maturity/Maintain phase, physical channel presence and trade support are the most critical factors for sustaining baseline sales.\n- **Marketing vs Comp Launch**: With an impact of 7472.00, this driver shows that our marketing dominance during a Quiet competitor period is yielding high returns, effectively capturing market share while rival activity is low.\n- **Price Marketing Synergy**: The 3277.44 value validates the Strong Multiplier signal, demonstrating that our marketing campaigns are successfully amplifying our Under-cutter price position to drive consumer action.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model correctly identifies the Hyper-sensitive price regime, as evidenced by the positive Price Effect of 1778.31 and Leader Price Delta of 1391.50. Because we are in a Steady State phase as an Under-cutter, our sales are heavily dependent on maintaining a significant price gap relative to the market leader. However, the Strong Multiplier effect from Price Marketing Synergy suggests that price alone is not the sole driver; rather, it is the visibility of our price advantage that converts. The negative Our Price Velocity of -733.36 suggests that any recent upward movement in our own pricing is immediately penalized by the market, confirming the hyper-sensitivity signal.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: Although Retail Support Spend is the highest positive driver, the wargame alert for promotion fatigue indicates a critical risk. This suggests that while current spend is driving volume, we are likely at the peak of its effectiveness, which is corroborated by the Efficiency Momentum of -145.75 and the Diminishing Returns signal.\n- **Search Adstock**: The negative impact of -1344.47 is an anomaly in a Dominant SOV context, suggesting that our search strategy is currently disconnected from the maturity stage of the product or is suffering from extreme inefficiency.\n- **Marketing Efficiency**: The Mkt Efficiency Ratio of 203.24 is being offset by the negative Efficiency Momentum, signaling that while we are currently dominant, the cost to acquire the next unit of sale is increasing.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T12:44:38.667400+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

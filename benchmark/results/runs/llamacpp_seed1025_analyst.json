@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1025,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **marketing_intensity**: This driver has a significant impact on sales movement. The high marketing intensity is likely driving demand and contributing to the positive sales trend.\n\n2. **price_gap_pct**: This driver also has a substantial impact on sales movement. The high price gap percentage suggests that our prices are relatively low compared to competitors, which could be driving demand and contributing to the positive sales trend.\n\n3. **leader_price_delta**: This driver also has a significant impact on sales movement. The large leader price delta suggests that our competitor's prices are significantly higher than ours, which could be driving demand and contributing to the positive sales trend.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers identified above, we can form the following scientific hypothesis:\n\n\"Despite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat. The high marketing intensity and low price gap percentage are likely driving demand and contributing to the positive sales trend.\"\n\n### DATA ANOMALIES\n\nThere are no data anomalies in this analysis.\n\n### SYNERGY AUDIT\n\nThe marketing synergy is strong, with a value of 2962.0498046875. This suggests that our marketing spend is effectively amplifying our price position and driving demand.\n\nHowever, it's worth noting that the promotion fatigue is true, which means there is a risk to the drivers identified above.",
+  "numbers_extracted": 1,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T21:51:47.742880+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

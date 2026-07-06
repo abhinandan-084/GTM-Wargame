@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1001,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Total Marketing Spend**: This is the primary positive driver (7580.740234375), which aligns with our Dominant Share of Voice and the need to sustain volume during the Maturity lifecycle stage.\n- **Marketing vs Competitor Launch**: The significant positive impact (6618.669921875) indicates that our high spend is particularly effective because competitor activity is currently Quiet, allowing us to dominate mindshare.\n- **Retail Support Spend**: This driver (6096.9892578125) is crucial for maintaining our Under-cutter position at the point of sale, though its impact is being countered by negative Efficiency Momentum (-1009.5166015625).\n\n### SCIENTIFIC HYPOTHESIS\nThe model accurately reflects the Hyper-sensitive price regime by showing positive contributions from Leader Price Delta (1373.135498046875) and Price Gap Pct (1106.3109130859375). Our Under-cutter status is being successfully leveraged through a Strong Multiplier effect, as evidenced by the high Price Marketing Synergy (3137.00732421875), meaning our marketing is effectively communicating our price advantage. However, the negative Recent Promo Intensity (-2221.547607421875) suggests that while general marketing is working, specific tactical promotions are currently dragging on performance, likely due to the Diminishing Returns signal identified in the efficiency trend.\n\n### DATA ANOMALIES\n- **Efficiency Momentum**: The negative SHAP value (-1009.5166015625) serves as a critical warning that matches the Diminishing Returns signal; despite high Total Mkt Spend, the incremental benefit of each dollar is decreasing.\n- **Wargame Alerts**: The absence of a Competitor Price War or Promotion Fatigue confirms that the negative impact of Recent Promo Intensity (-2221.547607421875) is likely an internal optimization issue rather than a result of external market exhaustion or aggressive rival pricing.\n- **Price Sensitivity**: The model correctly identifies the Hyper-sensitive regime, as even small movements in Relative Velocity (77.01933288574219) and Price Gap Pct are yielding significant SHAP swings, confirming that our volume is highly dependent on maintaining the gap against the market leader.",
+  "numbers_extracted": 11,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:00:21.324058+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

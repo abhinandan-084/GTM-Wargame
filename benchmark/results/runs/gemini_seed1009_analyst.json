@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1009,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of sales movement (14896.07), indicating that our Dominant share of voice is yielding maximum returns while the market regime is Quiet and competitor activity is absent.\n- **Retail Support Spend**: Contributing significantly (4918.29), this driver shows that physical channel support is critical during the Maturity/Maintain lifecycle stage to sustain the baseline.\n- **Price Marketing Synergy**: With a value of 4021.18, this confirms the Strong Multiplier signal, proving that our marketing efforts are effectively amplifying our Under-cutter price position to a Hyper-sensitive consumer base.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model accurately detects the Steady State regime by prioritizing the price-marketing synergy (4021.18) over raw price effects. Because price sensitivity is Hyper-sensitive, our position as an Under-cutter is being successfully defended by our Dominant share of voice, creating a protective moat against the leader. However, the negative search_adstock (-1819.51) and marketing_intensity (-1235.05) suggest that while we are winning on price perception, our broad-reach digital tactics are beginning to hit Diminishing Returns. The high marketing_vs_comp_launch value suggests we are currently benefiting more from competitor silence than from our own incremental efficiency.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: Although retail_support_spend (4918.29) is a top positive driver, the active promotion_fatigue alert warns of a looming reversal, which is already surfacing in the negative recent_promo_intensity (-523.29) and efficiency_momentum (-24.94).\n- **Search Adstock Drag**: Despite the Dominant share of voice, search_adstock is a major negative driver (-1819.51), suggesting a disconnect between high-level brand dominance and lower-funnel conversion efficiency.\n- **Price Gap vs Velocity**: While the price_gap_pct (808.30) is driving volume, our_price_velocity (72.42) is significantly lower than the synergy impact, indicating that the price point itself is less important than how that price is marketed.",
+  "numbers_extracted": 12,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T12:17:48.496537+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

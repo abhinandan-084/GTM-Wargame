@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1023,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: This is the primary driver (17377.2734375) of sales movement, indicating that our dominant share of voice is yielding massive returns because the competitor activity is currently Quiet.\n- **Price Marketing Synergy**: The high positive impact (2035.7926025390625) confirms the Strong Multiplier signal in the business context, proving that our Under-cutter price position is being effectively amplified by our marketing spend.\n- **Search Adstock**: The significant negative movement (-1827.0057373046875) validates the Diminishing Returns signal, suggesting that our search channel has reached saturation and is no longer contributing positively to incremental volume.\n\n### SCIENTIFIC HYPOTHESIS\nDespite the market being in a Steady State, the brand is successfully leveraging its Dominant share of voice to capture volume. Because price sensitivity is Inelastic/Brand-driven, the positive impact of list_price (660.8912353515625) and price_effect (654.1134033203125) suggests the model correctly identifies that sales are not being hindered by our pricing strategy, but rather propelled by the synergy between our price position and marketing intensity.\n\n### DATA ANOMALIES\n- **Efficiency Momentum**: The negative value (-454.34429931640625) acts as a leading indicator for the Diminishing Returns signal, warning that while marketing is currently a top driver, its marginal utility is fading.\n- **Wargame Alerts**: The absence of a competitor_price_war and promotion_fatigue (False) confirms that the negative search_adstock is likely an internal channel optimization issue rather than a reaction to external market pressure.\n- **Month**: The negative seasonal impact (-1518.702392578125) is being heavily offset by the marketing_vs_comp_launch interaction, suggesting marketing is successfully pulling demand forward against seasonal trends.",
+  "numbers_extracted": 7,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:53:55.990117+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

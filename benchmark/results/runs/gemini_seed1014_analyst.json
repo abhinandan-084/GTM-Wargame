@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1014,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: The highest driver at 11019.080078125 indicates that our dominant share of voice is yielding maximum returns because we are spending aggressively while competitor activity is quiet.\n- **Retail Support Spend**: A contribution of 6705.39501953125 suggests that in the maturity stage, physical channel support is critical for sustaining the baseline volume of our under-cutter price position.\n- **Search Adstock**: The value of 3630.13232421875 confirms that our sustained digital presence is effectively capturing consumer intent and maintaining brand salience during this steady state market phase.\n\n### SCIENTIFIC HYPOTHESIS\n- **Hypothesis**: The model is accurately detecting the hyper-sensitive price regime, as the price gap percentage (1385.593994140625) and leader price delta (2136.51123046875) are significant positive drivers for our under-cutter position. This is further amplified by a strong price-marketing synergy of 2898.180908203125, proving that our marketing spend is not disconnected but is actively functioning as a multiplier for our competitive pricing strategy.\n\n### DATA ANOMALIES\n- **Efficiency Momentum**: While the model reports a positive efficiency momentum of 1349.46044921875, the business context signals diminishing returns on marketing, suggesting that current spend levels may soon hit a ceiling despite the high SHAP value.\n- **Recent Promo Intensity**: The negative impact of -1151.548095703125 stands out as a localized drag; however, since the wargame alerts confirm no promotion fatigue, this likely reflects a temporary inefficiency in tactical execution rather than a broader market rejection.",
+  "numbers_extracted": 8,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T13:28:11.019322+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

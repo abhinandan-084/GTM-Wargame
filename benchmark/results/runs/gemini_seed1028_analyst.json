@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1028,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: The most significant positive driver at 15800.71 indicates that our dominant Share of Voice is effectively shielding our volume during competitor cycles, acting as the primary defense mechanism in a steady state market.\n- **Leader Price Delta**: This is the strongest negative driver at -8881.54, which directly reflects the High Stress competitive price threat where the market leader is aggressively slashing prices to close the gap with our under-cutter position.\n- **Retail Support Spend**: Contributing 4400.94, this driver suggests that physical channel presence is providing a necessary volume floor, though its impact is significantly smaller than the losses driven by the leader's pricing maneuvers.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite our price position as an Under-cutter, the market is currently Hyper-sensitive to price movements. The model correctly identifies that the leader price delta is cannibalizing our baseline volume because the competitor price war has narrowed the perceived value gap. While our marketing synergy remains a Strong Multiplier at 751.80, the negative efficiency momentum of -212.14 suggests we are entering a phase of diminishing returns where additional spend cannot fully offset the leader's aggressive discounting.\n\n### DATA ANOMALIES\n\n- **Competitor Price War**: This alert is the primary explanation for the massive negative leader price delta of -8881.54, confirming that the price gap pct of 233.76 is no longer sufficient to protect our market share from the leader's price slashing.\n- **Diminishing Returns**: The signal of dropping efficiency is validated by the efficiency momentum at -212.14, suggesting that even though total mkt spend (2198.33) and marketing intensity (1636.22) are positive, the cost of acquiring each incremental unit is rising.\n- **Recent Promo Intensity**: The negative value of -905.66, paired with the False alert for promotion fatigue, suggests that our current promotional depth is being overwhelmed by the competitor's broader price war rather than a lack of consumer interest.",
+  "numbers_extracted": 11,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T15:39:32.204133+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

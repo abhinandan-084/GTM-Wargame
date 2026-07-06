@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1007,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: The massive impact of 19559.033203125 indicates that our dominant share of voice is successfully defending our market position during competitor activity, effectively acting as a firewall against the quiet market regime.\n- **Retail Support Spend**: A contribution of 2044.6473388671875 shows that physical retail presence remains a primary driver for our under-cutter price position, though the efficiency trend signal suggests we are approaching diminishing returns.\n- **Price Marketing Synergy**: The value of 1776.9202880859375 confirms the strong multiplier signal, where our marketing spend is not just driving awareness but is actively amplifying the perceived value of our pricing strategy.\n\n### SCIENTIFIC HYPOTHESIS\nThe model correctly identifies a hyper-sensitive price regime where the competitor price war is actively cannibalizing volume, as seen in the negative pressure from leader price delta (-1257.9189453125) and price gap percentage (-689.1514892578125). While our dominant share of voice and marketing synergy are currently offsetting these losses, the negative impact of recent promo intensity (-894.5869750976562) suggests that we have reached promotion fatigue, meaning further price-led tactical spend will likely fail to yield positive returns.\n\n### DATA ANOMALIES\n- **Promotion Fatigue**: The negative impact of recent promo intensity (-894.5869750976562) directly supports the wargame alert, indicating that our current promotional tactics are no longer resonating with the hyper-sensitive consumer base.\n- **Competitor Price War**: The significant negative driver from leader price delta (-1257.9189453125) confirms that the high stress price threat from the competitor is successfully narrowing our under-cutter advantage.\n- **Efficiency Momentum**: Despite high total spend impact, the negative efficiency momentum (-408.9050598144531) warns that our current marketing dominance is becoming increasingly expensive to maintain in a maturity phase.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:55:12.382982+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

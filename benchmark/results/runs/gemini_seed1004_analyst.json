@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1004,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of volume at 10870.2783203125, indicating that our dominant share of voice is effectively capturing the market during a quiet competitor phase. Even without an active rival launch, our defensive marketing posture is the strongest contributor to sales stability.\n- **Retail Support Spend**: Contributing 4023.440673828125, this driver shows that physical channel investment remains highly effective in the maturity stage. This aligns with our steady state phase where maintaining baseline visibility is critical for the under-cutter position.\n- **Leader Price Delta**: With a SHAP value of 2583.60546875, this confirms that our strategy as an under-cutter is working. The model correctly identifies that the gap between our price and the market leader is a significant pull factor for consumers in this regime.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe market is currently in a hyper-sensitive state regarding price, which validates the high impact of the leader price delta and the price marketing synergy of 2357.07373046875. Our sales are not being driven by newness but by the successful amplification of our price position through a dominant share of voice. However, the negative impact of recent promo intensity at -1405.6392822265625 suggests we have reached a saturation point. The hypothesis is that while marketing is currently a strong multiplier, we are entering a period of diminishing returns where additional promotional spend will likely be offset by the confirmed promotion fatigue.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: The wargame alert for promotion fatigue is explicitly reflected in the recent promo intensity SHAP value of -1405.6392822265625. This creates a contradiction where retail support spend is positive, but the frequency or depth of recent promotions is now actively cannibalizing potential gains.\n- **Efficiency Momentum**: Although efficiency momentum shows a positive contribution of 692.8841552734375, the business signal for efficiency trend indicates diminishing returns. This suggests the model is capturing the tail end of a high-efficiency period that is expected to pivot downward.\n- **Seasonality vs Market Activity**: The month variable is exerting a strong downward pressure of -1161.5972900390625, which suggests that external seasonal factors are currently a stronger headwind than any specific competitor action, given that competitor activity is rated as quiet.",
+  "numbers_extracted": 8,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:30:36.331179+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

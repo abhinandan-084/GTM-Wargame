@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1025,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This driver contributed 15235.197265625 to the sales movement. In a quiet market regime with no active competitor launches, our dominant share of voice is effectively capturing the vacuum, acting as the primary engine for volume.\n- **Retail Support Spend**: Contributing 4160.212890625, this indicates that our physical channel presence is a critical pillar for sustaining baseline sales during this maturity phase.\n- **Price Marketing Synergy**: With a SHAP value of 2962.0498046875, this confirms the strong multiplier signal. Our marketing spend is not just driving awareness but is actively amplifying our position as an under-cutter relative to the market leader.\n\n### SCIENTIFIC HYPOTHESIS\n\n**Hypothesis**: While the market is in a steady state and price sensitivity is inelastic/brand-driven, our sales are currently decoupled from raw price changes and are instead powered by high-intensity marketing and retail support. However, the negative efficiency momentum of -4.756771087646484 and a negative marketing efficiency ratio of -365.4774169921875 suggest we are over-leveraging these drivers. We are successfully maintaining volume through sheer force of spend, but we are approaching a point of diminishing returns where the cost of sustaining this dominant share of voice may soon outweigh the incremental volume gains.\n\n### DATA ANOMALIES\n\n- **Promotion Fatigue**: The wargame alert for promotion fatigue is clearly reflected in the data, as recent promo intensity shows a negative impact of -345.20068359375. This indicates that despite our strong marketing synergy, traditional promotional tactics are starting to cannibalize value or fail to resonate with the consumer base.\n- **Efficiency vs Spend**: There is a notable tension between retail support spend being a top positive driver at 4160.212890625 and the mkt efficiency ratio being negative at -365.4774169921875. This confirms the signal of diminishing returns; we are buying volume at an increasingly inefficient rate.\n- **Price Position Paradox**: Despite being an under-cutter, the price effect of 455.83941650390625 is relatively small compared to marketing drivers, validating the model's detection of an inelastic, brand-driven regime where price is a secondary consideration to brand presence.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T15:10:06.414921+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

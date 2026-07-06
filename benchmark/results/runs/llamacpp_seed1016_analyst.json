@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1016,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n1. **marketing_intensity**: This driver is significant because it indicates that our marketing efforts are having a positive impact on sales.\n2. **price_gap_pct**: This driver suggests that our price positioning is under threat due to competitor activity. We need to reassess our pricing strategy to maintain our premium position.\n3. **leader_price_delta**: This driver indicates that the leader's price movement is influencing our sales performance.\n\n### SCIENTIFIC HYPOTHESIS\n\nDespite the launch phase, price sensitivity is 'Hyper-sensitive', meaning our premium position is under threat. We need to reassess our pricing strategy to maintain our premium position.\n\n### DATA ANOMALIES\n\n* **promotion_fatigue**: True\nThis indicates that there may be a risk of promotion fatigue affecting our sales performance.\n\n### SYNERGY AUDIT\n\nOur marketing spend is amplifying our price position, as indicated by the 'marketing_synergy' signal. However, we need to ensure that this synergy continues and does not become disconnected due to changes in market conditions or competitor activity.",
+  "numbers_extracted": 0,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T19:55:36.591400+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1029,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n- **price_gap_pct**: This driver has a high value of 292.4739990234375, indicating that the price gap between our product and the market leader is a significant factor in sales movement.\n\n- **marketing_intensity**: This driver has a moderate negative value of -178.8542022705078, indicating that marketing intensity is not having a significant positive impact on sales movement.\n\n- **leader_price_delta**: This driver has a high positive value of 301.066162109375, indicating that the price delta between our product and the market leader is a significant factor in sales movement.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on the drivers identified, we can hypothesize that:\n\n* The high price gap percentage between our product and the market leader is contributing to low sales.\n* Despite marketing intensity efforts, our product's premium position is under threat due to hyper-sensitive price sensitivity.\n* The significant price delta between our product and the market leader is a major contributor to sales movement.\n\n### DATA ANOMALIES\n\nBased on the wargame alerts, we can identify the following data anomalies:\n\n* **promotion_fatigue**: This alert indicates that promotion fatigue is not an issue at this time. However, it's essential to keep monitoring this metric to ensure that our promotions are still effective.\n* **competitor_price_war**: This alert indicates that there is no competitor price war at this time. However, it's crucial to continue monitoring this metric to ensure that we're aware of any potential competitor price wars.\n\n### SYNERGY AUDIT\n\nBased on the marketing synergy metric, we can see that our spend is actually amplifying our price position. This suggests that our marketing efforts are effective in driving sales.\n\nHowever, it's essential to continue monitoring this metric to ensure that our marketing efforts remain effective and aligned with our business goals.",
+  "numbers_extracted": 3,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T22:43:20.217107+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

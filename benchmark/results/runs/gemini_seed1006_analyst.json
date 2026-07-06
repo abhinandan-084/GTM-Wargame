@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1006,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: The highest positive driver (15024.48) indicates that our marketing posture is exceptionally effective during this period of Quiet competitor activity, allowing us to capture share while rivals are inactive.\n- **Price Marketing Synergy**: This driver (3198.48) confirms the Strong Multiplier signal in the business context, suggesting that our marketing efforts are successfully amplifying our Under-cutter price position rather than operating in a vacuum.\n- **Leader Price Delta**: The significant impact (2677.81) reflects the market's Hyper-sensitive price sensitivity, where maintaining a substantial price gap relative to the market leader is a primary engine for volume.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model correctly identifies that sales movement is currently decoupled from lifecycle decay and is instead powered by our Under-cutter price position. Because price sensitivity is Hyper-sensitive, the leader_price_delta and price_marketing_synergy are acting as the primary catalysts for growth. Even though we are in a Steady State phase, our Dominant share of voice is creating a massive advantage (15024.48) against a quiet competitive field. However, the positive efficiency_momentum (1154.43) is likely nearing a peak, as the business context warns of Diminishing Returns, suggesting that while current spend is highly synergistic with our price, additional investment may see lower marginal utility.\n\n### DATA ANOMALIES\n\n- **Efficiency Conflict**: The model reports a positive **efficiency_momentum** of 1154.43, which appears to contradict the business signal of **Diminishing Returns**, suggesting the model is trailing the most recent shift in marketing productivity.\n- **Marketing vs Comp Launch**: The extreme SHAP value of 15024.48 for **marketing_vs_comp_launch** is statistically dominant despite **is_comp_launch** being 0.0, indicating the model is attributing nearly all baseline strength to our defensive marketing posture in the absence of a competitor threat.\n- **Promo Intensity vs Synergy**: While **price_marketing_synergy** is a top driver (3198.48), **recent_promo_intensity** is exerting a negative pull (-1006.92), suggesting that while our general price-marketing alignment is strong, specific recent promotional tactics may be less effective than the overarching price strategy.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:45:24.445223+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

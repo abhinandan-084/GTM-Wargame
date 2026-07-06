@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1011,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: The most significant driver (17133.27734375) indicates that our dominant share of voice during a period of quiet competitor activity is the primary engine of sales, effectively capturing the market while rivals are inactive.\n- **Price Marketing Synergy**: This driver (2906.129638671875) confirms the strong multiplier signal, showing that our marketing spend is highly effective at amplifying our under-cutter price position.\n- **Search Adstock**: The negative impact (-1940.3663330078125) aligns with the diminishing returns signal, suggesting that our search advertising has reached a saturation point where additional spend is no longer driving positive incremental volume.\n\n### SCIENTIFIC HYPOTHESIS\nDespite being in a Maturity phase, our Under-cutter price position is successfully defended by a Dominant share of voice, though the negative search adstock and low efficiency momentum (148.4070587158203) suggest we are over-investing in digital channels that have reached their ceiling. The model correctly identifies that our price effect (1326.46728515625) and leader price delta (1821.5850830078125) are driving growth because the market regime is stable and price sensitivity is normal.\n\n### DATA ANOMALIES\n- **Wargame Alerts**: There are no active alerts for promotion fatigue or competitor price wars, which confirms that the positive price gap pct (53.47372817993164) is a genuine competitive advantage rather than a desperate response to market pressure.\n- **Marketing Efficiency**: While the marketing synergy is high, the mkt efficiency ratio (382.8981628417969) is relatively low compared to the total mkt spend (843.178466796875), supporting the business context signal that we are facing diminishing returns on our current investment levels.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T12:55:20.763962+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

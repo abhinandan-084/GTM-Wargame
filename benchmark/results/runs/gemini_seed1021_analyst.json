@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1021,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: The primary driver of volume (19151.74609375) indicates that our defensive marketing posture is exceptionally effective during this quiet competitive period, successfully insulating our market share despite the lack of active rival launches.\n- **Price Marketing Synergy**: The strong positive impact (3228.602783203125) validates the Strong Multiplier signal, proving that our marketing campaigns are effectively amplifying our Under-cutter price position to drive conversion.\n- **Marketing Intensity**: High intensity (2879.002197265625) leverages our Dominant Share of Voice to maintain baseline sales during the Maturity stage, though it is beginning to face headwinds from efficiency losses.\n\n### SCIENTIFIC HYPOTHESIS\nDespite the market being classified as Inelastic/Brand-driven, our volume is heavily anchored by the **price_gap_pct** (1117.76513671875), suggesting that our Under-cutter status is the foundational requirement for our brand strength to convert. However, the negative **mkt_efficiency_ratio** (-1507.7926025390625) and **social_adstock** (-2412.72900390625) indicate that we are over-spending to maintain this position, confirming the Diminishing Returns signal.\n\n### DATA ANOMALIES\n- **Promotion Fatigue**: Although **retail_support_spend** (2030.234375) is currently a top four driver, the wargame alert for promotion fatigue is True, signaling that this driver is likely to weaken or turn negative if we continue high-frequency discounting in a Steady State regime.\n- **Adstock Divergence**: There is a significant disconnect between the positive impact of **retail_support_spend** and the heavy negative drag from **social_adstock** (-2412.72900390625), suggesting that our digital channel execution is currently destroying value while physical retail support is sustaining it.\n- **Efficiency Momentum**: The positive **efficiency_momentum** (604.456298828125) provides a slight contradiction to the Diminishing Returns signal, suggesting that recent optimizations may be attempting to offset the broader downward trend in marketing productivity.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T14:40:26.100889+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

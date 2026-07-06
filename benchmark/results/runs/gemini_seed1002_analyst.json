@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1002,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: This is the primary driver of sales movement (14946.5078125), indicating that our dominant share of voice is effectively capturing the market during this quiet competitive phase.\n- **Price Marketing Synergy**: The high SHAP value (3101.595458984375) validates the strong multiplier signal, showing that our marketing spend is significantly more effective because it is paired with our under-cutter price position.\n- **Total Market Spend**: Direct investment (2909.8203125) continues to push volume, though the model is beginning to detect diminishing returns as evidenced by the negative marketing efficiency ratio (-78.92831420898438).\n\n### SCIENTIFIC HYPOTHESIS\nThe current sales growth is fueled by a defensive marketing posture that leverages our under-cutter pricing in a hyper-sensitive market. While the leader price delta (1988.076171875) shows we are successfully exploiting the gap between us and the market leader, the negative efficiency momentum (-65.43958282470703) suggests that we are over-spending to maintain this baseline. The model correctly identifies that our volume is not organic but is highly dependent on maintaining a specific price-to-marketing ratio.\n\n### DATA ANOMALIES\n- **Promotion Fatigue**: Although retail support spend (2425.40576171875) is a top positive driver, the wargame alert for promotion fatigue indicates a high risk that this lever is losing its long-term efficacy.\n- **Digital Adstock Contradiction**: Despite the dominant share of voice, both search adstock (-1337.0184326171875) and social adstock (-861.877685546875) are exerting downward pressure on sales, suggesting that our digital channel mix is currently inefficient or misaligned with the maturity stage of the product.\n- **Seasonal Headwinds**: The negative impact of the month variable (-1125.5811767578125) suggests a natural cyclical downturn that is currently being masked by aggressive marketing spend.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:14:18.692545+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

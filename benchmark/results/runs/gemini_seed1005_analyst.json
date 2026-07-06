@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1005,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch**: This is the primary driver of volume (14970.95), indicating that our dominant share of voice is highly effective because competitor activity is currently quiet.\n- **Retail Support Spend**: Direct investment in retail channels (3256.52) is providing a significant lift, likely by capitalizing on our under-cutter price position during this steady state phase.\n- **Price Marketing Synergy**: The model identifies a strong interaction between our pricing and marketing efforts (3196.84), confirming the signal that our marketing acts as a strong multiplier for our price advantage.\n\n### SCIENTIFIC HYPOTHESIS\n\nOur current sales growth is driven by an aggressive marketing posture in a vacuum of competitor activity, but we are approaching a ceiling. While our under-cutter position is successfully exploiting hyper-sensitive price sensitivity, the negative marketing efficiency ratio (-952.22) and recent promo intensity (-2007.64) suggest that we are entering a phase of diminishing returns where further spend may not yield proportional volume gains.\n\n### DATA ANOMALIES\n\n- **Wargame Alerts**: There are no active alerts for promotion fatigue or competitor price wars, suggesting the negative impact from recent promo intensity (-2007.64) is a result of internal efficiency drops rather than external market pressure.\n- **Seasonality**: The negative month impact (-1276.83) and month sin value (-62.37) indicate a seasonal headwind that is currently being masked by our high total mkt spend (2449.01) and price positioning.\n- **Price Sensitivity**: The model correctly identifies the hyper-sensitive regime, as evidenced by the high positive impact of the leader price delta (2143.84), showing that our volume is highly dependent on maintaining a specific gap relative to the market leader.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:35:33.585652+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1003,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n- **Marketing vs Comp Launch**: This driver contributed 18156.318359375 to sales volume, representing the most significant impact. In a market regime defined as Steady State with Quiet competitor activity, our Dominant share of voice is effectively capturing the market vacuum, as there are no aggressive competitor moves to counteract our presence.\n- **Retail Support Spend**: Contributing 3446.407470703125, this driver indicates that physical channel support is critical during the Maturity/Maintain lifecycle stage. It suggests that sustaining baseline volume is heavily dependent on maintaining visibility in retail environments while the product is in its steady phase.\n- **Recent Promo Intensity**: This is a major negative driver at -2533.5, acting as a significant drag on sales. Despite the fact that promotion_fatigue is False, this negative movement aligns with the signal of Diminishing Returns, suggesting that the current intensity of promotional activity is no longer yielding positive volume and may be inefficient.\n\n### SCIENTIFIC HYPOTHESIS\n- **Price Sensitivity and Position**: The model is correctly detecting the Hyper-sensitive price sensitivity of the market, as evidenced by the positive impact of leader_price_delta at 1620.8726806640625 and price_gap_pct at 447.1025085449219. Because our price position is an Under-cutter, our significantly lower price relative to the leader is the primary engine for volume, but the negative mkt_efficiency_ratio of -949.9857177734375 warns that we cannot simply spend our way out of the maturity phase.\n\n### DATA ANOMALIES\n- **Synergy vs Efficiency**: While price_marketing_synergy shows a Strong Multiplier effect at 2384.7509765625, indicating our marketing successfully highlights our price advantage, it is contradicted by the efficiency_momentum of 1196.6175537109375 and the negative mkt_efficiency_ratio. This suggests that while the strategy of pairing price with marketing is sound, the overall efficiency of the spend is declining as we exhaust the current market segment.\n- **Seasonal Drag**: The month driver shows a negative impact of -1084.389404296875, which suggests a seasonal downturn that is currently being masked by the massive 18156.318359375 lift from our marketing posture against quiet competitors.",
+  "numbers_extracted": 10,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T11:23:16.442663+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}

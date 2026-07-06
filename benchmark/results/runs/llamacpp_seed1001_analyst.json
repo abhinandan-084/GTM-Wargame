@@ -1,0 +1,22 @@
+{
+  "model": "llamacpp",
+  "seed": 1001,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\nBased on the SHAP values, the top 3 drivers are:\n\n- **price_gap_pct**: This driver has a high positive value, indicating that the price gap between our product and the market leader is significant. This could be driving sales movement.\n- **marketing_intensity**: This driver has a moderate positive value, suggesting that marketing efforts are contributing to sales movement.\n- **leader_price_delta**: This driver has a negative value, indicating that changes in the market leader's price may be influencing sales movement.\n\n### SCIENTIFIC HYPOTHESIS\n\nBased on these drivers and their contextual significance:\n\n* Despite being in the launch phase, our premium position is under threat due to 'price_gap_pct'.\n* Marketing efforts are contributing to sales movement, but the effectiveness of these efforts needs further investigation.\n* Changes in the market leader's price may be influencing sales movement.\n\n### DATA ANOMALIES\n\nBased on the wargame_alerts:\n\n* **promotion_fatigue**: This alert is not triggered, indicating that there is no promotion fatigue affecting our analysis.\n* **competitor_price_war**: This alert is not triggered, indicating that there is no competitor price war affecting our analysis.\n\n### SYNERGY AUDIT\n\nBased on the 'marketing_synergy' signal:\n\n* Our spend appears to be amplifying our price position, as indicated by the positive value of 'price_gap_pct'. However, further investigation is needed to confirm the effectiveness of this synergy.",
+  "numbers_extracted": 0,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T16:29:10.127373+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "llamacpp",
+    "temperature": 0.4
+  }
+}

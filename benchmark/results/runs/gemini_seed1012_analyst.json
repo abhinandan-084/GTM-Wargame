@@ -1,0 +1,22 @@
+{
+  "model": "gemini",
+  "seed": 1012,
+  "node": "analyst",
+  "text": "### TOP DRIVERS\n\n- **Marketing vs Comp Launch (11494.2392578125)**: This is the most significant positive driver, indicating that our defensive marketing posture is successfully insulating our volume from competitor movements. Even though the market is in a Steady State, our dominant Share of Voice is acting as a primary volume protector against rival tactics.\n- **Retail Support Spend (5331.185546875)**: Direct investment in retail channels is yielding high returns. In a Hyper-sensitive price environment, this spend is likely being used to secure floor space and salesperson mindshare, which is critical for maintaining our Under-cutter position.\n- **Month (-2834.556884765625)**: This negative driver represents a significant seasonal headwind. As the product is in the Maturity/Maintain lifecycle stage, the baseline is naturally eroding during this specific period, requiring higher levels of intervention to maintain flat sales.\n\n### SCIENTIFIC HYPOTHESIS\n\nThe model accurately detects the Hyper-sensitive price regime, as evidenced by the positive Price Marketing Synergy (1775.036865234375) and Price Effect (862.4609985351562). However, the hypothesis is that our volume is currently artificial; it is being sustained by aggressive defensive spending rather than organic price appeal. While we are the Under-cutter, the negative Leader Price Delta (-1175.035400390625) suggests the competitor is slashing prices faster than we can react, narrowing the gap and neutralizing our primary advantage. The Strong Multiplier synergy is currently the only thing preventing the Competitor Price War from causing a total volume collapse, but the Diminishing Returns signal suggests this strategy is nearing its limit.\n\n### DATA ANOMALIES\n\n- **Competitor Price War**: There is a conflict between the Quiet competitor activity signal and the High Stress price threat. The SHAP values confirm the latter is the true reality, as Leader Price Delta (-1175.035400390625) is a major drag on performance.\n- **Marketing Efficiency**: Despite the massive positive impact of Marketing vs Comp Launch, the Efficiency Momentum (-166.68643188476562) is negative. This aligns with the Diminishing Returns signal, suggesting that while our spend is moving the needle, each additional dollar is becoming less effective at counteracting the competitor's price aggression.\n- **Search Adstock (-2752.3896484375)**: This significant negative value is an anomaly given our Dominant Share of Voice. It suggests that our search strategy is either misaligned with current consumer intent or is being heavily outbid by the competitor during this price war.",
+  "numbers_extracted": 9,
+  "flagged_values": [],
+  "is_valid": true,
+  "timestamp": "2026-07-06T13:06:00.377813+00:00",
+  "config": {
+    "tier": "upstart",
+    "budget": 500000.0,
+    "horizon": 4,
+    "nodes": [
+      "analyst",
+      "strategist"
+    ],
+    "dry_run": false,
+    "model": "gemini",
+    "temperature": 0.1
+  }
+}
