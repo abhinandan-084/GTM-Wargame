@@ -44,3 +44,33 @@ trap-l,TRAP,1337,2,0,0,0,0,2,True,True,[],[]
 trap-m,TRAP,42,2,0,0,0,0,2,True,True,[],[]
 trap-n,TRAP,1337,2,0,0,0,0,2,True,True,[],[]
 trap-o,TRAP,42,2,0,0,0,0,2,True,True,[],[]
+trap-p,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-q,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-r,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-s,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-t,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-u,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-v,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-w,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-x,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-y,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-z,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-aa,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-ab,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+trap-ac,TRAP,1337,3,0,0,0,0,3,True,True,[],[]
+trap-ad,TRAP,42,3,0,0,0,0,3,True,True,[],[]
+injected-p,INJECTED,42,3,1,1,0,0,2,False,True,[114.0],[114.0]
+injected-q,INJECTED,1337,3,1,1,0,0,2,False,True,[32.0],[32.0]
+injected-r,INJECTED,42,4,2,2,0,0,2,False,True,"[470.0, 148.0]","[148.0, 470.0]"
+injected-s,INJECTED,1337,3,1,1,0,0,2,False,True,[251.0],[251.0]
+injected-t,INJECTED,42,3,1,1,0,0,2,False,True,[51.0],[51.0]
+injected-u,INJECTED,1337,4,2,2,0,0,2,False,True,"[751.0, 554.0]","[554.0, 751.0]"
+injected-v,INJECTED,42,4,2,2,0,0,2,False,True,"[635.0, 381.0]","[381.0, 635.0]"
+injected-w,INJECTED,1337,4,2,2,0,0,2,False,True,"[319.0, 311.0]","[311.0, 319.0]"
+injected-x,INJECTED,42,3,1,1,0,0,2,False,True,[412.0],[412.0]
+injected-y,INJECTED,1337,3,1,1,0,0,2,False,True,[704.0],[704.0]
+injected-z,INJECTED,42,4,2,2,0,0,2,False,True,"[625.0, 604.0]","[604.0, 625.0]"
+injected-aa,INJECTED,1337,3,1,1,0,0,2,False,True,[940.0],[940.0]
+injected-ab,INJECTED,42,4,2,2,0,0,2,False,True,"[968.0, 271.0]","[271.0, 968.0]"
+injected-ac,INJECTED,1337,4,2,2,0,0,2,False,True,"[481.0, 784.0]","[481.0, 784.0]"
+injected-ad,INJECTED,42,4,2,2,0,0,2,False,True,"[420.0, 390.0]","[390.0, 420.0]"

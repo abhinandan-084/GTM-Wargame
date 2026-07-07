@@ -40,3 +40,36 @@ def test_common_small_integers_are_ignored():
     text = "1. First point. 2. Second point. 3. Third point."
     result = ConsistencyChecker.validate_response(text, SHAP_INFO, MARKET_CONTEXT, OPT_RESULTS)
     assert result["is_valid"] is True
+
+
+K_OPT_RESULTS = {"optimized_search": 176432.11, "optimized_retail": 195575.07}
+
+
+def test_k_notation_citation_of_real_pool_value_is_accepted():
+    # 176k for 176,432.11 (round) and 195k for 195,575.07 (truncation) are
+    # both within one unit of the last written digit.
+    for text in ("Search spend totals 176k this cycle.",
+                 "Retail gets 195k over the horizon.",
+                 "Search spend totals 176 thousand this cycle.",
+                 "Search runs at 176.4k per the optimizer."):
+        result = ConsistencyChecker.validate_response(text, {}, {}, K_OPT_RESULTS)
+        assert result["is_valid"] is True, text
+
+
+def test_k_notation_is_context_gated_and_precision_aware():
+    # A bare "176" (no suffix) must NOT silently match 176,432.11...
+    result = ConsistencyChecker.validate_response(
+        "The figure is 176.", {}, {}, K_OPT_RESULTS)
+    assert 176.0 in result["hallucinated_values"]
+    # ...a fabricated k value must still flag...
+    result = ConsistencyChecker.validate_response(
+        "Allocate 84k to Social.", {}, {}, K_OPT_RESULTS)
+    assert 84.0 in result["hallucinated_values"]
+    # ...aggressive rounding beyond one k-unit flags (130k for 126,279)...
+    result = ConsistencyChecker.validate_response(
+        "Retail takes 130k.", {}, {}, {"optimized_retail": 126279.0})
+    assert 130.0 in result["hallucinated_values"]
+    # ...and higher written precision earns a tighter window.
+    result = ConsistencyChecker.validate_response(
+        "Search runs at 176.9k.", {}, {}, K_OPT_RESULTS)
+    assert 176.9 in result["hallucinated_values"]

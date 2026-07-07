@@ -1,0 +1,96 @@
+{
+  "standard": "Final human-judgment buckets for every Experiment A flag, aligned row-by-row with flag_audit_raw.csv (which holds the sentence context and mechanical evidence). A mechanical derivation hit is a candidate, not a verdict: buckets require the sentence to semantically support the match, and genuinely ambiguous flags resolve to FABRICATED so fabrication rates stay an upper bound. Rendered into experiment_a_report.md by audit_flags.py --write-report.",
+  "verdicts": [
+    {
+      "model": "gemini",
+      "seed": 1015,
+      "value": 25.0,
+      "bucket": "CORRECT-BUT-DERIVED",
+      "justification": "'25 percent price gap relative to the leader (715.18)': (715.18 - 535.68) / 715.18 = 25.1%; both operands are pool values and the sentence names the derivation."
+    },
+    {
+      "model": "gemini",
+      "seed": 1019,
+      "value": 30.0,
+      "bucket": "CORRECT-BUT-DERIVED",
+      "justification": "'496.14 maintains a healthy 30% gap below the market leader price of 715.07': (715.07 - 496.14) / 715.07 = 30.6%, within the checker's own tolerance of 30; sentence names both operands."
+    },
+    {
+      "model": "gemini",
+      "seed": 1023,
+      "value": 28.0,
+      "bucket": "CORRECT-BUT-DERIVED",
+      "justification": "'515.32 ... 28 percent safety buffer' vs leader 715.07: (715.07 - 515.32) / 715.07 = 27.9%; sentence names both operands."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1015,
+      "value": 20.0,
+      "bucket": "FABRICATED",
+      "justification": "'Reduce spending on Search by 20%': invented action parameter with no pool basis; derivation hits are chance collisions."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1016,
+      "value": 60.0,
+      "bucket": "FABRICATED",
+      "justification": "Invented '60% to Margin Preservation' budget split; no pool basis."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1016,
+      "value": 40.0,
+      "bucket": "FABRICATED",
+      "justification": "Invented '40% to Efficiency Enhancement' split; no pool basis."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1016,
+      "value": 60.0,
+      "bucket": "FABRICATED",
+      "justification": "Second occurrence of the invented 60% split (checker flags per occurrence)."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1016,
+      "value": 40.0,
+      "bucket": "FABRICATED",
+      "justification": "Second occurrence of the invented 40% split."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1017,
+      "value": 20.0,
+      "bucket": "FABRICATED",
+      "justification": "'Reduce budget by 20% to $X': invented parameter beside a literal unfilled placeholder."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1017,
+      "value": 30.0,
+      "bucket": "FABRICATED",
+      "justification": "'Increase budget by 30% to $Y': same invented pattern."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1029,
+      "value": 100.0,
+      "bucket": "FABRICATED",
+      "justification": "Invented ROI table Spend cell ('$100k'); the pipeline computes no revenue or ROI; the only mechanical hits are degenerate (a-0)/a collisions."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1029,
+      "value": 500.0,
+      "bucket": "FABRICATED",
+      "justification": "Invented ROI table Revenue cell ('$500k'). Numerically coincides with the run budget 500,000, which is not itself a pool member - coincidence, not grounding."
+    },
+    {
+      "model": "llamacpp",
+      "seed": 1029,
+      "value": 50.0,
+      "bucket": "FABRICATED",
+      "justification": "Invented ROI table Spend cell ('$50k'); no pool value near 50,000."
+    }
+  ]
+}

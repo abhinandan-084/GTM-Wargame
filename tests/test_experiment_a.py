@@ -4,8 +4,14 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
+from benchmark.audit_flags import (  # noqa: E402
+    _run_denominators,
+    load_verdicts,
+    render_audit_section,
+)
 from benchmark.run import (  # noqa: E402  (import itself asserts import-safety: no side effects)
     MockProvider,
+    _highlight_flagged,
     parse_seeds,
     run_experiment,
     wilson_interval,
@@ -54,6 +60,39 @@ def test_dry_run_completes_end_to_end_without_api_calls(tmp_path):
     examples = list((tmp_path / "examples").glob("*.md"))
     assert len(examples) == 1
     assert "FLAGGED" in examples[0].read_text()
+
+
+def test_highlight_never_annotates_inside_comma_grouped_numbers():
+    # Flagged 25 is "25 percent", not the head of "25,106.14" (real bug:
+    # gemini seed 1015 example had the marker inside the spend figure).
+    text = "Social spend is minimized to 25,106.14 given the 25 percent gap and 25% risk."
+    out = _highlight_flagged(text, [25.0])
+    assert "25,106.14" in out and "**[FLAGGED: 25]**,106.14" not in out
+    assert "**[FLAGGED: 25]** percent" in out
+    assert "**[FLAGGED: 25]**%" in out
+
+    out = _highlight_flagged("Retail spend of 195,575.07 misses the 195k claim.", [195.0])
+    assert "195,575.07" in out and "**[FLAGGED: 195]**,575" not in out
+    assert "**[FLAGGED: 195]**k" in out
+
+
+def test_flag_audit_section_is_computed_and_in_sync_with_the_report():
+    # load_verdicts asserts row-by-row alignment with flag_audit_raw.csv, so a
+    # verdict edited without rerunning the audit (or vice versa) fails here.
+    verdicts = load_verdicts()
+    section = render_audit_section(verdicts, _run_denominators())
+
+    # The published taxonomy and headline rates, pinned to the committed
+    # verdicts + run records rather than typed into prose.
+    assert "| FABRICATED | 0 | 10 | 10 |" in section
+    assert "| CORRECT-BUT-DERIVED | 3 | 0 | 3 |" in section
+    assert "0/537 (0.0%), 95% CI [0.0%, 0.7%]" in section
+    assert "10/138 (7.2%), 95% CI [4.0%, 12.8%]" in section
+
+    # The committed report carries exactly this rendering: regenerating with
+    # audit_flags.py --write-report after any evidence change keeps them in sync.
+    report = REPO_ROOT / "benchmark" / "results" / "experiment_a_report.md"
+    assert section in report.read_text()
 
 
 def test_mock_provider_fabricated_number_is_unmatchable():

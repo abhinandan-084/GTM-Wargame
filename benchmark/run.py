@@ -5,9 +5,10 @@ artifacts rebuilt per seed, validates scored node outputs with the
 ConsistencyChecker, and reports run-level and per-number flag rates with
 Wilson 95% confidence intervals. Real API calls - run locally, never in CI.
 
-This is not a model leaderboard. A frontier model's rate shows fabrication
-persists even at the frontier under explicit no-invention instructions; a
-local model's rate shows why the guardrail is load-bearing in local/private
+This is not a model leaderboard, and a flag is not a fabrication verdict:
+flag rates are an upper bound, audited per flag by benchmark/audit_flags.py
+(corrected rates live in the report's flag-audit section). The corrected
+local-model rate is what shows the guardrail is load-bearing in local/private
 deployments.
 
 Honesty caveat: this measures numerical grounding against a known pool -
@@ -256,7 +257,9 @@ def _highlight_flagged(text: str, flagged: List[float]) -> str:
             forms.add(str(int(v)))
         for form in sorted(forms, key=len, reverse=True):
             pattern = re.escape(form)
-            text = re.sub(rf"(?<![\d.\w]){pattern}(?![\d.])", f"**[FLAGGED: {form}]**", text)
+            # (?!...|,\d): never annotate the head of a comma-grouped number
+            # ("25" inside "25,106.14" is not the flagged 25).
+            text = re.sub(rf"(?<![\d.\w]){pattern}(?![\d.]|,\d)", f"**[FLAGGED: {form}]**", text)
     return text
 
 
@@ -301,11 +304,13 @@ def write_report(out_dir: Path, rows: List[Dict], failures: List[Dict],
     lines = [
         "# LLM fabrication rates with the guardrail observing (Experiment A)",
         "",
-        "**Framing:** this is not a model leaderboard. A frontier model's non-zero rate",
-        "shows that fabrication persists even at the frontier, on clean synthetic data,",
-        "under prompts that explicitly forbid inventing numbers. A local model's higher",
-        "rate is the point, not an embarrassment: it shows why the guardrail is",
-        "load-bearing in local/private deployments.",
+        "**Framing:** this is not a model leaderboard, and a flag is not yet a",
+        "fabrication: flag rates are an *upper bound* - a flag means a number failed",
+        "pool matching, not necessarily that the model invented it. Every flag is",
+        "audited and classified before it becomes a claim (the flag-audit section,",
+        "maintained by `benchmark/audit_flags.py --write-report`); the fabrication",
+        "rates there are what show the guardrail is load-bearing in local/private",
+        "deployments.",
         "",
         "**Honesty caveat:** this measures numerical grounding against a known pool -",
         "whether a cited number *exists* in the ground truth - not semantic correctness.",
@@ -330,7 +335,10 @@ def write_report(out_dir: Path, rows: List[Dict], failures: List[Dict],
             f"| {r['numbers_written']} | {r['numbers_flagged']} | {per_number} |"
         )
 
-    lines += ["", "Raw counts are authoritative; rates at small K are noisy - read the CI."]
+    lines += [
+        "",
+        "Raw counts are authoritative; rates at small K are noisy - read the CI.",
+    ]
 
     if failures:
         lines += ["", "## Failures (excluded from denominators)", ""]

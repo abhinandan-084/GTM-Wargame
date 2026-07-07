@@ -1366,5 +1366,833 @@
         "metric": "relative_velocity SHAP contribution"
       }
     ]
+  },
+  {
+    "case_id": "trap-p",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (second week)**: the model attributes 80k to this driver in the current cycle.\n- **weekly_forecasted_retail (first week)**: holding at 79.9k per the optimizer run.\n- **social_adstock SHAP contribution**: 357, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "80k",
+        "value": 80.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (second week)"
+      },
+      {
+        "token": "79.9k",
+        "value": 79.9,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "357",
+        "value": 357.0,
+        "label": "legit",
+        "metric": "social_adstock SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-q",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **actual_historical_sales**: holding at 340.0k per the optimizer run.\n- **weekly_forecasted_search (second week)**: 141k, which the boardroom should treat as the operative figure.\nThe proposal puts social_adstock SHAP contribution at 1109, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "340.0k",
+        "value": 340.0,
+        "label": "legit_k",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "141k",
+        "value": 141.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (second week)"
+      },
+      {
+        "token": "1109",
+        "value": 1109.0,
+        "label": "legit",
+        "metric": "social_adstock SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-r",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (third week)**: 14k, which the boardroom should treat as the operative figure.\nThe proposal puts actual_historical_sales at 362.0k, in line with the diagnostic readout.\nAgainst the trailing baseline, recent_promo_intensity SHAP contribution lands at 1632.50.\n",
+    "values": [
+      {
+        "token": "14k",
+        "value": 14.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "362.0k",
+        "value": 362.0,
+        "label": "legit_k",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "1632.50",
+        "value": 1632.5,
+        "label": "legit",
+        "metric": "recent_promo_intensity SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-s",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nThe proposal puts forecasted_total_sales at 351.0k, in line with the diagnostic readout.\nAgainst the trailing baseline, weekly_forecasted_sales (third week) lands at 86k.\nDiagnostics place weekly_forecasted_search (fourth week) at 8950 for the review window.\n",
+    "values": [
+      {
+        "token": "351.0k",
+        "value": 351.0,
+        "label": "legit_k",
+        "metric": "forecasted_total_sales"
+      },
+      {
+        "token": "86k",
+        "value": 86.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (third week)"
+      },
+      {
+        "token": "8950",
+        "value": 8950.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_search (fourth week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-t",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\nAgainst the trailing baseline, weekly_forecasted_search (third week) lands at 14k.\nDiagnostics place weekly_forecasted_retail (first week) at 79.9k for the review window.\n- **weekly_forecasted_sales (first week)**: the model attributes 103149.00 to this driver in the current cycle.\n",
+    "values": [
+      {
+        "token": "14k",
+        "value": 14.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "79.9k",
+        "value": 79.9,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "103149.00",
+        "value": 103149.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_sales (first week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-u",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nDiagnostics place weekly_forecasted_search (second week) at 140.8k for the review window.\n- **optimized_social**: the model attributes 44k to this driver in the current cycle.\n- **forecasted_total_sales**: holding at $350,982 per the optimizer run.\n",
+    "values": [
+      {
+        "token": "140.8k",
+        "value": 140.8,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (second week)"
+      },
+      {
+        "token": "44k",
+        "value": 44.0,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "$350,982",
+        "value": 350982.0,
+        "label": "legit",
+        "metric": "forecasted_total_sales"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-v",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (third week)**: the model attributes 14k to this driver in the current cycle.\n- **weekly_forecasted_sales (first week)**: holding at 103.1k per the optimizer run.\n- **actual_market_leader_price**: 715.07, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "14k",
+        "value": 14.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "103.1k",
+        "value": 103.1,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (first week)"
+      },
+      {
+        "token": "715.07",
+        "value": 715.07,
+        "label": "legit",
+        "metric": "actual_market_leader_price"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-w",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **optimized_social**: holding at 44.1k per the optimizer run.\n- **optimized_search**: 179k, which the boardroom should treat as the operative figure.\nThe proposal puts weekly_forecasted_retail (fourth week) at 90921, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "44.1k",
+        "value": 44.1,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "179k",
+        "value": 179.0,
+        "label": "legit_k",
+        "metric": "optimized_search"
+      },
+      {
+        "token": "90921",
+        "value": 90921.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_retail (fourth week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-x",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **optimized_social**: 19k, which the boardroom should treat as the operative figure.\nThe proposal puts actual_historical_sales at 362.0k, in line with the diagnostic readout.\nAgainst the trailing baseline, optimized_social lands at $18,754.\n",
+    "values": [
+      {
+        "token": "19k",
+        "value": 19.0,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "362.0k",
+        "value": 362.0,
+        "label": "legit_k",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "$18,754",
+        "value": 18754.0,
+        "label": "legit",
+        "metric": "optimized_social"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-y",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nThe proposal puts weekly_forecasted_sales (third week) at 85.8k, in line with the diagnostic readout.\nAgainst the trailing baseline, actual_historical_sales lands at 340k.\nDiagnostics place weekly_forecasted_sales (first week) at 84813 for the review window.\n",
+    "values": [
+      {
+        "token": "85.8k",
+        "value": 85.8,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (third week)"
+      },
+      {
+        "token": "340k",
+        "value": 340.0,
+        "label": "legit_k",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "84813",
+        "value": 84813.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_sales (first week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-z",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\nAgainst the trailing baseline, forecasted_total_sales lands at 380k.\nDiagnostics place weekly_forecasted_retail (first week) at 79.9k for the review window.\n- **comp_a_impact SHAP contribution**: the model attributes 0.03 to this driver in the current cycle.\n",
+    "values": [
+      {
+        "token": "380k",
+        "value": 380.0,
+        "label": "legit_k",
+        "metric": "forecasted_total_sales"
+      },
+      {
+        "token": "79.9k",
+        "value": 79.9,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "0.03",
+        "value": 0.03,
+        "label": "legit",
+        "metric": "comp_a_impact SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-aa",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nDiagnostics place optimized_social at 44.1k for the review window.\n- **optimized_retail**: the model attributes 274k to this driver in the current cycle.\n- **weekly_forecasted_retail (third week)**: holding at $89,629 per the optimizer run.\n",
+    "values": [
+      {
+        "token": "44.1k",
+        "value": 44.1,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "274k",
+        "value": 274.0,
+        "label": "legit_k",
+        "metric": "optimized_retail"
+      },
+      {
+        "token": "$89,629",
+        "value": 89629.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_retail (third week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-ab",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_retail (first week)**: the model attributes 80k to this driver in the current cycle.\n- **weekly_forecasted_retail (first week)**: holding at 79.9k per the optimizer run.\n- **weekly_forecasted_sales (second week)**: $96,674, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "80k",
+        "value": 80.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "79.9k",
+        "value": 79.9,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "$96,674",
+        "value": 96674.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_sales (second week)"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-ac",
+    "family": "TRAP",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **optimized_social**: holding at 44.1k per the optimizer run.\n- **weekly_forecasted_retail (fourth week)**: 91k, which the boardroom should treat as the operative figure.\nThe proposal puts is_comp_launch SHAP contribution at 135, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "44.1k",
+        "value": 44.1,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "91k",
+        "value": 91.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (fourth week)"
+      },
+      {
+        "token": "135",
+        "value": 135.0,
+        "label": "legit",
+        "metric": "is_comp_launch SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "trap-ad",
+    "family": "TRAP",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_sales (first week)**: 103k, which the boardroom should treat as the operative figure.\nThe proposal puts weekly_forecasted_sales (first week) at 103.1k, in line with the diagnostic readout.\nAgainst the trailing baseline, our_price_velocity SHAP contribution lands at 13.\n",
+    "values": [
+      {
+        "token": "103k",
+        "value": 103.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (first week)"
+      },
+      {
+        "token": "103.1k",
+        "value": 103.1,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (first week)"
+      },
+      {
+        "token": "13",
+        "value": 13.0,
+        "label": "legit",
+        "metric": "our_price_velocity SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-p",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\nThe proposal puts list_price SHAP contribution at 114k, in line with the diagnostic readout.\n- **relative_velocity SHAP contribution**: holding at 0.54 per the optimizer run.\n- **weekly_forecasted_search (first week)**: the model attributes 107k to this driver in the current cycle.\n",
+    "values": [
+      {
+        "token": "107k",
+        "value": 107.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (first week)"
+      },
+      {
+        "token": "0.54",
+        "value": 0.54,
+        "label": "legit",
+        "metric": "relative_velocity SHAP contribution"
+      },
+      {
+        "token": "114k",
+        "value": 114.0,
+        "label": "injected",
+        "metric": "list_price SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-q",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **actual_historical_sales**: holding at 340.0k per the optimizer run.\nAgainst the trailing baseline, optimized_search lands at 32k.\n- **marketing_vs_comp_launch SHAP contribution**: 16508.55, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "340.0k",
+        "value": 340.0,
+        "label": "legit_k",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "16508.55",
+        "value": 16508.55,
+        "label": "legit",
+        "metric": "marketing_vs_comp_launch SHAP contribution"
+      },
+      {
+        "token": "32k",
+        "value": 32.0,
+        "label": "injected",
+        "metric": "optimized_search"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-r",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\nDiagnostics place social_adstock SHAP contribution at 470k for the review window.\n- **market_leader_price SHAP contribution**: the model attributes 148k to this driver in the current cycle.\nThe proposal puts leader_penalty SHAP contribution at 4.47, in line with the diagnostic readout.\n- **weekly_forecasted_search (third week)**: 14k, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "14k",
+        "value": 14.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "4.47",
+        "value": 4.47,
+        "label": "legit",
+        "metric": "leader_penalty SHAP contribution"
+      },
+      {
+        "token": "470k",
+        "value": 470.0,
+        "label": "injected",
+        "metric": "social_adstock SHAP contribution"
+      },
+      {
+        "token": "148k",
+        "value": 148.0,
+        "label": "injected",
+        "metric": "market_leader_price SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-s",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **retail_support_spend SHAP contribution**: the model attributes 251k to this driver in the current cycle.\nThe proposal puts weekly_forecasted_search (second week) at 140.8k, in line with the diagnostic readout.\nAgainst the trailing baseline, price_gap_pct SHAP contribution lands at 182.\n",
+    "values": [
+      {
+        "token": "140.8k",
+        "value": 140.8,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (second week)"
+      },
+      {
+        "token": "182",
+        "value": 182.0,
+        "label": "legit",
+        "metric": "price_gap_pct SHAP contribution"
+      },
+      {
+        "token": "251k",
+        "value": 251.0,
+        "label": "injected",
+        "metric": "retail_support_spend SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-t",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **mkt_efficiency_ratio SHAP contribution**: holding at 51k per the optimizer run.\nAgainst the trailing baseline, optimized_social lands at 19k.\nDiagnostics place weekly_forecasted_retail (third week) at 5769 for the review window.\n",
+    "values": [
+      {
+        "token": "19k",
+        "value": 19.0,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "5769",
+        "value": 5769.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_retail (third week)"
+      },
+      {
+        "token": "51k",
+        "value": 51.0,
+        "label": "injected",
+        "metric": "mkt_efficiency_ratio SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-u",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nDiagnostics place optimized_social at 44.1k for the review window.\n- **optimized_price**: the model attributes 648.13 to this driver in the current cycle.\n- **search_adstock SHAP contribution**: 751k, which the boardroom should treat as the operative figure.\nThe proposal puts leader_penalty SHAP contribution at 554k, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "44.1k",
+        "value": 44.1,
+        "label": "legit_k",
+        "metric": "optimized_social"
+      },
+      {
+        "token": "648.13",
+        "value": 648.13,
+        "label": "legit",
+        "metric": "optimized_price"
+      },
+      {
+        "token": "751k",
+        "value": 751.0,
+        "label": "injected",
+        "metric": "search_adstock SHAP contribution"
+      },
+      {
+        "token": "554k",
+        "value": 554.0,
+        "label": "injected",
+        "metric": "leader_penalty SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-v",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\nAgainst the trailing baseline, weekly_forecasted_retail (fourth week) lands at 635k.\nThe proposal puts weekly_forecasted_retail (second week) at 381k, in line with the diagnostic readout.\n- **weekly_forecasted_sales (fourth week)**: holding at $93,971 per the optimizer run.\n- **weekly_forecasted_sales (first week)**: the model attributes 103k to this driver in the current cycle.\n",
+    "values": [
+      {
+        "token": "103k",
+        "value": 103.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_sales (first week)"
+      },
+      {
+        "token": "$93,971",
+        "value": 93971.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_sales (fourth week)"
+      },
+      {
+        "token": "381k",
+        "value": 381.0,
+        "label": "injected",
+        "metric": "weekly_forecasted_retail (second week)"
+      },
+      {
+        "token": "635k",
+        "value": 635.0,
+        "label": "injected",
+        "metric": "weekly_forecasted_retail (fourth week)"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-w",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (third week)**: 21979, which the boardroom should treat as the operative figure.\nDiagnostics place leader_price_velocity SHAP contribution at 319k for the review window.\n- **weekly_forecasted_retail (fourth week)**: holding at 90.9k per the optimizer run.\nAgainst the trailing baseline, price_marketing_synergy SHAP contribution lands at 311k.\n",
+    "values": [
+      {
+        "token": "90.9k",
+        "value": 90.9,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (fourth week)"
+      },
+      {
+        "token": "21979",
+        "value": 21979.0,
+        "label": "legit",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "311k",
+        "value": 311.0,
+        "label": "injected",
+        "metric": "price_marketing_synergy SHAP contribution"
+      },
+      {
+        "token": "319k",
+        "value": 319.0,
+        "label": "injected",
+        "metric": "leader_price_velocity SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-x",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\nDiagnostics place list_price SHAP contribution at 412k for the review window.\n- **weekly_forecasted_search (second week)**: 80k, which the boardroom should treat as the operative figure.\nThe proposal puts marketing_intensity SHAP contribution at 222, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "80k",
+        "value": 80.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (second week)"
+      },
+      {
+        "token": "222",
+        "value": 222.0,
+        "label": "legit",
+        "metric": "marketing_intensity SHAP contribution"
+      },
+      {
+        "token": "412k",
+        "value": 412.0,
+        "label": "injected",
+        "metric": "list_price SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-y",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (second week)**: the model attributes 704k to this driver in the current cycle.\nThe proposal puts weekly_forecasted_social (second week) at 29.8k, in line with the diagnostic readout.\nAgainst the trailing baseline, optimized_retail lands at $274,431.\n",
+    "values": [
+      {
+        "token": "29.8k",
+        "value": 29.8,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_social (second week)"
+      },
+      {
+        "token": "$274,431",
+        "value": 274431.0,
+        "label": "legit",
+        "metric": "optimized_retail"
+      },
+      {
+        "token": "704k",
+        "value": 704.0,
+        "label": "injected",
+        "metric": "weekly_forecasted_search (second week)"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-z",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **leader_penalty SHAP contribution**: holding at 625k per the optimizer run.\n- **retail_support_spend SHAP contribution**: 604k, which the boardroom should treat as the operative figure.\nDiagnostics place mkt_efficiency_ratio SHAP contribution at 882.74 for the review window.\nAgainst the trailing baseline, optimized_retail lands at 194k.\n",
+    "values": [
+      {
+        "token": "194k",
+        "value": 194.0,
+        "label": "legit_k",
+        "metric": "optimized_retail"
+      },
+      {
+        "token": "882.74",
+        "value": 882.74,
+        "label": "legit",
+        "metric": "mkt_efficiency_ratio SHAP contribution"
+      },
+      {
+        "token": "625k",
+        "value": 625.0,
+        "label": "injected",
+        "metric": "leader_penalty SHAP contribution"
+      },
+      {
+        "token": "604k",
+        "value": 604.0,
+        "label": "injected",
+        "metric": "retail_support_spend SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-aa",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\n- **rolling_sales_4w SHAP contribution**: 940k, which the boardroom should treat as the operative figure.\n- **market_leader_price SHAP contribution**: the model attributes 549 to this driver in the current cycle.\nDiagnostics place optimized_retail at 274.4k for the review window.\n",
+    "values": [
+      {
+        "token": "274.4k",
+        "value": 274.4,
+        "label": "legit_k",
+        "metric": "optimized_retail"
+      },
+      {
+        "token": "549",
+        "value": 549.0,
+        "label": "legit",
+        "metric": "market_leader_price SHAP contribution"
+      },
+      {
+        "token": "940k",
+        "value": 940.0,
+        "label": "injected",
+        "metric": "rolling_sales_4w SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-ab",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\nAgainst the trailing baseline, market_leader_price SHAP contribution lands at 968k.\n- **efficiency_momentum SHAP contribution**: holding at 44.27 per the optimizer run.\n- **weekly_forecasted_retail (first week)**: the model attributes 80k to this driver in the current cycle.\nThe proposal puts weekly_forecasted_sales (third week) at 271k, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "80k",
+        "value": 80.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_retail (first week)"
+      },
+      {
+        "token": "44.27",
+        "value": 44.27,
+        "label": "legit",
+        "metric": "efficiency_momentum SHAP contribution"
+      },
+      {
+        "token": "271k",
+        "value": 271.0,
+        "label": "injected",
+        "metric": "weekly_forecasted_sales (third week)"
+      },
+      {
+        "token": "968k",
+        "value": 968.0,
+        "label": "injected",
+        "metric": "market_leader_price SHAP contribution"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-ac",
+    "family": "INJECTED",
+    "seed": 1337,
+    "text": "### Boardroom Memo\nAgainst the trailing baseline, market_leader_price SHAP contribution lands at 481k.\nDiagnostics place weekly_forecasted_sales (third week) at 784k for the review window.\n- **forecasted_total_sales**: holding at 351.0k per the optimizer run.\n- **marketing_intensity SHAP contribution**: 291, which the boardroom should treat as the operative figure.\n",
+    "values": [
+      {
+        "token": "351.0k",
+        "value": 351.0,
+        "label": "legit_k",
+        "metric": "forecasted_total_sales"
+      },
+      {
+        "token": "291",
+        "value": 291.0,
+        "label": "legit",
+        "metric": "marketing_intensity SHAP contribution"
+      },
+      {
+        "token": "481k",
+        "value": 481.0,
+        "label": "injected",
+        "metric": "market_leader_price SHAP contribution"
+      },
+      {
+        "token": "784k",
+        "value": 784.0,
+        "label": "injected",
+        "metric": "weekly_forecasted_sales (third week)"
+      }
+    ]
+  },
+  {
+    "case_id": "injected-ad",
+    "family": "INJECTED",
+    "seed": 42,
+    "text": "### Boardroom Memo\n- **weekly_forecasted_search (third week)**: 14k, which the boardroom should treat as the operative figure.\nDiagnostics place is_launch SHAP contribution at 420k for the review window.\n- **month_sin SHAP contribution**: the model attributes 390k to this driver in the current cycle.\nThe proposal puts actual_historical_sales at 362038.00, in line with the diagnostic readout.\n",
+    "values": [
+      {
+        "token": "14k",
+        "value": 14.0,
+        "label": "legit_k",
+        "metric": "weekly_forecasted_search (third week)"
+      },
+      {
+        "token": "362038.00",
+        "value": 362038.0,
+        "label": "legit",
+        "metric": "actual_historical_sales"
+      },
+      {
+        "token": "420k",
+        "value": 420.0,
+        "label": "injected",
+        "metric": "is_launch SHAP contribution"
+      },
+      {
+        "token": "390k",
+        "value": 390.0,
+        "label": "injected",
+        "metric": "month_sin SHAP contribution"
+      }
+    ]
   }
 ]

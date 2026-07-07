@@ -8,7 +8,7 @@ Timestamp: 2026-07-06T13:40:21.068359+00:00
 ### BUDGET RATIONALE
 - **Search Inefficiency**: The optimizer allocates 414,677.85 to Search despite a negative adstock impact of -835.43, suggesting the model is attempting to brute-force volume in a hyper-sensitive market where digital reach is no longer converting efficiently.
 - **Retail Prioritization**: Investment in Retail Support (37,027.31) is justified as it remains a top three driver of baseline sales, providing a more stable foundation than digital channels during this maturity phase.
-- **Social Retrenchment**: Social spend is correctly minimized to **[FLAGGED: 25]**,106.14 because the current creative strategy is disconnected from the price-sensitive needs of the consumer, resulting in negative adstock pressure.
+- **Social Retrenchment**: Social spend is correctly minimized to 25,106.14 because the current creative strategy is disconnected from the price-sensitive needs of the consumer, resulting in negative adstock pressure.
 - **Diminishing Returns**: The overall budget allocation ignores the efficiency trend signal of diminishing returns, indicating that the proposed spend levels are likely to erode margins without delivering the intended volume.
 
 ### STRATEGIC PLAY

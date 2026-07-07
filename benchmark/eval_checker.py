@@ -65,6 +65,19 @@ def matches_pool(value: float, pool: List[float]) -> bool:
     return False
 
 
+def matches_pool_k(value: float, pool: List[float], decimals: int = 0) -> bool:
+    """The checker's context-gated k-notation rule: a value written with a k
+    suffix matches a pool value within one unit of its last written digit
+    ("176k" -> 176,000 +/- 1,000; "176.4k" -> +/- 100)."""
+    window = 1000.0 * 10.0 ** (-decimals)
+    return any(abs(value * 1000 - gt) < window for gt in pool)
+
+
+def _k_decimals(token: str) -> int:
+    digits = token.rstrip("kK")
+    return len(digits.split(".")[1]) if "." in digits else 0
+
+
 def is_matchable(value: float, pool: List[float]) -> bool:
     return value not in SKIP_VALUES and matches_pool(value, pool)
 
@@ -164,7 +177,10 @@ _TEMPLATES = [
 
 
 def _parse_token(token: str) -> float:
-    return abs(float(token.replace(",", "").replace("$", "").replace("%", "")))
+    cleaned = token.replace(",", "").replace("$", "").replace("%", "")
+    if cleaned and cleaned[-1] in "kK":
+        cleaned = cleaned[:-1]  # the checker's regex extracts the bare digits
+    return abs(float(cleaned))
 
 
 def _eligible_forms(g: float) -> List[str]:
@@ -195,6 +211,10 @@ def _render(g: float, form: str) -> str:
         return f"${round(g):,}"
     if form == "negative":
         return f"-{g:.2f}"
+    if form == "k_int":
+        return f"{round(g / 1000)}k"
+    if form == "k_1dp":
+        return f"{g / 1000:.1f}k"
     raise ValueError(f"Unknown form: {form}")
 
 
@@ -235,6 +255,22 @@ def _draw_injected(rng: random.Random, base: float, pool, taken) -> Tuple[str, f
     raise RuntimeError("Could not draw an unmatchable injected value")
 
 
+def _draw_injected_k(rng: random.Random, pool, taken) -> Tuple[str, float]:
+    """Draw a fabricated k-suffix value the checker must still flag.
+
+    Must be unmatchable under the plain rules AND outside every pool value's
+    k window - a fake that lands in either would rightly be accepted, which
+    corrupts recall accounting."""
+    for _ in range(2000):
+        cand = float(rng.randint(6, 999))
+        token = f"{int(cand)}k"
+        if cand in taken:
+            continue
+        if is_unmatchable(cand, pool) and not matches_pool_k(cand, pool, 0):
+            return token, cand
+    raise RuntimeError("Could not draw an unmatchable injected k value")
+
+
 _TRAP_SPECS = [
     # (name, predicate on pool value g, render form)
     ("pct_of_fraction", lambda g: 0.06 <= g <= 0.99, "pct_bare"),   # "12" when pool holds 0.12
@@ -262,10 +298,20 @@ def _assert_case_labels(case: Dict, pool: List[float]) -> None:
     for v in case["values"]:
         if v["label"] == "legit":
             assert is_matchable(v["value"], pool), f"legit value {v['value']} not matchable ({case['case_id']})"
+        elif v["label"] == "legit_k":
+            assert matches_pool_k(v["value"], pool, _k_decimals(v["token"])), (
+                f"legit_k value {v['token']} not k-matchable ({case['case_id']})"
+            )
         elif v["label"] == "injected":
             assert is_unmatchable(v["value"], pool), f"injected value {v['value']} is matchable ({case['case_id']})"
+            if v["token"].rstrip("kK") != v["token"]:
+                assert not matches_pool_k(v["value"], pool, _k_decimals(v["token"])), (
+                    f"injected k value {v['token']} is k-matchable ({case['case_id']})"
+                )
         elif v["label"] == "skipped":
             assert v["value"] in SKIP_VALUES, f"skipped value {v['value']} not in skip list ({case['case_id']})"
+        else:
+            raise AssertionError(f"unknown label {v['label']} in {case['case_id']}")
     considered = sorted(extract_considered_numbers(case["text"]))
     labelled = sorted(v["value"] for v in case["values"] if v["label"] != "skipped")
     assert considered == labelled, (
@@ -285,9 +331,12 @@ def build_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> None:
 
     cases = []
 
+    def _suffix(idx: int) -> str:
+        return chr(ord("a") + idx) if idx < 26 else "a" + chr(ord("a") + idx - 26)
+
     def add_case(family: str, idx: int, seed: int, lines: List[str], values: List[Dict]) -> None:
         case = {
-            "case_id": f"{family.lower()}-{chr(ord('a') + idx)}",
+            "case_id": f"{family.lower()}-{_suffix(idx)}",
             "family": family,
             "seed": seed,
             "text": _build_case_text(lines) if lines else _SKIP_BULLET_TEXT,
@@ -362,6 +411,73 @@ def build_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> None:
         values.append({"token": token, "value": value, "label": "legit", "metric": metric})
         add_case("TRAP", trap_idx, seed, lines, values)
         trap_idx += 1
+
+    # k-notation cases, extending the same families: TRAP cases with correct
+    # k-citations of thousand-scale pool values (a checker without the
+    # context-gated x1000 rule flags every one), and INJECTED cases with
+    # fabricated k-suffix values that must still flag under it.
+    # (Built after the cases above so their RNG draws are unchanged.)
+    k_forms = ("k_int", "k_1dp")
+
+    def _pick_k_citation(rng, entries, pool, taken, form) -> Optional[Tuple[str, str, float]]:
+        candidates = [(m, g) for m, g in entries if g >= 6000]
+        rng.shuffle(candidates)
+        for metric, g in candidates:
+            token = _render(g, form)
+            value = _parse_token(token)
+            if value in taken or value in SKIP_VALUES:
+                continue
+            if is_matchable(value, pool):
+                continue  # plain-matchable by accident: not a genuine k trap
+            if not matches_pool_k(value, pool, _k_decimals(token)):
+                continue
+            return metric, token, value
+        return None
+
+    for i in range(CASES_PER_FAMILY):
+        seed = SEEDS[i % len(SEEDS)]
+        pool = pools[str(seed)]
+        entries = _numeric_entries(pools_data[str(seed)])
+
+        taken, lines, values = set(), [], []
+        for j in range(2):
+            picked = _pick_k_citation(rng, entries, pool, taken, k_forms[(i + j) % 2])
+            if picked is None:
+                continue
+            metric, token, value = picked
+            taken.add(value)
+            lines.append(_TEMPLATES[(i + j) % len(_TEMPLATES)].format(metric=metric, tok=token))
+            values.append({"token": token, "value": value, "label": "legit_k", "metric": metric})
+        assert lines, f"no k-citable pool value for seed {seed}"
+        metric, token, value = _pick_clean_value(rng, entries, pool, taken)
+        lines.append(_TEMPLATES[(i + 2) % len(_TEMPLATES)].format(metric=metric, tok=token))
+        values.append({"token": token, "value": value, "label": "legit", "metric": metric})
+        add_case("TRAP", CASES_PER_FAMILY + i, seed, lines, values)
+
+    for i in range(CASES_PER_FAMILY):
+        seed = SEEDS[i % len(SEEDS)]
+        pool = pools[str(seed)]
+        entries = _numeric_entries(pools_data[str(seed)])
+
+        taken, lines, values = set(), [], []
+        picked = _pick_k_citation(rng, entries, pool, taken, k_forms[i % 2])
+        if picked is not None:  # legit k citation alongside the fakes
+            metric, token, value = picked
+            taken.add(value)
+            lines.append(_TEMPLATES[i % len(_TEMPLATES)].format(metric=metric, tok=token))
+            values.append({"token": token, "value": value, "label": "legit_k", "metric": metric})
+        metric, token, value = _pick_clean_value(rng, entries, pool, taken)
+        taken.add(value)
+        lines.append(_TEMPLATES[(i + 1) % len(_TEMPLATES)].format(metric=metric, tok=token))
+        values.append({"token": token, "value": value, "label": "legit", "metric": metric})
+        for j in range(rng.randint(1, 2)):
+            metric, _ = rng.choice(entries)
+            token, value = _draw_injected_k(rng, pool, taken)
+            taken.add(value)
+            lines.append(_TEMPLATES[(i + j + 3) % len(_TEMPLATES)].format(metric=metric, tok=token))
+            values.append({"token": token, "value": value, "label": "injected", "metric": metric})
+        rng.shuffle(lines)
+        add_case("INJECTED", CASES_PER_FAMILY + i, seed, lines, values)
 
     counts = {f: sum(1 for c in cases if c["family"] == f) for f in FAMILIES}
     print(f"Built {len(cases)} cases: {counts}")
@@ -446,8 +562,9 @@ def _write_report(out_dir: Path, overall: Dict, by_family: Dict[str, Dict], rows
         "",
         "**Label rule:** a number is a true hallucination only if it is programmatically",
         "unmatchable against the case's pool - not within 1.1 of any pool value, its x100,",
-        "or its /100, and not in the skip list [0..5] (`is_unmatchable`). Verified for every",
-        "injected value at fixture-build time.",
+        "or its /100, not a k-suffixed citation within one unit of a pool value's",
+        "thousandth (`matches_pool_k`), and not in the skip list [0..5] (`is_unmatchable`).",
+        "Verified for every injected value at fixture-build time.",
         "",
         "**Honesty caveat:** this measures numerical grounding against a known pool -",
         "whether a cited number *exists* in the ground truth - not semantic correctness",
@@ -473,18 +590,21 @@ def _write_report(out_dir: Path, overall: Dict, by_family: Dict[str, Dict], rows
     lines += [
         "",
         "- **CLEAN**: every number traces to the pool; expected zero flags.",
-        "- **INJECTED**: contains provably unmatchable numbers; expected exactly those flagged.",
+        "- **INJECTED**: contains provably unmatchable numbers - including fabricated",
+        "  k-suffix values verified outside both the plain and k-notation windows;",
+        "  expected exactly those flagged.",
         "- **TRAP**: naive-checker bait (x100//100 scaling, rounding, negatives, `$1,234`",
-        "  formatting, skip-list bullet indices); expected zero flags.",
+        "  formatting, skip-list bullet indices, and correct k-notation citations of real",
+        "  pool values like `176k` for 176,432.11); expected zero flags.",
         "",
-        "Precision/recall are only defined where injected numbers exist (INJECTED family);",
-        "CLEAN and TRAP measure the false-positive rate.",
+        "Precision/recall are only defined where injected numbers exist (the INJECTED",
+        "family); the other families measure the false-positive rate.",
         "",
         "**Reading a perfect score:** labels are defined by the checker's documented matching",
         "rule, so this eval cannot disagree with that rule by construction - what it tests is",
         "everything layered around it: number extraction (regex, comma/currency/percent",
         "cleaning), the skip list, sign handling, and pool flattening. A perfect score means",
-        "those layers never contradict the matching rule across 45 adversarial cases; it does",
+        f"those layers never contradict the matching rule across {overall['cases']} adversarial cases; it does",
         "not mean the checker is semantically infallible (see the honesty caveat above).",
         "",
     ]
