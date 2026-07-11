@@ -31,7 +31,6 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
 
 try:
     from benchmark.eval_checker import (
@@ -60,10 +59,6 @@ CALL_CONFIRM_THRESHOLD = 100
 MODEL_TEMPERATURES = {"gemini": 0.1, "openai": 0.1, "anthropic": 0.1, "llamacpp": 0.4}
 
 
-# ---------------------------------------------------------------------------
-# Statistics
-# ---------------------------------------------------------------------------
-
 def wilson_interval(successes: int, n: int, z: float = 1.96) -> tuple:
     """Wilson score 95% CI for a binomial proportion. Sane at small N."""
     if n == 0:
@@ -75,7 +70,7 @@ def wilson_interval(successes: int, n: int, z: float = 1.96) -> tuple:
     return (max(0.0, center - half), min(1.0, center + half))
 
 
-def parse_seeds(spec: Optional[str], k: int) -> List[int]:
+def parse_seeds(spec: str | None, k: int) -> list[int]:
     """'1000:1010' -> [1000..1009]; '7,9,13' -> [7, 9, 13]; None -> [1000..1000+k-1]."""
     if spec is None:
         return list(range(1000, 1000 + k))
@@ -87,11 +82,7 @@ def parse_seeds(spec: Optional[str], k: int) -> List[int]:
     return seeds[:k] if k and k < len(seeds) else seeds
 
 
-# ---------------------------------------------------------------------------
-# Pipeline artifacts (shared across models: paired design)
-# ---------------------------------------------------------------------------
-
-def build_artifacts(seed: int, tier: str, budget: float, horizon: int) -> Dict:
+def build_artifacts(seed: int, tier: str, budget: float, horizon: int) -> dict:
     from gtm_boardroom.data.config import get_tier_config
     from gtm_boardroom.data.source import SyntheticDataSource
     from gtm_boardroom.diagnostics.driver_engine import GTM_DriverEngine
@@ -112,19 +103,13 @@ def build_artifacts(seed: int, tier: str, budget: float, horizon: int) -> Dict:
     return artifacts
 
 
-# ---------------------------------------------------------------------------
-# Dry-run mock provider (zero API calls)
-# ---------------------------------------------------------------------------
-
 class MockProvider:
-    """Duck-types LLMProvider.invoke with canned memo text built from real pool numbers.
+    """Duck-types LLMProvider.invoke with canned memo text built from real pool
+    numbers. Fabricating runs also inject one number verified unmatchable against
+    the run's actual pool, so the whole flag -> report -> examples pipeline runs
+    deterministically without any API call."""
 
-    On fabricating runs it also injects one number verified unmatchable against
-    the run's actual pool, so the whole flag -> report -> examples pipeline is
-    exercised deterministically without any API call.
-    """
-
-    def __init__(self, artifacts: Dict, fabricate: bool):
+    def __init__(self, artifacts: dict, fabricate: bool):
         self.name = "mock"
         opt = artifacts["opt_results"]
         self._citations = [
@@ -139,7 +124,7 @@ class MockProvider:
                 candidate += 1313.13
             self._fabricated = f"{round(candidate, 2):,}"
 
-    def invoke(self, template: str, variables: Dict) -> str:
+    def invoke(self, template: str, variables: dict) -> str:
         lines = [
             "### Executive Summary",
             f"- **Optimized Price**: reposition at {self._citations[0]} for the coming cycle.",
@@ -153,7 +138,7 @@ class MockProvider:
         return "\n".join(lines)
 
 
-def make_brain(model: str, dry_run: bool, artifacts: Dict, seed: int):
+def make_brain(model: str, dry_run: bool, artifacts: dict, seed: int):
     from gtm_boardroom.agents.gtm_agents import GTMBrain
 
     if dry_run:
@@ -164,10 +149,6 @@ def make_brain(model: str, dry_run: bool, artifacts: Dict, seed: int):
         return brain
     return GTMBrain(provider=model)
 
-
-# ---------------------------------------------------------------------------
-# Per-run procedure
-# ---------------------------------------------------------------------------
 
 def _call_with_retry(fn, label: str, retries: int = 3, backoff: float = 2.0):
     for attempt in range(1, retries + 1):
@@ -180,8 +161,8 @@ def _call_with_retry(fn, label: str, retries: int = 3, backoff: float = 2.0):
             time.sleep(backoff * attempt)
 
 
-def run_one(model: str, seed: int, artifacts: Dict, nodes: List[str],
-            dry_run: bool, run_config: Dict) -> List[Dict]:
+def run_one(model: str, seed: int, artifacts: dict, nodes: list[str],
+            dry_run: bool, run_config: dict) -> list[dict]:
     """One model x seed run: full chain, validate scored nodes, return records."""
     from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
 
@@ -220,11 +201,7 @@ def run_one(model: str, seed: int, artifacts: Dict, nodes: List[str],
     return records
 
 
-# ---------------------------------------------------------------------------
-# Aggregation, report, examples
-# ---------------------------------------------------------------------------
-
-def aggregate(records: List[Dict], failures: List[Dict], models: List[str]) -> List[Dict]:
+def aggregate(records: list[dict], failures: list[dict], models: list[str]) -> list[dict]:
     rows = []
     for model in models:
         recs = [r for r in records if r["model"] == model]
@@ -248,7 +225,7 @@ def aggregate(records: List[Dict], failures: List[Dict], models: List[str]) -> L
     return rows
 
 
-def _highlight_flagged(text: str, flagged: List[float]) -> str:
+def _highlight_flagged(text: str, flagged: list[float]) -> str:
     """Best-effort inline highlighting of flagged number occurrences."""
     for v in flagged:
         forms = {f"{v:g}", f"{v:.2f}", f"{v:.1f}", f"{v:,.2f}", f"{v:,.1f}"}
@@ -263,7 +240,7 @@ def _highlight_flagged(text: str, flagged: List[float]) -> str:
     return text
 
 
-def write_examples(records: List[Dict], examples_dir: Path, limit: int = 3) -> List[Path]:
+def write_examples(records: list[dict], examples_dir: Path, limit: int = 3) -> list[Path]:
     flagged_records = [r for r in records if r["flagged_values"]]
     # Prefer one example per model before taking seconds from the same model.
     flagged_records.sort(key=lambda r: (r["model"], r["seed"]))
@@ -299,8 +276,8 @@ def write_examples(records: List[Dict], examples_dir: Path, limit: int = 3) -> L
     return paths
 
 
-def write_report(out_dir: Path, rows: List[Dict], failures: List[Dict],
-                 run_config: Dict, example_paths: List[Path]) -> Path:
+def write_report(out_dir: Path, rows: list[dict], failures: list[dict],
+                 run_config: dict, example_paths: list[Path]) -> Path:
     lines = [
         "# LLM fabrication rates with the guardrail observing (Experiment A)",
         "",
@@ -358,11 +335,7 @@ def write_report(out_dir: Path, rows: List[Dict], failures: List[Dict],
     return report_path
 
 
-# ---------------------------------------------------------------------------
-# Orchestration
-# ---------------------------------------------------------------------------
-
-def check_prerequisites(models: List[str], dry_run: bool) -> None:
+def check_prerequisites(models: list[str], dry_run: bool) -> None:
     """Fail fast, before any expensive work, if a requested model can't run."""
     if dry_run:
         return
@@ -387,9 +360,9 @@ def check_prerequisites(models: List[str], dry_run: bool) -> None:
                 )
 
 
-def run_experiment(models: List[str], seeds: List[int], tier: str, budget: float,
-                   horizon: int, nodes: List[str], out_dir: Path,
-                   dry_run: bool = False) -> Dict:
+def run_experiment(models: list[str], seeds: list[int], tier: str, budget: float,
+                   horizon: int, nodes: list[str], out_dir: Path,
+                   dry_run: bool = False) -> dict:
     run_config = {
         "tier": tier, "budget": budget, "horizon": horizon,
         "nodes": nodes, "dry_run": dry_run,
@@ -405,7 +378,7 @@ def run_experiment(models: List[str], seeds: List[int], tier: str, budget: float
             print(f"  Running {model} on seed {seed}...")
             try:
                 seed_records = run_one(model, seed, artifacts, nodes, dry_run, run_config)
-            except Exception as exc:  # one API failure must not kill the batch
+            except Exception as exc:
                 failure = {
                     "model": model, "seed": seed, "error": f"{type(exc).__name__}: {exc}",
                     "timestamp": datetime.now(timezone.utc).isoformat(),

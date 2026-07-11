@@ -42,7 +42,6 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 try:
     from benchmark.run import (aggregate, build_artifacts, wilson_interval,
@@ -66,11 +65,7 @@ TOLERANCE = 1.1  # the checker's own matching tolerance
 NOTATION_RELATIVE = 0.005  # 0.5% relative, for k/M-scaled comparisons
 
 
-# ---------------------------------------------------------------------------
-# Sentence context
-# ---------------------------------------------------------------------------
-
-def _value_forms(v: float) -> List[str]:
+def _value_forms(v: float) -> list[str]:
     """Textual forms a flagged float may take in the transcript (mirrors
     _highlight_flagged in run.py)."""
     forms = {f"{v:g}", f"{v:.2f}", f"{v:.1f}", f"{v:,.2f}", f"{v:,.1f}"}
@@ -80,7 +75,7 @@ def _value_forms(v: float) -> List[str]:
     return sorted(forms, key=len, reverse=True)
 
 
-def find_sentences(text: str, value: float) -> List[str]:
+def find_sentences(text: str, value: float) -> list[str]:
     """Sentences/bullets containing the value as a standalone number.
 
     Rejects matches that are the head of a longer number ("25" inside
@@ -88,7 +83,7 @@ def find_sentences(text: str, value: float) -> List[str]:
     Falls back to any-occurrence sentences if the strict pass finds nothing.
     """
     # Bullets and headings are their own units; then split prose on sentence ends.
-    units: List[str] = []
+    units: list[str] = []
     for line in text.splitlines():
         line = line.strip()
         if not line:
@@ -108,10 +103,6 @@ def find_sentences(text: str, value: float) -> List[str]:
     return strict if strict else loose
 
 
-# ---------------------------------------------------------------------------
-# Mechanical passes
-# ---------------------------------------------------------------------------
-
 def _near(a: float, b: float) -> bool:
     return abs(a - b) < TOLERANCE
 
@@ -120,7 +111,7 @@ def _near_relative(a: float, b: float, rel: float = NOTATION_RELATIVE) -> bool:
     return b != 0 and abs(a - b) / abs(b) <= rel
 
 
-def notation_pass(value: float, pool: List[float], sentences: List[str]) -> Optional[str]:
+def notation_pass(value: float, pool: list[float], sentences: list[str]) -> str | None:
     """Candidate NOTATION-ARTIFACT: value x1000/x1e6 near a pool value AND the
     sentence actually carries k/M wording."""
     context = " ".join(sentences).lower()
@@ -134,13 +125,13 @@ def notation_pass(value: float, pool: List[float], sentences: List[str]) -> Opti
     return None
 
 
-def derivation_pass(value: float, pool: List[float], horizon: int,
-                    budget: float) -> List[str]:
+def derivation_pass(value: float, pool: list[float], horizon: int,
+                    budget: float) -> list[str]:
     """Candidate CORRECT-BUT-DERIVED: pairwise combinations of pool values that
     land within the checker's tolerance of the flag. Pairs only - no triples -
     to keep chance collisions bounded. Returns every match; the human pass
     decides whether the sentence semantically supports any of them."""
-    matches: List[str] = []
+    matches: list[str] = []
 
     def record(formula: str, result: float) -> None:
         entry = f"{formula} = {result:.2f}"
@@ -176,11 +167,7 @@ def derivation_pass(value: float, pool: List[float], horizon: int,
     return matches
 
 
-# ---------------------------------------------------------------------------
-# Audit
-# ---------------------------------------------------------------------------
-
-def load_flagged_runs(runs_dir: Path = RUNS_DIR) -> List[Dict]:
+def load_flagged_runs(runs_dir: Path = RUNS_DIR) -> list[dict]:
     records = []
     for path in sorted(runs_dir.glob("*.json")):
         if path.stem.endswith("FAILURE"):
@@ -191,7 +178,7 @@ def load_flagged_runs(runs_dir: Path = RUNS_DIR) -> List[Dict]:
     return records
 
 
-def revalidate(record: Dict, artifacts: Dict, allow_drift: bool) -> List[float]:
+def revalidate(record: dict, artifacts: dict, allow_drift: bool) -> list[float]:
     """Re-run the checker on the stored text.
 
     Default mode asserts the flags match the stored record exactly (pipeline
@@ -212,7 +199,7 @@ def revalidate(record: Dict, artifacts: Dict, allow_drift: bool) -> List[float]:
 
 
 def _build_artifacts_cached(seed: int, tier: str, budget: float, horizon: int,
-                            cache_dir: Optional[Path]) -> Dict:
+                            cache_dir: Path | None) -> dict:
     """build_artifacts is minutes of optimizer work per seed; cache the
     jsonable result so audit re-runs (e.g. after a checker change) are instant."""
     if cache_dir is None:
@@ -227,13 +214,13 @@ def _build_artifacts_cached(seed: int, tier: str, budget: float, horizon: int,
 
 
 def audit(runs_dir: Path = RUNS_DIR, out_csv: Path = OUT_CSV,
-          allow_drift: bool = False, cache_dir: Optional[Path] = None) -> List[Dict]:
+          allow_drift: bool = False, cache_dir: Path | None = None) -> list[dict]:
     records = load_flagged_runs(runs_dir)
     if not records:
         sys.exit(f"No flagged runs found under {runs_dir}")
 
-    pools: Dict[Tuple[int, str], Dict] = {}
-    rows: List[Dict] = []
+    pools: dict[tuple[int, str], dict] = {}
+    rows: list[dict] = []
     for record in records:
         cfg = record["config"]
         key = (record["seed"], cfg["tier"])
@@ -286,12 +273,8 @@ def audit(runs_dir: Path = RUNS_DIR, out_csv: Path = OUT_CSV,
     return rows
 
 
-# ---------------------------------------------------------------------------
-# Verdicts -> report section
-# ---------------------------------------------------------------------------
-
 def load_verdicts(verdicts_path: Path = VERDICTS_JSON,
-                  csv_path: Path = OUT_CSV) -> List[Dict]:
+                  csv_path: Path = OUT_CSV) -> list[dict]:
     """Load the final human-judgment buckets, asserting row-by-row alignment
     with the audit CSV so verdicts can never silently drift from evidence."""
     verdicts = json.loads(verdicts_path.read_text())["verdicts"]
@@ -309,10 +292,10 @@ def load_verdicts(verdicts_path: Path = VERDICTS_JSON,
     return verdicts
 
 
-def _run_denominators(runs_dir: Path = RUNS_DIR) -> Dict[str, Dict]:
+def _run_denominators(runs_dir: Path = RUNS_DIR) -> dict[str, dict]:
     """Numbers written, seeds run, and seeds flagged per model, from the
     stored run records (the experiment report's own denominators)."""
-    stats: Dict[str, Dict] = {}
+    stats: dict[str, dict] = {}
     for path in sorted(runs_dir.glob("*.json")):
         if path.stem.endswith("FAILURE"):
             continue
@@ -325,7 +308,7 @@ def _run_denominators(runs_dir: Path = RUNS_DIR) -> Dict[str, Dict]:
     return stats
 
 
-def render_audit_section(verdicts: List[Dict], stats: Dict[str, Dict]) -> str:
+def render_audit_section(verdicts: list[dict], stats: dict[str, dict]) -> str:
     """The flag-audit section of experiment_a_report.md. Every number is
     computed from the verdicts and the stored run records."""
     models = sorted(stats)

@@ -20,7 +20,7 @@ import json
 import random
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from gtm_boardroom.guardrails.consistency_checker import ConsistencyChecker
 
@@ -41,11 +41,7 @@ FAMILIES = ("CLEAN", "INJECTED", "TRAP")
 MASTER_RNG_SEED = 20260705
 
 
-# ---------------------------------------------------------------------------
-# Label rules: matchability against a ground-truth pool
-# ---------------------------------------------------------------------------
-
-def pool_from_data(pool_data: Dict) -> List[float]:
+def pool_from_data(pool_data: dict) -> list[float]:
     """Ground truth pool exactly as the checker builds it: flattened absolute values."""
     raw = []
     for source in (pool_data["shap_info"], pool_data["market_context"], pool_data["opt_results"]):
@@ -53,7 +49,7 @@ def pool_from_data(pool_data: Dict) -> List[float]:
     return [abs(v) for v in raw]
 
 
-def matches_pool(value: float, pool: List[float]) -> bool:
+def matches_pool(value: float, pool: list[float]) -> bool:
     """True if the checker's matching rule (direct, x100, /100, tolerance 1.1) accepts value."""
     for gt in pool:
         if abs(value - gt) < TOLERANCE:
@@ -65,7 +61,7 @@ def matches_pool(value: float, pool: List[float]) -> bool:
     return False
 
 
-def matches_pool_k(value: float, pool: List[float], decimals: int = 0) -> bool:
+def matches_pool_k(value: float, pool: list[float], decimals: int = 0) -> bool:
     """The checker's context-gated k-notation rule: a value written with a k
     suffix matches a pool value within one unit of its last written digit
     ("176k" -> 176,000 +/- 1,000; "176.4k" -> +/- 100)."""
@@ -78,11 +74,11 @@ def _k_decimals(token: str) -> int:
     return len(digits.split(".")[1]) if "." in digits else 0
 
 
-def is_matchable(value: float, pool: List[float]) -> bool:
+def is_matchable(value: float, pool: list[float]) -> bool:
     return value not in SKIP_VALUES and matches_pool(value, pool)
 
 
-def is_unmatchable(value: float, pool: List[float]) -> bool:
+def is_unmatchable(value: float, pool: list[float]) -> bool:
     """True only if the checker could never legitimately match this value.
 
     An injected value must satisfy this at fixture-build time, otherwise a
@@ -91,21 +87,14 @@ def is_unmatchable(value: float, pool: List[float]) -> bool:
     return value not in SKIP_VALUES and not matches_pool(value, pool)
 
 
-def extract_considered_numbers(text: str) -> List[float]:
-    """Mirror of the checker's extraction: cleaning, regex, abs, skip list.
-
-    Used to count how many numbers the checker actually evaluates per case
-    (needed for true-negative accounting; the checker only returns flags).
-    """
+def extract_considered_numbers(text: str) -> list[float]:
+    """Mirror of the checker's extraction (cleaning, regex, abs, skip list); used
+    for true-negative accounting, since the checker only returns flags."""
     clean_text = text.replace(",", "").replace("$", "").replace("%", "")
     tokens = re.findall(r"[-+]?\d*\.\d+|\d+", clean_text)
     nums = [abs(float(t)) for t in tokens]
     return [n for n in nums if n not in SKIP_VALUES]
 
-
-# ---------------------------------------------------------------------------
-# Fixture building: authentic pools + programmatically labelled memo texts
-# ---------------------------------------------------------------------------
 
 def _to_jsonable(data: Any) -> Any:
     import numpy as np
@@ -123,7 +112,7 @@ def _to_jsonable(data: Any) -> Any:
     return data
 
 
-def _generate_pool_data(seed: int) -> Dict:
+def _generate_pool_data(seed: int) -> dict:
     """Run the real pipeline (no LLM) for one seed and return jsonable artifacts."""
     from gtm_boardroom.data.config import get_tier_config
     from gtm_boardroom.data.source import SyntheticDataSource
@@ -146,7 +135,7 @@ def _generate_pool_data(seed: int) -> Dict:
 _WEEK_WORDS = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth"]
 
 
-def _numeric_entries(pool_data: Dict) -> List[Tuple[str, float]]:
+def _numeric_entries(pool_data: dict) -> list[tuple[str, float]]:
     """(metric name, abs value) pairs with provenance, for realistic memo sentences.
 
     Metric names must not contain digits above the skip list, or they would leak
@@ -183,7 +172,7 @@ def _parse_token(token: str) -> float:
     return abs(float(cleaned))
 
 
-def _eligible_forms(g: float) -> List[str]:
+def _eligible_forms(g: float) -> list[str]:
     forms = []
     if g >= 0.01 and round(g, 2) not in SKIP_VALUES:
         forms.append("two_dp")
@@ -218,7 +207,7 @@ def _render(g: float, form: str) -> str:
     raise ValueError(f"Unknown form: {form}")
 
 
-def _pick_clean_value(rng: random.Random, entries, pool, taken) -> Tuple[str, str, float]:
+def _pick_clean_value(rng: random.Random, entries, pool, taken) -> tuple[str, str, float]:
     """Pick a pool entry and render it in a legitimately matchable form."""
     for _ in range(2000):
         metric, g = rng.choice(entries)
@@ -235,7 +224,7 @@ def _pick_clean_value(rng: random.Random, entries, pool, taken) -> Tuple[str, st
     raise RuntimeError("Could not pick a clean value; pool too degenerate")
 
 
-def _draw_injected(rng: random.Random, base: float, pool, taken) -> Tuple[str, float]:
+def _draw_injected(rng: random.Random, base: float, pool, taken) -> tuple[str, float]:
     """Draw a provably-unmatchable value of realistic magnitude for the metric."""
     for _ in range(2000):
         if base < 1:
@@ -255,7 +244,7 @@ def _draw_injected(rng: random.Random, base: float, pool, taken) -> Tuple[str, f
     raise RuntimeError("Could not draw an unmatchable injected value")
 
 
-def _draw_injected_k(rng: random.Random, pool, taken) -> Tuple[str, float]:
+def _draw_injected_k(rng: random.Random, pool, taken) -> tuple[str, float]:
     """Draw a fabricated k-suffix value the checker must still flag.
 
     Must be unmatchable under the plain rules AND outside every pool value's
@@ -289,11 +278,11 @@ _SKIP_BULLET_TEXT = (
 )
 
 
-def _build_case_text(lines: List[str]) -> str:
+def _build_case_text(lines: list[str]) -> str:
     return "### Boardroom Memo\n" + "\n".join(lines) + "\n"
 
 
-def _assert_case_labels(case: Dict, pool: List[float]) -> None:
+def _assert_case_labels(case: dict, pool: list[float]) -> None:
     """Build-time verification that labels are correct and the text leaks no numbers."""
     for v in case["values"]:
         if v["label"] == "legit":
@@ -334,7 +323,7 @@ def build_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> None:
     def _suffix(idx: int) -> str:
         return chr(ord("a") + idx) if idx < 26 else "a" + chr(ord("a") + idx - 26)
 
-    def add_case(family: str, idx: int, seed: int, lines: List[str], values: List[Dict]) -> None:
+    def add_case(family: str, idx: int, seed: int, lines: list[str], values: list[dict]) -> None:
         case = {
             "case_id": f"{family.lower()}-{_suffix(idx)}",
             "family": family,
@@ -419,7 +408,7 @@ def build_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> None:
     # (Built after the cases above so their RNG draws are unchanged.)
     k_forms = ("k_int", "k_1dp")
 
-    def _pick_k_citation(rng, entries, pool, taken, form) -> Optional[Tuple[str, str, float]]:
+    def _pick_k_citation(rng, entries, pool, taken, form) -> tuple[str, str, float] | None:
         candidates = [(m, g) for m, g in entries if g >= 6000]
         rng.shuffle(candidates)
         for metric, g in candidates:
@@ -487,17 +476,13 @@ def build_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> None:
     print(f"Fixtures written to {fixtures_dir}")
 
 
-# ---------------------------------------------------------------------------
-# Evaluation: run the real checker over the fixtures and score it
-# ---------------------------------------------------------------------------
-
-def load_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> Tuple[Dict, List[Dict]]:
+def load_fixtures(fixtures_dir: Path = FIXTURES_DIR) -> tuple[dict, list[dict]]:
     pools_data = json.loads((fixtures_dir / "pools.json").read_text())
     cases = json.loads((fixtures_dir / "cases.json").read_text())
     return pools_data, cases
 
 
-def score_case(case: Dict, pool_data: Dict) -> Dict:
+def score_case(case: dict, pool_data: dict) -> dict:
     result = ConsistencyChecker.validate_response(
         case["text"],
         pool_data["shap_info"],
@@ -532,7 +517,7 @@ def score_case(case: Dict, pool_data: Dict) -> Dict:
     }
 
 
-def _rates(tp: int, fn: int, fp: int, tn: int) -> Dict[str, Optional[float]]:
+def _rates(tp: int, fn: int, fp: int, tn: int) -> dict[str, float | None]:
     return {
         "precision": tp / (tp + fp) if (tp + fp) else None,
         "recall": tp / (tp + fn) if (tp + fn) else None,
@@ -540,7 +525,7 @@ def _rates(tp: int, fn: int, fp: int, tn: int) -> Dict[str, Optional[float]]:
     }
 
 
-def _aggregate(rows: List[Dict]) -> Dict:
+def _aggregate(rows: list[dict]) -> dict:
     agg = {k: sum(r[k] for r in rows) for k in ("n_considered", "n_injected", "tp", "fn", "fp", "tn")}
     agg["cases"] = len(rows)
     agg["cases_matching_expectation"] = sum(1 for r in rows if r["verdict_match"])
@@ -548,11 +533,11 @@ def _aggregate(rows: List[Dict]) -> Dict:
     return agg
 
 
-def _fmt(x: Optional[float]) -> str:
+def _fmt(x: float | None) -> str:
     return "n/a" if x is None else f"{x:.3f}"
 
 
-def _write_report(out_dir: Path, overall: Dict, by_family: Dict[str, Dict], rows: List[Dict]) -> None:
+def _write_report(out_dir: Path, overall: dict, by_family: dict[str, dict], rows: list[dict]) -> None:
     lines = [
         "# ConsistencyChecker precision/recall (Experiment B)",
         "",
@@ -576,7 +561,7 @@ def _write_report(out_dir: Path, overall: Dict, by_family: Dict[str, Dict], rows
         "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
 
-    def row(scope: str, a: Dict) -> str:
+    def row(scope: str, a: dict) -> str:
         return (
             f"| {scope} | {a['cases']} | {a['cases_matching_expectation']} | {a['n_considered']} "
             f"| {a['tp']} | {a['fn']} | {a['fp']} | {a['tn']} "
@@ -626,7 +611,7 @@ def _write_report(out_dir: Path, overall: Dict, by_family: Dict[str, Dict], rows
     (out_dir / "eval_checker_report.md").write_text("\n".join(lines))
 
 
-def _write_csv(out_dir: Path, rows: List[Dict]) -> None:
+def _write_csv(out_dir: Path, rows: list[dict]) -> None:
     fields = [
         "case_id", "family", "seed", "n_considered", "n_injected",
         "tp", "fn", "fp", "tn", "checker_is_valid", "verdict_match",
@@ -642,7 +627,7 @@ def _write_csv(out_dir: Path, rows: List[Dict]) -> None:
             writer.writerow(out)
 
 
-def run_eval(fixtures_dir: Path = FIXTURES_DIR, out_dir: Path = RESULTS_DIR) -> Dict:
+def run_eval(fixtures_dir: Path = FIXTURES_DIR, out_dir: Path = RESULTS_DIR) -> dict:
     pools_data, cases = load_fixtures(fixtures_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
