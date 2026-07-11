@@ -76,6 +76,19 @@ def test_highlight_never_annotates_inside_comma_grouped_numbers():
     assert "**[FLAGGED: 195]**k" in out
 
 
+def test_highlight_never_double_wraps():
+    # Duplicate flagged values must not nest markers (real bug: llamacpp
+    # seed 1016 flagged 60 and 40 twice, producing **[FLAGGED: **[FLAGGED: 60]**]**).
+    text = "Allocate 60% to Margin Preservation and the remaining 40% elsewhere."
+    out = _highlight_flagged(text, [60.0, 40.0, 60.0, 40.0])
+    assert "**[FLAGGED: 60]**%" in out
+    assert "**[FLAGGED: 40]**%" in out
+    assert "FLAGGED: **[FLAGGED" not in out
+
+    # A second pass over already-annotated text is a no-op.
+    assert _highlight_flagged(out, [60.0, 40.0]) == out
+
+
 def test_flag_audit_section_is_computed_and_in_sync_with_the_report():
     # load_verdicts asserts row-by-row alignment with flag_audit_raw.csv, so a
     # verdict edited without rerunning the audit (or vice versa) fails here.

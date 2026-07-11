@@ -227,7 +227,7 @@ def aggregate(records: list[dict], failures: list[dict], models: list[str]) -> l
 
 def _highlight_flagged(text: str, flagged: list[float]) -> str:
     """Best-effort inline highlighting of flagged number occurrences."""
-    for v in flagged:
+    for v in dict.fromkeys(flagged):
         forms = {f"{v:g}", f"{v:.2f}", f"{v:.1f}", f"{v:,.2f}", f"{v:,.1f}"}
         if float(v).is_integer():
             forms.add(f"{int(v):,}")
@@ -236,7 +236,12 @@ def _highlight_flagged(text: str, flagged: list[float]) -> str:
             pattern = re.escape(form)
             # (?!...|,\d): never annotate the head of a comma-grouped number
             # ("25" inside "25,106.14" is not the flagged 25).
-            text = re.sub(rf"(?<![\d.\w]){pattern}(?![\d.]|,\d)", f"**[FLAGGED: {form}]**", text)
+            # (?<!FLAGGED: ): never re-wrap a number already inside a marker.
+            text = re.sub(
+                rf"(?<![\d.\w])(?<!FLAGGED: ){pattern}(?![\d.]|,\d)",
+                f"**[FLAGGED: {form}]**",
+                text,
+            )
     return text
 
 

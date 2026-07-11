@@ -31,14 +31,14 @@ Based on the Analyst's insight on efficiency (efficiency_trend: 'Diminishing Ret
 
 Based on the Analyst's insight on efficiency (efficiency_trend: 'Diminishing Returns') and the optimizer's suggestion to shift budget from Search, Social, and Retail, we should allocate the budget as follows:
 
-* **[FLAGGED: **[FLAGGED: 60]**]**% of the budget will be allocated to 'Margin Preservation' to maintain our current market position without risking further decline in ROI.
-* The remaining **[FLAGGED: **[FLAGGED: 40]**]**% of the budget will be reallocated to 'Efficiency Enhancement' to improve our marketing efficiency and mitigate the risk of 'Diminishing Returns'.
+* **[FLAGGED: 60]**% of the budget will be allocated to 'Margin Preservation' to maintain our current market position without risking further decline in ROI.
+* The remaining **[FLAGGED: 40]**% of the budget will be reallocated to 'Efficiency Enhancement' to improve our marketing efficiency and mitigate the risk of 'Diminishing Returns'.
 
 ### STRATEGIC PLAY
 
 The Tag for the upcoming 2 weeks is 'Margin Preservation'. This means that our primary objective is to maintain our current market position without risking further decline in ROI.
 
-To achieve this objective, we will allocate **[FLAGGED: **[FLAGGED: 60]**]**% of the budget to 'Margin Preservation' and reallocate the remaining **[FLAGGED: **[FLAGGED: 40]**]**% of the budget to 'Efficiency Enhancement'.
+To achieve this objective, we will allocate **[FLAGGED: 60]**% of the budget to 'Margin Preservation' and reallocate the remaining **[FLAGGED: 40]**% of the budget to 'Efficiency Enhancement'.
 
 ### RISK ASSESSMENT
 
