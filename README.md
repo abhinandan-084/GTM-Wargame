@@ -18,7 +18,7 @@ Everything else in the repo - the XGBoost forecaster, the SHAP attribution, the 
 
 ## What it does, concretely
 
-It simulates weekly sales, pricing, and marketing spend for a smartphone OEM, trains an XGBoost model to forecast sales and attribute drivers via SHAP, runs a `scipy.optimize.differential_evolution` search to find the sales-maximizing price/spend allocation under a budget constraint, and then hands all of that to a three-agent LangChain "boardroom" (Analyst → Strategist → Manager) that turns it into an executive playbook - guardrailed by the `ConsistencyChecker` described above.
+It simulates weekly sales, pricing, and marketing spend for a smartphone OEM, trains an XGBoost model to forecast sales and attribute drivers via SHAP, runs a `scipy.optimize.differential_evolution` search to find the sales-maximizing price/spend allocation under a budget constraint. All of that then goes to a three-agent LangChain "boardroom" (Analyst → Strategist → Manager) that turns it into an executive playbook, guardrailed by the `ConsistencyChecker` described above.
 
 ## Demo
 
@@ -41,10 +41,10 @@ It simulates weekly sales, pricing, and marketing spend for a smartphone OEM, tr
 
 This is the part worth stealing for your own LLM-over-ML-outputs project.
 
-1. **Build a Ground Truth Pool.** Every number the agents are permitted to reference - SHAP values, market context signals, optimizer results - gets flattened into one pool of floats (`ConsistencyChecker._flatten_data`).
-2. **Let the agents write freely.** The Analyst/Strategist/Manager prompts are unconstrained prose with Chain-of-Thought reasoning - no rigid output schema to fight against.
-3. **Parse the output after the fact.** `ConsistencyChecker.validate_response` regex-extracts every number the LLM wrote and checks it against the pool, with tolerance for rounding and percentage/fraction scaling (an agent writing "12" for a ground-truth value of `0.12`, or vice versa, is still considered a match).
-4. **Surface the verdict, don't silently correct it.** If a number can't be matched to anything in the pool, it's surfaced as a hallucination in the UI - the boardroom sees the flag, not a silently "fixed" number.
+1. Build a Ground Truth Pool. Every number the agents are permitted to reference - SHAP values, market context signals, optimizer results - gets flattened into one pool of floats (`ConsistencyChecker._flatten_data`).
+2. Let the agents write freely. The Analyst/Strategist/Manager prompts are unconstrained prose with chain-of-thought reasoning - no rigid output schema to fight against.
+3. Parse the output after the fact. `ConsistencyChecker.validate_response` regex-extracts every number the LLM wrote and checks it against the pool, with tolerance for rounding and percentage/fraction scaling (an agent writing "12" for a ground-truth value of `0.12`, or vice versa, is still considered a match).
+4. Surface the verdict instead of silently correcting it. If a number can't be matched to anything in the pool, it's surfaced as a hallucination in the UI - the boardroom sees the flag, not a quietly "fixed" number.
 
 ```python
 result = ConsistencyChecker.validate_response(
@@ -60,7 +60,7 @@ If the Manager agent claims a **"47% lift"** but the optimizer actually forecast
 
 ## Measured Results
 
-The guardrail isn't just asserted - it's measured, by two experiments living in `benchmark/`:
+Two experiments in `benchmark/` put actual numbers behind the guardrail:
 
 - **[Checker precision & recall](benchmark/results/eval_checker_report.md)** (Experiment B, deterministic, runs in CI): the `ConsistencyChecker` scored **precision 1.000, recall 1.000, false-positive rate 0.000** across 75 labelled cases / 258 numbers built on authentic pipeline artifacts. All 43 injected fabrications were caught, with zero false flags on percentage-scaling, rounding, negative-sign, `$1,234`-formatting, and k-notation (`176k`) trap bait. Every injected value is programmatically verified to be unmatchable against its ground-truth pool at fixture-build time, so recall can't be inflated by fakes that accidentally match.
 - **[LLM fabrication rates](benchmark/results/experiment_a_report.md)** (Experiment A, real API calls, run locally, never in CI): how often real models write a number that isn't in the ground truth, with the guardrail observing. A flag is only an *upper bound* on fabrication, so every flag from the 30 paired seeds (identical scenarios per model, analyst + strategist nodes scored) was audited against its deterministically rebuilt pool and classified - the audit lives in the same report. **Gemini fabricated 0 of 537 numbers (0/30 runs)**: its only 3 flags were correct derived percentages the pool doesn't store (guardrail false positives by design - deriving new true values is outside the checker's contract). **Local llama.cpp (Llama 3.1 8B Q4) fabricated 10 of 138 numbers** (7.2%, 95% CI [4.0%, 12.8%]; 4/30 runs) - every one of its flags survived the audit as genuine. The local model's cleanly separated per-number rate shows why the guardrail is load-bearing in local/private deployments - and the frontier model's all-false-positive flags show why guardrail output gets audited before it becomes a claim. Every flagged transcript is committed under [`benchmark/results/examples/`](benchmark/results/examples/).
@@ -92,11 +92,11 @@ This is why `SyntheticDataSource`, `CSVDataSource`, and any future SQL/Snowflake
 
 **2. Multi-Agent Boardroom Logic**
 
-Chain-of-Thought reasoning across three personas: **Data Analyst** (maps SHAP values to market signals), **Growth Strategist** (critiques the optimizer's spend allocation against efficiency trends), **GTM Manager** (synthesizes the final wargame playbook with contingency plans).
+Chain-of-thought reasoning across three personas: **Data Analyst** (maps SHAP values to market signals), **Growth Strategist** (critiques the optimizer's spend allocation against efficiency trends), **GTM Manager** (synthesizes the final wargame playbook with contingency plans).
 
 **3. Multi-Provider LLM Support**
 
-An `LLMProvider` abstraction (`gtm_boardroom/agents/providers.py`) normalizes response handling across providers, so `GTMBrain` never branches on which one is active. Supported today: **Gemini**, **OpenAI**, **Anthropic**, plus **llama.cpp** for fully local/offline use via [`llama-cpp-python`](https://github.com/abetlen/llama-cpp-python) bindings against a `.gguf` model file on disk - no server process, no data leaving the machine. The Streamlit sidebar auto-detects which cloud providers are usable by checking which of `GOOGLE_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` are set - bring whichever keys you have. `llamacpp` is always listed, since it needs a model path, not a key.
+An `LLMProvider` abstraction (`gtm_boardroom/agents/providers.py`) normalizes response handling across providers, so `GTMBrain` never branches on which one is active. Supported today: **Gemini**, **OpenAI**, **Anthropic**, plus **llama.cpp** for fully local/offline use via [`llama-cpp-python`](https://github.com/abetlen/llama-cpp-python) bindings against a `.gguf` model file on disk, with no separate server process. The Streamlit sidebar auto-detects which cloud providers are usable by checking which of `GOOGLE_API_KEY` / `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` are set - bring whichever keys you have. `llamacpp` is always listed, since it needs a model path, not a key.
 
 **4. Pluggable Data Sources**
 
