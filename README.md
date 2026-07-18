@@ -189,6 +189,10 @@ uv run pytest
 - **Marketing Synergy Score** - whether adstock is amplifying or disconnected from price-gap impact
 - **Promotion Fatigue Index** - diminishing returns in rebate strategies
 
+## Related work
+
+[local_llm_benchmarks](https://github.com/abhinandan-084/local_llm_benchmarks) - my benchmarks on squeezing throughput out of local LLMs on constrained hardware (the "abstraction tax"): asymmetric thread tuning, KV-cache quantization, PCIe limits. Companion to this repo's hallucination/grounding work.
+
 ## Roadmap
 
 - [x] Pluggable `DataSource` interface (synthetic, CSV; SQL/Snowflake next)
