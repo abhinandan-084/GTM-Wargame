@@ -7,6 +7,7 @@
 ![Providers](https://img.shields.io/badge/LLM-Gemini%20%7C%20OpenAI%20%7C%20Anthropic-lightgrey)
 ![Guardrails](https://img.shields.io/badge/Guardrails-Consistency--Checker-blueviolet)
 ![CI](https://github.com/abhinandan-084/GTM-Wargame/actions/workflows/ci.yml/badge.svg)
+[![Article](https://img.shields.io/badge/Towards%20AI-Read%20the%20benchmark%20write--up-blue)]([YOUR-ARTICLE-URL](https://medium.com/p/0db77efb0644))
 
 ## The problem this repo actually solves
 
@@ -59,6 +60,8 @@ result = ConsistencyChecker.validate_response(
 If the Manager agent claims a **"47% lift"** but the optimizer actually forecast 12%, this is exactly what gets caught.
 
 ## Measured Results
+
+> 📊 **Full write-up:** [Why My LLM Guardrail Flagged the Right Answers (And Why I Refused to Fix It)](https://medium.com/p/0db77efb0644) - published in Towards AI, covering the complete methodology, the flag-by-flag audit, and why the false positives stayed in.
 
 Two experiments in `benchmark/` put actual numbers behind the guardrail:
 
